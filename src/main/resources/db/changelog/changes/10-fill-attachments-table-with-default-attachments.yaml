@@ -1,0 +1,164 @@
+databaseChangeLog:
+  - changeSet:
+      id: 10-fill-attachments-table-with-default-attachments
+      author: kastashenkova
+      changes:
+        - insert:
+            tableName: attachments
+            columns:
+              - column:
+                  name: task_id
+                  valueNumeric: 1
+              - column:
+                  name: dropbox_file_id
+                  value: "dbx_id_001_project_structure"
+              - column:
+                  name: filename
+                  value: "project-structure-diagram.png"
+              - column:
+                  name: upload_date
+                  value: "2026-01-20"
+
+        - insert:
+            tableName: attachments
+            columns:
+              - column:
+                  name: task_id
+                  valueNumeric: 1
+              - column:
+                  name: dropbox_file_id
+                  value: "dbx_id_002_pom_config"
+              - column:
+                  name: filename
+                  value: "pom-dependencies-notes.pdf"
+              - column:
+                  name: upload_date
+                  value: "2026-01-21"
+
+        - insert:
+            tableName: attachments
+            columns:
+              - column:
+                  name: task_id
+                  valueNumeric: 2
+              - column:
+                  name: dropbox_file_id
+                  value: "dbx_id_003_stripe_docs"
+              - column:
+                  name: filename
+                  value: "stripe-integration-guide.pdf"
+              - column:
+                  name: upload_date
+                  value: "2026-02-05"
+
+        - insert:
+            tableName: attachments
+            columns:
+              - column:
+                  name: task_id
+                  valueNumeric: 2
+              - column:
+                  name: dropbox_file_id
+                  value: "dbx_id_004_payment_flow"
+              - column:
+                  name: filename
+                  value: "payment-flow-diagram.png"
+              - column:
+                  name: upload_date
+                  value: "2025-02-07"
+
+        - insert:
+            tableName: attachments
+            columns:
+              - column:
+                  name: task_id
+                  valueNumeric: 3
+              - column:
+                  name: dropbox_file_id
+                  value: "dbx_id_005_erd"
+              - column:
+                  name: filename
+                  value: "database-erd-v1.png"
+              - column:
+                  name: upload_date
+                  value: "2026-02-08"
+
+        - insert:
+            tableName: attachments
+            columns:
+              - column:
+                  name: task_id
+                  valueNumeric: 3
+              - column:
+                  name: dropbox_file_id
+                  value: "dbx_id_006_migration_scripts"
+              - column:
+                  name: filename
+                  value: "liquibase-migrations-review.pdf"
+              - column:
+                  name: upload_date
+                  value: "2025-02-09"
+
+        - insert:
+            tableName: attachments
+            columns:
+              - column:
+                  name: task_id
+                  valueNumeric: 4
+              - column:
+                  name: dropbox_file_id
+                  value: "dbx_id_007_jwt_flow"
+              - column:
+                  name: filename
+                  value: "jwt-auth-flow-diagram.png"
+              - column:
+                  name: upload_date
+                  value: "2026-02-25"
+
+        - insert:
+            tableName: attachments
+            columns:
+              - column:
+                  name: task_id
+                  valueNumeric: 5
+              - column:
+                  name: dropbox_file_id
+                  value: "dbx_id_008_microservices_plan"
+              - column:
+                  name: filename
+                  value: "microservices-split-plan.pdf"
+              - column:
+                  name: upload_date
+                  value: "2026-03-12"
+
+        - insert:
+            tableName: attachments
+            columns:
+              - column:
+                  name: task_id
+                  valueNumeric: 7
+              - column:
+                  name: dropbox_file_id
+                  value: "dbx_id_009_test_report"
+              - column:
+                  name: filename
+                  value: "unit-test-coverage-report.html"
+              - column:
+                  name: upload_date
+                  value: "2025-05-22"
+
+        - insert:
+            tableName: attachments
+            columns:
+              - column:
+                  name: task_id
+                  valueNumeric: 8
+              - column:
+                  name: dropbox_file_id
+                  value: "dbx_id_010_ci_config"
+              - column:
+                  name: filename
+                  value: "github-actions-workflow.yaml"
+              - column:
+                  name: upload_date
+                  value: "2023-12-10"

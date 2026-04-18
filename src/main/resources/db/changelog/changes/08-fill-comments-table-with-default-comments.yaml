@@ -1,0 +1,164 @@
+databaseChangeLog:
+  - changeSet:
+      id: 08-fill-comments-table-with-default-comments
+      author: kastashenkova
+      changes:
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: task_id
+                  valueNumeric: 1
+              - column:
+                  name: user_id
+                  valueNumeric: 1
+              - column:
+                  name: text
+                  value: "Project structure looks good, dependencies are up to date"
+              - column:
+                  name: created_at
+                  valueDate: "2026-01-20T10:00:00"
+
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: task_id
+                  valueNumeric: 1
+              - column:
+                  name: user_id
+                  valueNumeric: 2
+              - column:
+                  name: text
+                  value: "Please add Checkstyle plugin to the Maven configuration"
+              - column:
+                  name: created_at
+                  valueDate: "2026-01-20T11:30:00"
+
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: task_id
+                  valueNumeric: 2
+              - column:
+                  name: user_id
+                  valueNumeric: 1
+              - column:
+                  name: text
+                  value: "Stripe sandbox is configured, starting integration tests"
+              - column:
+                  name: created_at
+                  valueDate: "2026-02-05T09:15:00"
+
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: task_id
+                  valueNumeric: 2
+              - column:
+                  name: user_id
+                  valueNumeric: 3
+              - column:
+                  name: text
+                  value: "Need to handle webhook events for failed payments"
+              - column:
+                  name: created_at
+                  valueDate: "2026-02-06T14:00:00"
+
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: task_id
+                  valueNumeric: 3
+              - column:
+                  name: user_id
+                  valueNumeric: 2
+              - column:
+                  name: text
+                  value: "ERD is ready, reviewed and approved by the team"
+              - column:
+                  name: created_at
+                  valueDate: "2026-02-10T16:45:00"
+
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: task_id
+                  valueNumeric: 4
+              - column:
+                  name: user_id
+                  valueNumeric: 1
+              - column:
+                  name: text
+                  value: "JWT secret should be stored in environment variables, not hardcoded"
+              - column:
+                  name: created_at
+                  valueDate: "2026-02-28T10:20:00"
+
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: task_id
+                  valueNumeric: 4
+              - column:
+                  name: user_id
+                  valueNumeric: 3
+              - column:
+                  name: text
+                  value: "Refresh token logic works correctly, ready for code review"
+              - column:
+                  name: created_at
+                  valueDate: "2026-03-01T08:00:00"
+
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: task_id
+                  valueNumeric: 5
+              - column:
+                  name: user_id
+                  valueNumeric: 2
+              - column:
+                  name: text
+                  value: "Identified 6 bounded contexts for microservice extraction"
+              - column:
+                  name: created_at
+                  valueDate: "2026-04-15T13:00:00"
+
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: task_id
+                  valueNumeric: 7
+              - column:
+                  name: user_id
+                  valueNumeric: 1
+              - column:
+                  name: text
+                  value: "Service layer coverage is at 45%, need to add more edge cases"
+              - column:
+                  name: created_at
+                  valueDate: "2026-05-20T11:00:00"
+
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: task_id
+                  valueNumeric: 8
+              - column:
+                  name: user_id
+                  valueNumeric: 3
+              - column:
+                  name: text
+                  value: "Pipeline passes all checks, deploying to staging environment"
+              - column:
+                  name: created_at
+                  valueDate: "2025-12-14T17:30:00"

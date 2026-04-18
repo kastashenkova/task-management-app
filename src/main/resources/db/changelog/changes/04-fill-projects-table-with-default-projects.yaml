@@ -1,0 +1,194 @@
+databaseChangeLog:
+  - changeSet:
+      id: 04-fill-projects-table-with-default-projects
+      author: kastashenkova
+      changes:
+        - insert:
+            tableName: projects
+            columns:
+              - column:
+                  name: name
+                  value: "E-Commerce Platform"
+              - column:
+                  name: description
+                  value: "Development of online shopping platform with payment integration"
+              - column:
+                  name: start_date
+                  value: "2026-01-15"
+              - column:
+                  name: end_date
+                  value: "2026-06-30"
+              - column:
+                  name: status
+                  value: "IN_PROGRESS"
+
+        - insert:
+            tableName: projects
+            columns:
+              - column:
+                  name: name
+                  value: "Banking REST API"
+              - column:
+                  name: description
+                  value: "RESTful API for banking operations with Spring Boot and JWT auth"
+              - column:
+                  name: start_date
+                  value: "2026-02-01"
+              - column:
+                  name: end_date
+                  value: "2026-04-01"
+              - column:
+                  name: status
+                  value: "COMPLETED"
+
+        - insert:
+            tableName: projects
+            columns:
+              - column:
+                  name: name
+                  value: "Microservices Migration"
+              - column:
+                  name: description
+                  value: "Migration of monolithic application to microservices architecture"
+              - column:
+                  name: start_date
+                  value: "2026-03-10"
+              - column:
+                  name: end_date
+                  value: "2026-12-31"
+              - column:
+                  name: status
+                  value: "INITIATED"
+
+        - insert:
+            tableName: projects
+            columns:
+              - column:
+                  name: name
+                  value: "Task Management System"
+              - column:
+                  name: description
+                  value: "Web app for managing tasks, projects and teams with role-based access"
+              - column:
+                  name: start_date
+                  value: "2026-01-01"
+              - column:
+                  name: end_date
+                  value: "2026-05-01"
+              - column:
+                  name: status
+                  value: "IN_PROGRESS"
+
+        - insert:
+            tableName: projects
+            columns:
+              - column:
+                  name: name
+                  value: "CI/CD Pipeline Setup"
+              - column:
+                  name: description
+                  value: "Setting up automated CI/CD pipelines with GitHub Actions and Docker"
+              - column:
+                  name: start_date
+                  value: "2025-11-01"
+              - column:
+                  name: end_date
+                  value: "2025-12-31"
+              - column:
+                  name: status
+                  value: "COMPLETED"
+
+        - insert:
+            tableName: projects
+            columns:
+              - column:
+                  name: name
+                  value: "Inventory Management API"
+              - column:
+                  name: description
+                  value: "REST API for warehouse inventory tracking with barcode scanner support"
+              - column:
+                  name: start_date
+                  value: "2026-04-01"
+              - column:
+                  name: end_date
+                  value: "2026-09-30"
+              - column:
+                  name: status
+                  value: "INITIATED"
+
+        - insert:
+            tableName: projects
+            columns:
+              - column:
+                  name: name
+                  value: "Notification Service"
+              - column:
+                  name: description
+                  value: "Microservice for sending email and push notifications via Kafka events"
+              - column:
+                  name: start_date
+                  value: "2025-09-01"
+              - column:
+                  name: end_date
+                  value: "2025-11-30"
+              - column:
+                  name: status
+                  value: "COMPLETED"
+
+        - insert:
+            tableName: projects
+            columns:
+              - column:
+                  name: name
+                  value: "Healthcare Patient Portal"
+              - column:
+                  name: description
+                  value: "Secure patient data management system with appointment scheduling"
+              - column:
+                  name: start_date
+                  value: "2026-02-15"
+              - column:
+                  name: end_date
+                  value: "2026-11-15"
+              - column:
+                  name: status
+                  value: "IN_PROGRESS"
+
+        - insert:
+            tableName: projects
+            columns:
+              - column:
+                  name: name
+                  value: "Code Review Tool"
+              - column:
+                  name: description
+                  value: "Internal tool for automated code quality checks and peer review workflow"
+              - column:
+                  name: start_date
+                  value: "2025-06-01"
+              - column:
+                  name: end_date
+                  value: "2025-10-01"
+              - column:
+                  name: status
+                  value: "COMPLETED"
+
+        - insert:
+            tableName: projects
+            columns:
+              - column:
+                  name: name
+                  value: "Real-Time Chat Application"
+              - column:
+                  name: description
+                  value: "WebSocket-based chat app with private and group messaging support"
+              - column:
+                  name: start_date
+                  value: "2026-05-01"
+              - column:
+                  name: end_date
+                  value: "2026-10-31"
+              - column:
+                  name: status
+                  value: "INITIATED"
