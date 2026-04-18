@@ -1,4 +1,3 @@
-.target/
+target/
 .env
 .idea/
-.src/resources/db/changelog/changes
