@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 16-insert-roles
+      author: kastashenkova
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: USER
+
+        - insert:
+            tableName: roles
+            columns:
+              - column:
+                  name: name
+                  value: ADMIN
