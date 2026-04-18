@@ -17,7 +17,7 @@ databaseChangeLog:
                   name: username
                   type: varchar(50)
                   constraints:
-                    primaryKey: true
+                    unique: true
                     nullable: false
               - column:
                   name: password

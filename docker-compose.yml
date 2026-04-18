@@ -2,7 +2,7 @@ services:
 
   task-management-db:
     image: postgres:17.6
-    container_name: postgres-db
+    container_name: task-management-db
     environment:
       POSTGRES_DB: task-management-system
       POSTGRES_USER: postgres
@@ -17,19 +17,6 @@ services:
       timeout: 5s
       retries: 10
     restart: unless-stopped
-
-  migrate-db:
-    image: migrate/migrate
-    command: [
-      "-path", "/migrations",
-      "-database",  "postgresql://postgres:postgres@task-management-db:5432/task-management-system?sslmode=disable", "up"
-    ]
-    volumes:
-      - ./migrations:/migrations
-    depends_on:
-      task-management-db:
-        condition: service_healthy
-    restart: "no"
 
   java-server:
     build:
@@ -48,8 +35,6 @@ services:
     depends_on:
       task-management-db:
         condition: service_healthy
-      migrate-db:
-        condition: service_completed_successfully
     healthcheck:
       test: [ "CMD-SHELL", "curl -f http://localhost:8090/api/v1/actuator/health || exit 1" ]
       interval: 10s

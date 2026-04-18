@@ -8,7 +8,6 @@ RUN --mount=type=cache,target=/root/.m2 \
 FROM base AS dev
 WORKDIR /app
 COPY src ./src
-COPY Makefile ./
 EXPOSE 8090
 CMD ["mvn", "spring-boot:run"]
 
