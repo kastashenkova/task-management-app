@@ -1,0 +1,80 @@
+databaseChangeLog:
+  - changeSet:
+      id: 02-fill-users-table-with-default-users
+      author: kastashenkova
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: kastashenkova
+              - column:
+                  name: email
+                  value: kastashenkova@gmail.com
+              - column:
+                  name: password
+                  value: $2a$10$G2OoeNY26fSUG0QFW5TTMupfHWEB5akpHsXDlVKsTOXIlb1jgD1mK # admin123
+              - column:
+                  name: first_name
+                  value: Kateryna
+              - column:
+                  name: last_name
+                  value: Astashenkova
+
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: imykolaichuk
+              - column:
+                  name: email
+                  value: imykolaichuk@gmail.com
+              - column:
+                  name: password
+                  value: $2a$10$SMqNrwJAr1g8RKfzfGdtreDPjbfIvT807xSA0VfBBFLkryiGI35sG # user1234
+              - column:
+                  name: first_name
+                  value: Ivan
+              - column:
+                  name: last_name
+                  value: Mykolaichuk
+
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: oteliha
+              - column:
+                  name: email
+                  value: oteliha@gmail.com
+              - column:
+                  name: password
+                  value: $2a$10$FyiTO8oSW9SawlT3NUTYIuN6PUFoVfN0nKFwPpAMpTkcOZazWaNOq # password1
+              - column:
+                  name: first_name
+                  value: Olena
+              - column:
+                  name: last_name
+                  value: Teliha
+
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: username
+                  value: vstus
+              - column:
+                  name: email
+                  value: vstus@gmail.com
+              - column:
+                  name: password
+                  value: $2a$10$4T43FxN0KrYjAphXFyi5ZOnb/nlLxTMRY2d7Q00RbfTZYiTNc.ZDi # qwerty123
+              - column:
+                  name: first_name
+                  value: Vasyl
+              - column:
+                  name: last_name
+                  value: Stus

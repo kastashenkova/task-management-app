@@ -1,0 +1,229 @@
+databaseChangeLog:
+  - changeSet:
+      id: 06-fill-tasks-table-with-default-tasks
+      author: kastashenkova
+      changes:
+        - insert:
+            tableName: tasks
+            columns:
+              - column:
+                  name: name
+                  value: "Setup project structure"
+              - column:
+                  name: description
+                  value: "Initialize Spring Boot project with Maven, configure dependencies"
+              - column:
+                  name: priority
+                  value: "HIGH"
+              - column:
+                  name: status
+                  value: "COMPLETED"
+              - column:
+                  name: due_date
+                  value: "2024-01-20"
+              - column:
+                  name: project_id
+                  valueNumeric: 1
+              - column:
+                  name: assignee_id
+                  valueNumeric: 1
+
+        - insert:
+            tableName: tasks
+            columns:
+              - column:
+                  name: name
+                  value: "Implement payment gateway"
+              - column:
+                  name: description
+                  value: "Integrate Stripe API for processing payments"
+              - column:
+                  name: priority
+                  value: "HIGH"
+              - column:
+                  name: status
+                  value: "IN_PROGRESS"
+              - column:
+                  name: due_date
+                  value: "2024-03-15"
+              - column:
+                  name: project_id
+                  valueNumeric: 1
+              - column:
+                  name: assignee_id
+                  valueNumeric: 2
+
+        - insert:
+            tableName: tasks
+            columns:
+              - column:
+                  name: name
+                  value: "Design database schema"
+              - column:
+                  name: description
+                  value: "Create ERD and write Liquibase migrations for all entities"
+              - column:
+                  name: priority
+                  value: "HIGH"
+              - column:
+                  name: status
+                  value: "COMPLETED"
+              - column:
+                  name: due_date
+                  value: "2024-02-10"
+              - column:
+                  name: project_id
+                  valueNumeric: 2
+              - column:
+                  name: assignee_id
+                  valueNumeric: 3
+
+        - insert:
+            tableName: tasks
+            columns:
+              - column:
+                  name: name
+                  value: "Implement JWT authentication"
+              - column:
+                  name: description
+                  value: "Add JWT-based auth with access and refresh tokens"
+              - column:
+                  name: priority
+                  value: "HIGH"
+              - column:
+                  name: status
+                  value: "COMPLETED"
+              - column:
+                  name: due_date
+                  value: "2024-03-01"
+              - column:
+                  name: project_id
+                  valueNumeric: 2
+              - column:
+                  name: assignee_id
+                  valueNumeric: 1
+
+        - insert:
+            tableName: tasks
+            columns:
+              - column:
+                  name: name
+                  value: "Analyze monolith modules"
+              - column:
+                  name: description
+                  value: "Identify service boundaries and define microservice split strategy"
+              - column:
+                  name: priority
+                  value: "MEDIUM"
+              - column:
+                  name: status
+                  value: "IN_PROGRESS"
+              - column:
+                  name: due_date
+                  value: "2024-04-30"
+              - column:
+                  name: project_id
+                  valueNumeric: 3
+              - column:
+                  name: assignee_id
+                  valueNumeric: 1
+
+        - insert:
+            tableName: tasks
+            columns:
+              - column:
+                  name: name
+                  value: "Setup Docker Compose"
+              - column:
+                  name: description
+                  value: "Configure multi-container environment for local development"
+              - column:
+                  name: priority
+                  value: "MEDIUM"
+              - column:
+                  name: status
+                  value: "NOT_STARTED"
+              - column:
+                  name: due_date
+                  value: "2024-05-15"
+              - column:
+                  name: project_id
+                  valueNumeric: 3
+              - column:
+                  name: assignee_id
+                  valueNumeric: 2
+
+        - insert:
+            tableName: tasks
+            columns:
+              - column:
+                  name: name
+                  value: "Write unit tests for services"
+              - column:
+                  name: description
+                  value: "Cover all service layer methods with JUnit and Mockito tests"
+              - column:
+                  name: priority
+                  value: "MEDIUM"
+              - column:
+                  name: status
+                  value: "NOT_STARTED"
+              - column:
+                  name: due_date
+                  value: "2024-06-01"
+              - column:
+                  name: project_id
+                  valueNumeric: 1
+              - column:
+                  name: assignee_id
+                  valueNumeric: 2
+
+        - insert:
+            tableName: tasks
+            columns:
+              - column:
+                  name: name
+                  value: "Configure GitHub Actions CI"
+              - column:
+                  name: description
+                  value: "Setup build, test and checkstyle pipeline on every pull request"
+              - column:
+                  name: priority
+                  value: "LOW"
+              - column:
+                  name: status
+                  value: "COMPLETED"
+              - column:
+                  name: due_date
+                  value: "2023-12-15"
+              - column:
+                  name: project_id
+                  valueNumeric: 5
+              - column:
+                  name: assignee_id
+                  valueNumeric: 1
+
+        - insert:
+            tableName: tasks
+            columns:
+              - column:
+                  name: name
+                  value: "Add Swagger documentation"
+              - column:
+                  name: description
+                  value: "Document all REST endpoints using SpringDoc OpenAPI"
+              - column:
+                  name: priority
+                  value: "LOW"
+              - column:
+                  name: status
+                  value: "NOT_STARTED"
+              - column:
+                  name: due_date
+                  value: "2024-07-01"
+              - column:
+                  name: project_id
+                  valueNumeric: 4
+              - column:
+                  name: assignee_id
+                  valueNumeric: 3

@@ -1,0 +1,104 @@
+databaseChangeLog:
+  - changeSet:
+      id: 12-fill-labels-table-with-default-labels
+      author: kastashenkova
+      changes:
+        - insert:
+            tableName: labels
+            columns:
+              - column:
+                  name: name
+                  value: "Bug Fix"
+              - column:
+                  name: color
+                  value: "#FF0000"
+
+        - insert:
+            tableName: labels
+            columns:
+              - column:
+                  name: name
+                  value: "Feature"
+              - column:
+                  name: color
+                  value: "#00CC00"
+
+        - insert:
+            tableName: labels
+            columns:
+              - column:
+                  name: name
+                  value: "Documentation"
+              - column:
+                  name: color
+                  value: "#0066FF"
+
+        - insert:
+            tableName: labels
+            columns:
+              - column:
+                  name: name
+                  value: "Code Review"
+              - column:
+                  name: color
+                  value: "#FF9900"
+
+        - insert:
+            tableName: labels
+            columns:
+              - column:
+                  name: name
+                  value: "High Priority"
+              - column:
+                  name: color
+                  value: "#CC0000"
+
+        - insert:
+            tableName: labels
+            columns:
+              - column:
+                  name: name
+                  value: "Testing"
+              - column:
+                  name: color
+                  value: "#9900CC"
+
+        - insert:
+            tableName: labels
+            columns:
+              - column:
+                  name: name
+                  value: "DevOps"
+              - column:
+                  name: color
+                  value: "#666666"
+
+        - insert:
+            tableName: labels
+            columns:
+              - column:
+                  name: name
+                  value: "Security"
+              - column:
+                  name: color
+                  value: "#CC6600"
+
+        - insert:
+            tableName: labels
+            columns:
+              - column:
+                  name: name
+                  value: "Performance"
+              - column:
+                  name: color
+                  value: "#006666"
+
+        - insert:
+            tableName: labels
+            columns:
+              - column:
+                  name: name
+                  value: "Technical Debt"
+              - column:
+                  name: color
+                  value: "#999900"

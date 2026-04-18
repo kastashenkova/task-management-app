@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Comment {
+    private Long id;
     private Long taskId;
     private Long userId;
     private String text;

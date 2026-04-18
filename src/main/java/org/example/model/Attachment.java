@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Attachment {
+    private Long id;
     private Long taskId;
     private String dropboxFileId;
     private String filename;
