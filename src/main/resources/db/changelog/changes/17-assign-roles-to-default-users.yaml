@@ -4,7 +4,7 @@ databaseChangeLog:
       author: kastashenkova
       changes:
         - insert:
-            tableName: user_role
+            tableName: users_roles
             columns:
               - column:
                   name: user_id
@@ -13,7 +13,7 @@ databaseChangeLog:
                   name: role_id
                   valueNumeric: 1
         - insert:
-            tableName: user_role
+            tableName: users_roles
             columns:
               - column:
                   name: user_id
@@ -22,7 +22,7 @@ databaseChangeLog:
                   name: role_id
                   valueNumeric: 1
         - insert:
-            tableName: user_role
+            tableName: users_roles
             columns:
               - column:
                   name: user_id
@@ -31,7 +31,7 @@ databaseChangeLog:
                   name: role_id
                   valueNumeric: 2
         - insert:
-            tableName: user_role
+            tableName: users_roles
             columns:
               - column:
                   name: user_id

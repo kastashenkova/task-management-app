@@ -1,4 +1,4 @@
-package org.example.dto.user.registration;
+package org.example.dto.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -15,23 +15,16 @@ import java.util.Set;
 @FieldMatch(first = "password",
         second = "repeatPassword",
         message = "Password and repeated password do not match")
-public class UserRegistrationRequestDto {
-    @NotBlank
+public class UserUpdateRequestDto {
     @Length(min = 3, max = 35)
     private String username;
-    @NotBlank
     @Email
     private String email;
-    @NotBlank
     @Length(min = 8, max = 35)
     private String password;
-    @NotBlank
     @Length(min = 8, max = 35)
     private String repeatPassword;
-    @NotBlank
     private String firstName;
-    @NotBlank
     private String lastName;
-    @NotBlank
     private Set<Role> roles;
 }
