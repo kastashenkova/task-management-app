@@ -22,10 +22,6 @@ services:
     build:
       dockerfile: Dockerfile
       target: dev
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://task-management-db:5432/task-management-system
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
     env_file:
       - .env
     volumes:

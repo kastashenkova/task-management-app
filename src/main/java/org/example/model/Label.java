@@ -26,5 +26,5 @@ public class Label {
     @Column(nullable = false)
     private String color;
     @Column(nullable = false)
-    private boolean is_deleted = false;
+    private boolean isDeleted = false;
 }

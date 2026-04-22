@@ -31,7 +31,7 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "task_id", nullable = false)
     private Task task;
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
     @Column(nullable = false)
@@ -39,5 +39,5 @@ public class Comment {
     @Column(nullable = false)
     private LocalDateTime timestamp;
     @Column(nullable = false)
-    private boolean is_deleted = false;
+    private boolean isDeleted = false;
 }

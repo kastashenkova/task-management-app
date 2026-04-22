@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 18-assign-roles-to-default-users
+      id: 16-assign-roles-to-default-users
       author: kastashenkova
       changes:
         - insert:

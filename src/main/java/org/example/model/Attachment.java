@@ -38,5 +38,5 @@ public class Attachment {
     @Column(nullable = false)
     private LocalDateTime uploadDate;
     @Column(nullable = false)
-    private boolean is_deleted = false;
+    private boolean isDeleted = false;
 }

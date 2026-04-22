@@ -30,7 +30,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: upload_date
-                  type: date
+                  type: TIMESTAMP
                   constraints:
                     nullable: false
               - column:
