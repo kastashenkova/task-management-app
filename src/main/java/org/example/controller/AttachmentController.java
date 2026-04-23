@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +30,7 @@ public class AttachmentController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Upload an attachment to a task",
             description = "File gets uploaded to Dropbox and we store the Dropbox File ID in our database")
+    @PreAuthorize("hasRole('ADMIN')")
     public AttachmentResponseDto createAttachment(@RequestParam Long taskId,
                                                   @RequestParam MultipartFile file)
             throws Exception {
@@ -54,6 +56,7 @@ public class AttachmentController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete attachment",
             description = "Delete attachment by its id")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteAttachment(@PathVariable Long id) throws Exception {
         attachmentService.deleteAttachment(id);
     }

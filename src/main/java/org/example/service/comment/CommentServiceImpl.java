@@ -50,4 +50,12 @@ public class CommentServiceImpl implements CommentService {
         return commentRepository.findAllByTask_Id(taskId, pageable)
                 .map(commentMapper::toDto);
     }
+
+    @Override
+    @Transactional
+    public void deleteCommentById(Long id) {
+        commentRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Comment with id " + id + " not found"));
+        commentRepository.deleteById(id);
+    }
 }

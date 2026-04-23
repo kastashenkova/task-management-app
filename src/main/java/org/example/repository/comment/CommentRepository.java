@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     Page<Comment> findAllByTask_Id(Long taskId, Pageable pageable);
+
+    boolean existsByIdAndUser_Username(Long id, String username);
 }

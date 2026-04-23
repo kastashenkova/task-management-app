@@ -8,6 +8,7 @@ import org.example.dto.project.ProjectResponseDto;
 import org.example.service.project.ProjectService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ public class ProjectController {
     @PostMapping
     @Operation(summary = "Create a new project",
             description = "Create a new project")
+    @PreAuthorize("hasRole('ADMIN')")
     public ProjectResponseDto createProject(@RequestBody ProjectRequestDto projectRequestDto) {
         return projectService.createProject(projectRequestDto);
     }
@@ -35,6 +37,7 @@ public class ProjectController {
     @GetMapping
     @Operation(summary = "Retrieve user's projects",
             description = "Retrieve projects of the logged in user")
+    @PreAuthorize("hasRole('USER')")
     public Page<ProjectResponseDto> getMyProjects(Pageable pageable) {
         return projectService.getMyProjects(pageable);
     }
@@ -49,6 +52,7 @@ public class ProjectController {
     @PutMapping("/{id}")
     @Operation(summary = "Update project",
             description = "Update project by its id")
+    @PreAuthorize("hasRole('ADMIN')")
     public ProjectResponseDto updateProjectById(@PathVariable Long id,
                                                 @RequestBody ProjectRequestDto projectRequestDto) {
         return projectService.updateProjectById(id, projectRequestDto);
@@ -57,6 +61,7 @@ public class ProjectController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete project",
             description = "Delete project by its id")
+    @PreAuthorize("hasRole('ADMIN')")
     public void deleteProjectById(@PathVariable Long id) {
         projectService.deleteProjectById(id);
     }

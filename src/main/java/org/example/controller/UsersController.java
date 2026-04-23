@@ -8,7 +8,15 @@ import org.example.dto.user.UserUpdateRequestDto;
 import org.example.dto.user.registration.UserResponseDto;
 import org.example.service.user.UserService;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Users management",
         description = "Endpoints for managing authentication and user registration")
@@ -22,8 +30,9 @@ public class UsersController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Update user role",
             description = "Update set of user roles by user id")
-    public UserResponseDto updateUserRolesById(@PathVariable Long id,
-                                               @RequestBody RoleDto roleDto) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public UserResponseDto updateUserRoleById(@PathVariable Long id,
+                                              @RequestBody RoleDto roleDto) {
         return userService.updateUserRoleById(id, roleDto);
     }
 
