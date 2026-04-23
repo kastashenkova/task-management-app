@@ -5,7 +5,10 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.dto.user.registration.annotation.FieldMatch;
+import org.example.model.user.Role;
 import org.hibernate.validator.constraints.Length;
+
+import java.util.Set;
 
 @Getter
 @Setter

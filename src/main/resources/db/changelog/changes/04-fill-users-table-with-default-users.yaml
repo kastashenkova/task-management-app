@@ -21,6 +21,9 @@ databaseChangeLog:
               - column:
                   name: last_name
                   value: Astashenkova
+              - column:
+                  name: role_id
+                  valueNumeric: 2
 
         - insert:
             tableName: users
@@ -40,6 +43,9 @@ databaseChangeLog:
               - column:
                   name: last_name
                   value: Mykolaichuk
+              - column:
+                  name: role_id
+                  valueNumeric: 1
 
         - insert:
             tableName: users
@@ -59,6 +65,9 @@ databaseChangeLog:
               - column:
                   name: last_name
                   value: Teliha
+              - column:
+                  name: role_id
+                  valueNumeric: 1
 
         - insert:
             tableName: users
@@ -78,3 +87,6 @@ databaseChangeLog:
               - column:
                   name: last_name
                   value: Stus
+              - column:
+                  name: role_id
+                  valueNumeric: 2
