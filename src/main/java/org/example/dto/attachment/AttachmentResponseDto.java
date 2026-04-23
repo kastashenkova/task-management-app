@@ -2,7 +2,6 @@ package org.example.dto.attachment;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.example.model.task.Task;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +9,7 @@ import java.time.LocalDateTime;
 @Setter
 public class AttachmentResponseDto {
     private Long id;
-    private Task task;
+    private Long taskId;
     private String dropboxFileId;
     private String filename;
     private LocalDateTime uploadDate;

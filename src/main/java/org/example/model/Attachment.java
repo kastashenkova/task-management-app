@@ -26,11 +26,9 @@ public class Attachment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "task_id", nullable = false)
     private Task task;
-
     @Column(nullable = false)
     private String dropboxFileId;
     @Column(nullable = false)

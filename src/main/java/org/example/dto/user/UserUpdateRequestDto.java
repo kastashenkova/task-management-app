@@ -26,5 +26,5 @@ public class UserUpdateRequestDto {
     private String repeatPassword;
     private String firstName;
     private String lastName;
-    private Set<Role> roles;
+    private String role;
 }

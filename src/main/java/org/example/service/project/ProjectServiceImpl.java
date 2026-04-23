@@ -9,8 +9,10 @@ import org.example.dto.project.ProjectResponseDto;
 import org.example.mapper.ProjectMapper;
 import org.example.model.project.Project;
 import org.example.model.task.Task;
+import org.example.model.user.User;
 import org.example.repository.project.ProjectRepository;
 import org.example.repository.task.TaskRepository;
+import org.example.repository.user.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +25,7 @@ public class ProjectServiceImpl implements ProjectService {
     private final ProjectRepository projectRepository;
     private final ProjectMapper projectMapper;
     private final TaskRepository taskRepository;
+    private final UserRepository userRepository;
 
     @Override
     public ProjectResponseDto createProject(ProjectRequestDto projectRequestDto) {
@@ -32,9 +35,11 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Page<ProjectResponseDto> getMyProjects(Pageable pageable) {
-        Long userId = Long.valueOf(
-                SecurityContextHolder.getContext().getAuthentication().getName());
-        List<Task> userTasks = taskRepository.findAllByAssigneeId(userId);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "User not found: " + username));
+        List<Task> userTasks = taskRepository.findAllByAssigneeId(user.getId());
         List<ProjectResponseDto> resultList = new ArrayList<>();
         for (Task task : userTasks) {
             Project project = projectRepository.findById(task.getProject().getId())

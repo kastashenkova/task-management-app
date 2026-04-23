@@ -1,13 +1,13 @@
 package org.example.service.user;
 
 import jakarta.persistence.EntityNotFoundException;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import org.example.dto.user.RoleDto;
 import org.example.dto.user.UserUpdateRequestDto;
 import org.example.dto.user.registration.UserRegistrationRequestDto;
 import org.example.dto.user.registration.UserResponseDto;
 import org.example.exception.RegistrationException;
-import org.example.mapper.UserMapper;
+import org.example.mapper.user.UserMapper;
 import org.example.model.user.Role;
 import org.example.model.user.User;
 import org.example.repository.user.RoleRepository;
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserResponseDto register(UserRegistrationRequestDto request)
             throws RegistrationException {
-        if (userRepository.findByUsername(request.getUsername().toLowerCase()).isEmpty()) {
+        if (userRepository.findByUsername(request.getUsername().toLowerCase()).isPresent()) {
             throw new RegistrationException(
                     "User with such username already exists: "
                             + request.getUsername());
@@ -39,63 +39,63 @@ public class UserServiceImpl implements UserService {
         Role defaultRole = roleRepository.findRoleByName(Role.RoleName.USER)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "Role USER not found: " + Role.RoleName.USER));
-        user.setRoles(Set.of(defaultRole));
+        user.setRole(defaultRole);
         userRepository.save(user);
         return userMapper.toDto(user);
     }
 
     @Override
     @Transactional
-    public UserResponseDto updateUserRolesById(Long userId, Set<Role> roles) {
-        if (userRepository.findById(userId).isEmpty()) {
-            throw new EntityNotFoundException(
-                    "User with such id not found: " + userId);
-        }
-        for (Role role : roles) {
-            if (roleRepository.findRoleByName(role.getName()).isEmpty()) {
-                throw new EntityNotFoundException("Role with such name not found: "
-                        + role.getName());
-            }
-        }
-        User user = userRepository.findById(userId).get();
-        user.setRoles(roles);
+    public UserResponseDto updateUserRoleById(Long userId,
+                                              RoleDto roleDto) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "User with such id not found: " + userId));
+        Role.RoleName roleName = Role.RoleName.valueOf(roleDto.getName().toUpperCase());
+        Role role = roleRepository.findRoleByName(roleName)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Role with such name not found: " + roleName));
+        user.setRole(role);
         userRepository.save(user);
         return userMapper.toDto(user);
     }
 
     @Override
     public UserResponseDto getMyInfo() {
-        Long userId = Long.valueOf(
-                SecurityContextHolder.getContext().getAuthentication().getName());
-        return userRepository.getUserById(userId);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("User not found: " + username));
+        return userMapper.toDto(user);
     }
 
     @Override
     @Transactional
     public UserResponseDto updateMyInfo(UserUpdateRequestDto userRequestDto) {
-        Long userId = Long.valueOf(
-                SecurityContextHolder.getContext().getAuthentication().getName());
-        if (userRepository.findById(userId).isEmpty()) {
-            throw new EntityNotFoundException("User with such id not found: " + userId);
-        }
-        User user = userRepository.findById(userId).get();
-        if (userRequestDto.getUsername() != null && userRequestDto.getUsername().isEmpty()) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("User not found: " + username));
+        if (userRequestDto.getUsername() != null && !userRequestDto.getUsername().isEmpty()) {
             user.setUsername(userRequestDto.getUsername());
         }
-        if (userRequestDto.getEmail() != null && userRequestDto.getEmail().isEmpty()) {
+        if (userRequestDto.getEmail() != null && !userRequestDto.getEmail().isEmpty()) {
             user.setEmail(userRequestDto.getEmail());
         }
-        if (userRequestDto.getFirstName() != null && userRequestDto.getFirstName().isEmpty()) {
+        if (userRequestDto.getFirstName() != null && !userRequestDto.getFirstName().isEmpty()) {
             user.setFirstName(userRequestDto.getFirstName());
         }
-        if (userRequestDto.getLastName() != null && userRequestDto.getLastName().isEmpty()) {
+        if (userRequestDto.getLastName() != null && !userRequestDto.getLastName().isEmpty()) {
             user.setLastName(userRequestDto.getLastName());
         }
-        if (userRequestDto.getPassword() != null && userRequestDto.getPassword().isEmpty()) {
+        if (userRequestDto.getPassword() != null && !userRequestDto.getPassword().isEmpty()) {
             user.setPassword(userRequestDto.getPassword());
         }
-        if (userRequestDto.getRoles() != null && userRequestDto.getRoles().isEmpty()) {
-            return updateUserRolesById(userId, userRequestDto.getRoles());
+        if (userRequestDto.getRole() != null && !userRequestDto.getRole().isEmpty()) {
+            Role.RoleName roleName = Role.RoleName.valueOf(
+                    userRequestDto.getRole().toUpperCase());
+            Role role = roleRepository.findRoleByName(roleName)
+                    .orElseThrow(() -> new EntityNotFoundException(
+                            "Role with such name not found: " + roleName));
+            user.setRole(role);
         }
         userRepository.save(user);
         return userMapper.toDto(user);
