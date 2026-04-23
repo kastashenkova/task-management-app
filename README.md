@@ -12,7 +12,7 @@ Manage tasks and projects effectively through a web-based application. This syst
 - Integration with third-party application of Google Calendar
 - Docker and Swagger usage
 - +80% test coverage
-- CI/CD checkstyle pipeline
+- CI/CD checkstyle pipeline: custom & Qodana
 - Deployment into AWS
 
 ## 📌 API endpoints
