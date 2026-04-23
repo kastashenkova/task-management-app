@@ -31,8 +31,8 @@ public class CommentController {
     }
 
     @GetMapping()
-    @Operation(summary = "Retrieve tasks for a project",
-            description = "Retrieve tasks for a project")
+    @Operation(summary = "Retrieve comments for a task",
+            description = "Retrieve comments for a task by its id")
     public Page<CommentResponseDto> getCommentsForTask(@RequestParam Long taskId,
                                                     Pageable pageable) {
         return commentService.getAllForTask(taskId, pageable);

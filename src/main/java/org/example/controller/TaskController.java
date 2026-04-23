@@ -8,14 +8,7 @@ import org.example.dto.task.TaskResponseDto;
 import org.example.service.task.TaskService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Tasks management",
         description = "Endpoints for managing tasks")
@@ -32,10 +25,10 @@ public class TaskController {
         return taskService.createTask(taskRequestDto);
     }
 
-    @GetMapping("/{projectId}")
+    @GetMapping()
     @Operation(summary = "Retrieve tasks for a project",
-            description = "Retrieve tasks for a project")
-    public Page<TaskResponseDto> getTasksForProject(@PathVariable Long projectId,
+            description = "Retrieve tasks for a project by its id")
+    public Page<TaskResponseDto> getTasksForProject(@RequestParam Long projectId,
                                                     Pageable pageable) {
         return taskService.getTasksForProject(projectId, pageable);
     }

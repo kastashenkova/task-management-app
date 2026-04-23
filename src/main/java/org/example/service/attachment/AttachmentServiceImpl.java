@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @RequiredArgsConstructor
@@ -26,6 +27,7 @@ public class AttachmentServiceImpl implements AttachmentService {
     private final DropboxService dropboxService;
 
     @Override
+    @Transactional
     public AttachmentResponseDto createAttachment(Long taskId, MultipartFile file) throws Exception {
         Attachment attachment = new Attachment();
         attachment.setTask(taskRepository.findById(taskId)
@@ -46,6 +48,8 @@ public class AttachmentServiceImpl implements AttachmentService {
                 .map(attachmentMapper::toDto);
     }
 
+    @Override
+    @Transactional
     public ResponseEntity<byte[]> retrieveAttachment(Long id) {
 
         Attachment attachment = attachmentRepository.findById(id)
@@ -60,6 +64,7 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
 
     @Override
+    @Transactional
     public void deleteAttachment(Long id) {
         Attachment attachment = attachmentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
