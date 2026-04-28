@@ -1,4 +1,4 @@
-# 📆 Task Management App 📆
+# 🗓️ Task Management App 🗓️
 Manage tasks and projects effectively through a web-based application. This system enables task creation, assignment, progress tracking, and completion.
 
 ## 📁 Stack
@@ -20,7 +20,7 @@ Manage tasks and projects effectively through a web-based application. This syst
 - `POST` */api/auth/register* — User registration
 - `POST` */api/auth/login* — User authentication
 
-#### 🔑 Google Authentication Controller 🔑
+#### 📅 Google Authentication Controller 📅
 - `POST` */api/auth/google/authorize* — Authenticate Google Calendar account as ADMIN to assign tasks for users
 - `POST` */api/auth/google/callback* — Google Calendar account url callback
 
