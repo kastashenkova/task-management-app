@@ -20,6 +20,10 @@ Manage tasks and projects effectively through a web-based application. This syst
 - `POST` */api/auth/register* — User registration
 - `POST` */api/auth/login* — User authentication
 
+#### 🔑 Google Authentication Controller 🔑
+- `POST` */api/auth/google/authorize* — Authenticate Google Calendar account as ADMIN to assign tasks for users
+- `POST` */api/auth/google/callback* — Google Calendar account url callback
+
 #### 👤 Users Controller 👤
 - `PUT` */users/{id}/role* — Update user role (for ADMIN only)
 - `GET` */users/me* — Get my profile info (for authorized users)
