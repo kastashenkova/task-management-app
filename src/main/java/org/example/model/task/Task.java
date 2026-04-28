@@ -52,4 +52,7 @@ public class Task {
 
     @Column(nullable = false)
     private boolean isDeleted = false;
+
+    @Column
+    private String calendarEventId;
 }

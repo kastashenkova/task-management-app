@@ -54,6 +54,11 @@ databaseChangeLog:
                   defaultValueBoolean: false
                   constraints:
                     nullable: false
+              - column:
+                  name: calendar_event_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
         - addForeignKeyConstraint:
             baseTableName: tasks
             baseColumnNames: project_id
