@@ -7,7 +7,7 @@ Manage tasks and projects effectively through a web-based application. This syst
 ## 💡 Features
 - ACID, CRUD and SOLID adherence
 - PostgreSQL and Dropbox API intercommunication
-- Security, JWT token and role allocation (ADMIN & USER where ADMIN is someone similar to project manager and USER is someone similar to average developer) 🔐
+- Security, JWT token and role allocation (ADMIN acts as a project manager who creates and assigns work, USER acts as a developer who executes tasks) 🔐
 - Email notification usage for user's tasks
 - Integration with third-party application of Google Calendar
 - Docker and Swagger usage
@@ -23,21 +23,21 @@ Manage tasks and projects effectively through a web-based application. This syst
 #### 👤 Users Controller 👤
 - `PUT` */users/{id}/role* — Update user role (for ADMIN only)
 - `GET` */users/me* — Get my profile info (for authorized users)
-- `PATCH` */users/me* — Update profile info (for uthorized users)
+- `PATCH` */users/me* — Update profile info (for authorized users)
 
 #### 🥇 Project Controller 🥇
-- `POST` */api/projects* — Create a new project (for authorized users)
+- `POST` */api/projects* — Create a new project (for ADMIN only)
 - `GET` */api/projects* — Retrieve user's projects (ADMIN retrieves all projects, USER retrieves their own projects)
 - `GET` */api/projects/{id}* — Retrieve project details (ADMIN retrieves any project, USER can retrieve only their own project)
 - `PUT` */api/projects/{id}* — Update project (ADMIN updates any project, USER can update only their own project)
-- `DELETE` */api/projects/{id}* — Delete project (ADMIN deletes any project, USER can delete only their own project)
+- `DELETE` */api/projects/{id}* — Delete project (for ADMIN only)
 
 #### 🎲 Task Controller 🎲
-- `POST` */api/tasks* — Create a new task (for authorized users)
+- `POST` */api/tasks* — Create a new task (for ADMIN only)
 - `GET` */api/tasks?projectId={projectId}* — Retrieve tasks for a project (ADMIN retrieves any project's tasks, USER can retrieve only their own projects' tasks)
 - `GET` */api/tasks/{id}* — Retrieve task details (ADMIN retrieves any task, USER can retrieve only their own task)
 - `PUT` */api/tasks/{id}* — Update task (ADMIN updates any task, USER can update only their own task)
-- `DELETE` */api/tasks/{id}* — Delete task (ADMIN deletes any task, USER can delete only their own task)
+- `DELETE` */api/tasks/{id}* — Delete task (for ADMIN only)
 
 #### ✍️ Comment Controller ✍️
 - `POST` */api/comments* — Add a comment to a task (for authorized users)
