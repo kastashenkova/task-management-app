@@ -8,6 +8,7 @@ import org.example.dto.comment.CommentRequestDto;
 import org.example.dto.comment.CommentResponseDto;
 import org.example.mapper.CommentMapper;
 import org.example.model.Comment;
+import org.example.model.task.Task;
 import org.example.model.user.User;
 import org.example.repository.comment.CommentRepository;
 import org.example.repository.task.TaskRepository;
@@ -34,8 +35,7 @@ public class CommentServiceImpl implements CommentService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found: " + username));
         Comment comment = new Comment();
         comment.setUser(user);
-        comment.setTask(taskRepository.findById(commentRequestDto.getTaskId())
-                .orElseThrow(EntityNotFoundException::new));
+        comment.setTask(getTaskById(commentRequestDto.getTaskId()));
         comment.setText(commentRequestDto.getText());
         comment.setTimestamp(LocalDateTime.now(ZoneId.of("Europe/Kyiv")));
         commentRepository.save(comment);
@@ -44,9 +44,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Page<CommentResponseDto> getAllForTask(Long taskId, Pageable pageable) {
-        taskRepository.findById(taskId).orElseThrow(
-                () -> new EntityNotFoundException("Task with id " + taskId + " not found")
-        );
+        getTaskById(taskId);
         return commentRepository.findAllByTask_Id(taskId, pageable)
                 .map(commentMapper::toDto);
     }
@@ -57,5 +55,35 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Comment with id " + id + " not found"));
         commentRepository.deleteById(id);
+    }
+
+    private Task getTaskById(Long id) {
+        Task task;
+        if (!isAdmin()) {
+            User user = getCurrentUser();
+            task = taskRepository.findTaskByIdAndAssignee(id, user).orElseThrow(
+                    () -> new EntityNotFoundException("Task with id " + id + " for user "
+                            + user.getId() + " not found")
+            );
+        } else {
+            task = taskRepository.findById(id).orElseThrow(
+                    () -> new EntityNotFoundException("Task with such id not found: " + id));
+        }
+        return task;
+    }
+
+    private boolean isAdmin() {
+        return SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getAuthorities()
+                .stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+    }
+
+    private User getCurrentUser() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("User not found: " + username));
     }
 }

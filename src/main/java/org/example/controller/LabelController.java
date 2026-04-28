@@ -37,6 +37,7 @@ public class LabelController {
     @GetMapping
     @Operation(summary = "Retrieve labels",
             description = "Retrieve labels")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public Page<LabelResponseDto> getLabels(Pageable pageable) {
         return labelService.getLabels(pageable);
     }

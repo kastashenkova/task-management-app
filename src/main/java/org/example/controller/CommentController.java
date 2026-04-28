@@ -29,7 +29,7 @@ public class CommentController {
     @PostMapping
     @Operation(summary = "Add a comment to a task",
             description = "Add a comment to a task")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public CommentResponseDto createComment(@RequestBody CommentRequestDto commentRequestDto) {
         return commentService.createComment(commentRequestDto);
     }
@@ -37,6 +37,7 @@ public class CommentController {
     @GetMapping()
     @Operation(summary = "Retrieve comments for a task",
             description = "Retrieve comments for a task by its id")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public Page<CommentResponseDto> getCommentsForTask(@RequestParam Long taskId,
                                                     Pageable pageable) {
         return commentService.getAllForTask(taskId, pageable);
@@ -46,7 +47,7 @@ public class CommentController {
     @Operation(summary = "Delete comment",
             description = "Delete comment by its id")
     @PreAuthorize("hasRole('ADMIN') or (hasRole('USER') and @commentSecurity.isOwner(authentication, #id))")
-    public void deleteProjectById(@PathVariable Long id) {
+    public void deleteCommentById(@PathVariable Long id) {
         commentService.deleteCommentById(id);
     }
 }

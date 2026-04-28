@@ -39,6 +39,7 @@ public class UsersController {
     @GetMapping("/me")
     @Operation(summary = "Get my profile info",
             description = "Get profile's info of the authorized user")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public UserResponseDto getMyInfo() {
         return userService.getMyInfo();
     }
@@ -46,6 +47,7 @@ public class UsersController {
     @PatchMapping("/me")
     @Operation(summary = "Update profile info",
             description = "Update my profile info")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public UserResponseDto updateMyInfo(@RequestBody UserUpdateRequestDto userRequestDto) {
         return userService.updateMyInfo(userRequestDto);
     }

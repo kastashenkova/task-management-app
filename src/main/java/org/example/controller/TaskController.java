@@ -3,8 +3,11 @@ package org.example.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.example.dto.project.ProjectResponseDto;
 import org.example.dto.task.TaskRequestDto;
 import org.example.dto.task.TaskResponseDto;
+import org.example.repository.project.specification.ProjectSearchParameters;
+import org.example.repository.task.specification.TaskSearchParameters;
 import org.example.service.task.TaskService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,6 +41,7 @@ public class TaskController {
     @GetMapping()
     @Operation(summary = "Retrieve tasks for a project",
             description = "Retrieve tasks for a project by its id")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public Page<TaskResponseDto> getTasksForProject(@RequestParam Long projectId,
                                                     Pageable pageable) {
         return taskService.getTasksForProject(projectId, pageable);
@@ -46,6 +50,7 @@ public class TaskController {
     @GetMapping("/{id}")
     @Operation(summary = "Retrieve task details",
             description = "Retrieve task details by its id")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public TaskResponseDto getTaskById(@PathVariable Long id) {
         return taskService.getTaskById(id);
     }
@@ -53,7 +58,7 @@ public class TaskController {
     @PutMapping("/{id}")
     @Operation(summary = "Update task",
             description = "Update task by its id")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public TaskResponseDto updateTaskById(@PathVariable Long id,
                                           @RequestBody TaskRequestDto taskRequestDto) {
         return taskService.updateTaskById(id, taskRequestDto);
@@ -65,5 +70,13 @@ public class TaskController {
     @PreAuthorize("hasRole('ADMIN')")
     public void deleteTaskById(@PathVariable Long id) {
         taskService.deleteTaskById(id);
+    }
+
+    @GetMapping("/search")
+    @Operation(summary = "Search tasks",
+            description = "Get a list of all available tasks by certain parameter")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Page<TaskResponseDto> search(TaskSearchParameters searchParameters, Pageable pageable) {
+        return taskService.search(searchParameters, pageable);
     }
 }

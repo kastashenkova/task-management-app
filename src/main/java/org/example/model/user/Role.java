@@ -32,5 +32,13 @@ public class Role implements GrantedAuthority {
     public enum RoleName {
         USER, ADMIN
     }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", name=" + name +
+                '}';
+    }
 }
 

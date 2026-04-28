@@ -30,7 +30,7 @@ public class AttachmentController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Upload an attachment to a task",
             description = "File gets uploaded to Dropbox and we store the Dropbox File ID in our database")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public AttachmentResponseDto createAttachment(@RequestParam Long taskId,
                                                   @RequestParam MultipartFile file)
             throws Exception {
@@ -40,6 +40,7 @@ public class AttachmentController {
     @GetMapping()
     @Operation(summary = "Retrieve attachments for a task",
             description = "Get the Dropbox File ID from the database and retrieve the actual file from Dropbox")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public Page<AttachmentResponseDto> getAttachmentsForTask(@RequestParam Long taskId,
                                                           Pageable pageable) {
         return attachmentService.getAllForTask(taskId, pageable);
@@ -48,6 +49,7 @@ public class AttachmentController {
     @GetMapping("/{id}")
     @Operation(summary = "Retrieve attachment",
             description = "Retrieve attachment by its id")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public ResponseEntity<byte[]> retrieveAttachment(@PathVariable Long id)
             throws Exception {
         return attachmentService.retrieveAttachment(id);
@@ -56,7 +58,7 @@ public class AttachmentController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete attachment",
             description = "Delete attachment by its id")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public void deleteAttachment(@PathVariable Long id) throws Exception {
         attachmentService.deleteAttachment(id);
     }
