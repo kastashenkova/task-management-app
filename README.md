@@ -31,6 +31,7 @@ Manage tasks and projects effectively through a web-based application. This syst
 - `GET` */api/projects/{id}* — Retrieve project details (ADMIN retrieves any project, USER can retrieve only their own project)
 - `PUT` */api/projects/{id}* — Update project (ADMIN updates any project, USER can update only their own project)
 - `DELETE` */api/projects/{id}* — Delete project (for ADMIN only)
+- `GET` */api/projects/search?[status/end_date]={[status/end_date]}* — Search projects by parameter (for ADMIN only)
 
 #### 🎲 Task Controller 🎲
 - `POST` */api/tasks* — Create a new task (for ADMIN only)
@@ -38,6 +39,7 @@ Manage tasks and projects effectively through a web-based application. This syst
 - `GET` */api/tasks/{id}* — Retrieve task details (ADMIN retrieves any task, USER can retrieve only their own task)
 - `PUT` */api/tasks/{id}* — Update task (ADMIN updates any task, USER can update only their own task)
 - `DELETE` */api/tasks/{id}* — Delete task (for ADMIN only)
+- `GET` */api/tasks/search?[priority/status]={[priority/status]}* — Search tasks by parameter (for ADMIN only)
 
 #### ✍️ Comment Controller ✍️
 - `POST` */api/comments* — Add a comment to a task (ADMIN comments any task, USER can comment only their own task)
