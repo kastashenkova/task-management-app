@@ -40,7 +40,7 @@ Manage tasks and projects effectively through a web-based application. This syst
 - `DELETE` */api/tasks/{id}* — Delete task (for ADMIN only)
 
 #### ✍️ Comment Controller ✍️
-- `POST` */api/comments* — Add a comment to a task (for authorized users)
+- `POST` */api/comments* — Add a comment to a task (ADMIN comments any task, USER can comment only their own task)
 - `GET` */api/comments?taskId={taskId}* — Retrieve comments for a task (ADMIN retrieves any task's comments, USER can retrieve only their own tasks' comments)
 - `DELETE` */api/comments/{id}* — Delete comment (ADMIN deletes any comment, USER can delete only their own comment)
 
