@@ -3,11 +3,13 @@ package org.example.controller.third_party;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.example.model.user.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,9 @@ public class GoogleAuthController {
     private String redirectUri;
 
     @GetMapping("/authorize")
+    @Operation(summary = "Authenticate Google Calendar account",
+            description = "Authenticate Google Calendar account")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> authorize(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         String userId = user.getId().toString();
@@ -38,6 +43,9 @@ public class GoogleAuthController {
     }
 
     @GetMapping("/callback")
+    @Operation(summary = "Google Calendar account url callback",
+            description = "Google Calendar account url callback")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> callback(@RequestParam String code,
                                            @RequestParam String state) throws Exception {
         GoogleTokenResponse tokenResponse = flow.newTokenRequest(code)
