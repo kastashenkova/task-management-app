@@ -10,9 +10,13 @@ import org.example.model.task.Task;
 import org.example.model.user.User;
 import org.example.repository.project.ProjectRepository;
 import org.example.repository.task.TaskRepository;
+import org.example.repository.task.specification.TaskSearchParameters;
+import org.example.repository.task.specification.TaskSpecificationBuilder;
 import org.example.repository.user.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +27,7 @@ public class TaskServiceImpl implements TaskService {
     private final TaskMapper taskMapper;
     private final UserRepository userRepository;
     private final ProjectRepository projectRepository;
+    private final TaskSpecificationBuilder taskSpecificationBuilder;
 
     @Override
     @Transactional
@@ -46,33 +51,50 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Page<TaskResponseDto> getTasksForProject(Long projectId, Pageable pageable) {
-        projectRepository.findById(projectId).orElseThrow(
-                () -> new EntityNotFoundException("Project with such id not found: " + projectId));
+        if (!isAdmin()) {
+            User user = getCurrentUser();
+            projectRepository.findByAssigneeIdAndId(user.getId(), projectId).orElseThrow(
+                    () -> new EntityNotFoundException("Project with id " + projectId + " for user "
+                            + user.getId() + " not found")
+            );
+        } else {
+            projectRepository.findById(projectId).orElseThrow(
+                    () -> new EntityNotFoundException("Project with such id not found: " + projectId));
+        }
         return taskRepository.findAllByProject_Id(projectId, pageable)
                 .map(taskMapper::toDto);
     }
 
     @Override
     public TaskResponseDto getTaskById(Long id) {
-        Task task = taskRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Task with such id not found: " + id));
-        return taskMapper.toDto(task);
+        return taskMapper.toDto(getById(id));
     }
 
     @Override
     @Transactional
     public TaskResponseDto updateTaskById(Long id, TaskRequestDto taskRequestDto) {
-        Task task = taskRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Task with such id not found: " + id));
+        Task task = getById(id);
+
         task.setName(taskRequestDto.getName());
         task.setDescription(taskRequestDto.getDescription());
         task.setPriority(taskRequestDto.getPriority());
         task.setStatus(taskRequestDto.getStatus());
         task.setDueDate(taskRequestDto.getDueDate());
 
-        Project project = projectRepository.findById(taskRequestDto.getProjectId())
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "Project with such id not found: " + taskRequestDto.getProjectId()));
+        Project project;
+        if (!isAdmin()) {
+            User user = getCurrentUser();
+            project = projectRepository.findByAssigneeIdAndId(user.getId(),
+                    taskRequestDto.getProjectId()).orElseThrow(
+                    () -> new EntityNotFoundException(
+                            "Project with id " + taskRequestDto.getProjectId()
+                                    + " for user " + user.getId() + " not found")
+            );
+        } else {
+            project = projectRepository.findById(taskRequestDto.getProjectId())
+                    .orElseThrow(() -> new EntityNotFoundException(
+                            "Project with such id not found: " + taskRequestDto.getProjectId()));
+        }
         task.setProject(project);
 
         User assignee = userRepository.findById(taskRequestDto.getAssigneeId())
@@ -90,5 +112,43 @@ public class TaskServiceImpl implements TaskService {
             throw new EntityNotFoundException("Task with such id not found: " + id);
         }
         taskRepository.deleteTaskById(id);
+    }
+
+    @Override
+    public Page<TaskResponseDto> search(TaskSearchParameters searchParameters, Pageable pageable) {
+        Specification<Task> taskSpecification = taskSpecificationBuilder
+                .buildSpecification(searchParameters);
+        return taskRepository.findAll(taskSpecification, pageable)
+                .map(taskMapper::toDto);
+    }
+
+    private Task getById(Long id) {
+        Task task;
+        if (!isAdmin()) {
+            User user = getCurrentUser();
+            task = taskRepository.findTaskByIdAndAssignee(id, user).orElseThrow(
+                    () -> new EntityNotFoundException("Task with id " + id + " for user "
+                            + user.getId() + " not found")
+            );
+        } else {
+            task = taskRepository.findById(id).orElseThrow(
+                    () -> new EntityNotFoundException("Task with such id not found: " + id));
+        }
+        return task;
+    }
+
+    private boolean isAdmin() {
+        return SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getAuthorities()
+                .stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
+    }
+
+    private User getCurrentUser() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("User not found: " + username));
     }
 }

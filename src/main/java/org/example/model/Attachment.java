@@ -13,14 +13,10 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.model.task.Task;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @Getter
 @Setter
-@SQLDelete(sql = "UPDATE attachments SET is_deleted = true WHERE id = ?")
-@SQLRestriction("is_deleted = false")
 @Table(name = "attachments")
 public class Attachment {
     @Id
@@ -35,6 +31,4 @@ public class Attachment {
     private String filename;
     @Column(nullable = false)
     private LocalDateTime uploadDate;
-    @Column(nullable = false)
-    private boolean isDeleted = false;
 }

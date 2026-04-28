@@ -18,6 +18,9 @@ public class DropboxClientConfig {
     public WebClient dropboxContentClient() {
         return WebClient.builder()
                 .baseUrl("https://content.dropboxapi.com")
+                .codecs(configurer -> configurer
+                        .defaultCodecs()
+                        .maxInMemorySize(50 * 1024 * 1024))
                 .build();
     }
 }

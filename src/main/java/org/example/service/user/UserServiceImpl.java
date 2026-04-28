@@ -89,14 +89,6 @@ public class UserServiceImpl implements UserService {
         if (userRequestDto.getPassword() != null && !userRequestDto.getPassword().isEmpty()) {
             user.setPassword(userRequestDto.getPassword());
         }
-        if (userRequestDto.getRole() != null && !userRequestDto.getRole().isEmpty()) {
-            Role.RoleName roleName = Role.RoleName.valueOf(
-                    userRequestDto.getRole().toUpperCase());
-            Role role = roleRepository.findRoleByName(roleName)
-                    .orElseThrow(() -> new EntityNotFoundException(
-                            "Role with such name not found: " + roleName));
-            user.setRole(role);
-        }
         userRepository.save(user);
         return userMapper.toDto(user);
     }

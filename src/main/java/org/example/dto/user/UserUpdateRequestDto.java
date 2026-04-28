@@ -1,14 +1,10 @@
 package org.example.dto.user;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import org.example.dto.user.registration.annotation.FieldMatch;
-import org.example.model.user.Role;
 import org.hibernate.validator.constraints.Length;
-
-import java.util.Set;
 
 @Getter
 @Setter
@@ -26,5 +22,4 @@ public class UserUpdateRequestDto {
     private String repeatPassword;
     private String firstName;
     private String lastName;
-    private String role;
 }

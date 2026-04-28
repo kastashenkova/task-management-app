@@ -2,6 +2,7 @@ package org.example.service.project;
 
 import org.example.dto.project.ProjectRequestDto;
 import org.example.dto.project.ProjectResponseDto;
+import org.example.repository.project.specification.ProjectSearchParameters;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -9,7 +10,7 @@ public interface ProjectService {
 
     ProjectResponseDto createProject(ProjectRequestDto projectRequestDto);
 
-    Page<ProjectResponseDto> getMyProjects(Pageable pageable);
+    Page<ProjectResponseDto> getProjects(Pageable pageable);
 
     ProjectResponseDto getProjectById(Long id);
 
@@ -17,4 +18,6 @@ public interface ProjectService {
                                          ProjectRequestDto projectRequestDto);
 
     void deleteProjectById(Long id);
+
+    Page<ProjectResponseDto> search(ProjectSearchParameters searchParameters, Pageable pageable);
 }

@@ -13,7 +13,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 public class DropboxService {
-
     private final WebClient apiClient;
     private final WebClient contentClient;
     private final String token;
@@ -41,7 +40,7 @@ public class DropboxService {
                 )
         );
 
-        contentClient.post()
+        String response = contentClient.post()
                 .uri("/2/files/upload")
                 .header("Authorization", "Bearer " + token)
                 .header("Dropbox-API-Arg", json)
@@ -51,7 +50,8 @@ public class DropboxService {
                 .bodyToMono(String.class)
                 .block();
 
-        return path;
+        Map<?, ?> responseMap = mapper.readValue(response, Map.class);
+        return (String) responseMap.get("path_display");
     }
 
     public byte[] downloadFile(String path) {

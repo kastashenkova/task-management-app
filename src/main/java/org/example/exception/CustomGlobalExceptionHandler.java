@@ -24,6 +24,11 @@ public class CustomGlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(SpecificationNotFoundException.class)
+    public ResponseEntity<String> handleSpecificationNotFound(SpecificationNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGeneral(Exception ex) {
         return new ResponseEntity<>("Internal server error: " + ex.getMessage(),
