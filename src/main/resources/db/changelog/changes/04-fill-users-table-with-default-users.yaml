@@ -11,7 +11,10 @@ databaseChangeLog:
                   value: kastashenkova
               - column:
                   name: email
-                  value: kastashenkova@gmail.com
+                  value: astashenkova.katya@gmail.com
+              - column:
+                  name: phone_number
+                  value: +380978332588
               - column:
                   name: password
                   value: $2a$10$G2OoeNY26fSUG0QFW5TTMupfHWEB5akpHsXDlVKsTOXIlb1jgD1mK # admin123
@@ -33,7 +36,10 @@ databaseChangeLog:
                   value: imykolaichuk
               - column:
                   name: email
-                  value: imykolaichuk@gmail.com
+                  value: ast.katrya@gmail.com
+              - column:
+                  name: phone_number
+                  value: +380980137037
               - column:
                   name: password
                   value: $2a$10$SMqNrwJAr1g8RKfzfGdtreDPjbfIvT807xSA0VfBBFLkryiGI35sG # user1234
@@ -55,7 +61,10 @@ databaseChangeLog:
                   value: oteliha
               - column:
                   name: email
-                  value: oteliha@gmail.com
+                  value: x20012006@icloud.com
+              - column:
+                  name: phone_number
+                  value: +380978332589
               - column:
                   name: password
                   value: $2a$10$FyiTO8oSW9SawlT3NUTYIuN6PUFoVfN0nKFwPpAMpTkcOZazWaNOq # password1
@@ -77,7 +86,10 @@ databaseChangeLog:
                   value: vstus
               - column:
                   name: email
-                  value: vstus@gmail.com
+                  value: silent.ukraine2026@gmail.com
+              - column:
+                  name: phone_number
+                  value: +380983230350
               - column:
                   name: password
                   value: $2a$10$4T43FxN0KrYjAphXFyi5ZOnb/nlLxTMRY2d7Q00RbfTZYiTNc.ZDi # qwerty123

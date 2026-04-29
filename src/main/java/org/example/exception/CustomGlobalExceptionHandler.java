@@ -29,6 +29,16 @@ public class CustomGlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(GoogleCalendarException.class)
+    public ResponseEntity<String> handleGoogleCalendarException(GoogleCalendarException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(EmailMessageException.class)
+    public ResponseEntity<String> handleEmailMessageException(EmailMessageException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGeneral(Exception ex) {
         return new ResponseEntity<>("Internal server error: " + ex.getMessage(),
