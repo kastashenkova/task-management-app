@@ -1,6 +1,5 @@
 package org.example.controller.third_party;
 
-import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -45,7 +44,6 @@ public class GoogleAuthController {
     @GetMapping("/callback")
     @Operation(summary = "Google Calendar account url callback",
             description = "Google Calendar account url callback")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> callback(@RequestParam String code,
                                            @RequestParam String state) throws Exception {
         GoogleTokenResponse tokenResponse = flow.newTokenRequest(code)
