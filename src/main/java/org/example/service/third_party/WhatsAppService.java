@@ -23,22 +23,70 @@ public class WhatsAppService {
     @Value("${whatsapp.api.url}")
     private String apiUrl;
 
-    public void sendTaskAssignmentWhatsApp(Task task, User assignee) {
+    public void sendTaskAssignmentWhatsApp(Task task, User assignee, String calendarEventUrl) {
         String phone = sanitizePhone(assignee.getPhoneNumber());
-        String messageText = buildMessageText(task, assignee);
 
         String url = apiUrl + "/" + phoneNumberId + "/messages";
 
+        String priority = switch (task.getPriority()) {
+            case HIGH -> "🔴 HIGH";
+            case MEDIUM -> "🟡 MEDIUM";
+            case LOW -> "🟢 LOW";
+        };
+
+        String status = switch (task.getStatus()) {
+            case NOT_STARTED -> "⏳ NOT_STARTED";
+            case IN_PROGRESS -> "\uD83D\uDD04 IN_PROGRESS";
+            case COMPLETED -> "✅ COMPLETED";
+        };
+
         String body = """
-                {
-                  "messaging_product": "whatsapp",
-                  "to": "%s",
-                  "type": "text",
-                  "text": {
-                    "body": "%s"
-                  }
-                }
-                """.formatted(phone, escapeJson(messageText));
+        {
+          "messaging_product": "whatsapp",
+          "to": "%s",
+          "type": "template",
+          "template": {
+            "name": "task_assignment_notification",
+            "language": { "code": "en" },
+            "components": [
+              {
+                "type": "body",
+                "parameters": [
+                  { "type": "text", "text": "%s" },
+                  { "type": "text", "text": "%s" },
+                  { "type": "text", "text": "%s" },
+                  { "type": "text", "text": "%s" },
+                  { "type": "text", "text": "%s" },
+                  { "type": "text", "text": "%s" },
+                  { "type": "text", "text": "%s" },
+                  { "type": "text", "text": "%s" },
+                  { "type": "text", "text": "%s" }
+                ]
+              },
+              {
+                     "type": "button",
+                     "sub_type": "url",
+                     "index": "0",
+                     "parameters": [
+                       { "type": "text", "text": "%s" }
+                     ]
+              }
+            ]
+          }
+        }
+        """.formatted(
+                phone,
+                escapeJson(assignee.getFirstName()),
+                escapeJson(String.valueOf(task.getId())),
+                escapeJson(task.getDescription()),
+                escapeJson(priority),
+                escapeJson(status),
+                "⏱\uFE0F " + escapeJson(task.getDueDate().toString()),
+                escapeJson(String.valueOf(task.getProject().getId())),
+                escapeJson(task.getProject().getName()),
+                escapeJson(task.getName()),
+                escapeJson(calendarEventUrl)
+        );
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -56,47 +104,6 @@ public class WhatsAppService {
         }
     }
 
-    private String buildMessageText(Task task, User assignee) {
-        String priority = switch (task.getPriority()) {
-            case HIGH -> "🔴 HIGH";
-            case MEDIUM -> "🟡 MEDIUM";
-            case LOW -> "🟢 LOW";
-        };
-
-        String status = switch (task.getStatus()) {
-            case NOT_STARTED -> "⏳ NOT_STARTED";
-            case IN_PROGRESS -> "\uD83D\uDD04 IN_PROGRESS";
-            case COMPLETED -> "✅ COMPLETED";
-        };
-
-        return """
-                *❗NEW TASK FOR YOU*
-
-                Hello, %s! You have been assigned a task.
-                
-                *✔️ Task ID: %s*
-                *⭐ Name: %s*
-                *💡 Project: ```%s``` %s*
-                *✍️ Description: %s*
-                
-                *Priority: %s*
-                *Status: %s*
-                *Due date: ⏰ %s*
-
-                _✨ Your Task Management System_
-                """.formatted(
-                assignee.getFirstName(),
-                task.getId(),
-                task.getName(),
-                task.getProject().getId(),
-                task.getProject().getName(),
-                task.getDescription(),
-                priority,
-                status,
-                task.getDueDate()
-        );
-    }
-
     private String sanitizePhone(String phone) {
         if (phone == null || phone.isBlank()) {
             throw new IllegalArgumentException("Assignee has no phone number");
@@ -108,6 +115,7 @@ public class WhatsAppService {
         return text
                 .replace("\\", "\\\\")
                 .replace("\"", "\\\"")
-                .replace("\n", "\\n");
+                .replace("\n", "\\n")
+                .replace("\r", "");
     }
 }
