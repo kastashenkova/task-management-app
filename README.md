@@ -74,6 +74,13 @@ Manage tasks and projects effectively through a web-based application. This syst
 - `PUT` */api/labels/{id}* — Update label (for ADMIN only)
 - `DELETE` */api/labels/{id}* — Delete label (for ADMIN only)
 
+We allow labels to be assigned to tasks for better organization. In our migrations we have default label colors, which are possible Google Calendar event colors (i.e. `11 TOMATO`, `6 TANGERINE`, `2 SAGE`). You can set any label to any task.
+Mind: correspondence between label color and task priority is **on user** since user can create their own labels. However, we highly recommend setting `2 SAGE` for `LOW` priority tasks, `6 TANGERINE` for `MEDIUM` priority tasks and `11 TOMATO` for `HIGH` priority tasks.
+
+<img width="544" height="150" alt="Знімок екрана 2026-05-01 115510" src="https://github.com/user-attachments/assets/19804edc-c7b4-4a8b-aba9-c8772f238fbf" />
+
+> Due to Google Calendar's policy, task's label color is visible only for ADMIN (assigner), but it can be changed in assignee's calendar manually as well.
+
 ## 📦 Setup
 ### Docker configuration
 Steps to reproduce below.
