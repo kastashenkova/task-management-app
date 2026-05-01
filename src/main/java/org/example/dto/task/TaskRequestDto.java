@@ -32,4 +32,6 @@ public class TaskRequestDto {
     private Long projectId;
     @NotEmpty
     private Long assigneeId;
+    @NotEmpty
+    private Long labelId;
 }

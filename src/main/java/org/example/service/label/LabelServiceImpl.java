@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.dto.label.LabelRequestDto;
 import org.example.dto.label.LabelResponseDto;
 import org.example.mapper.LabelMapper;
-import org.example.model.Label;
+import org.example.model.label.Label;
 import org.example.repository.label.LabelRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

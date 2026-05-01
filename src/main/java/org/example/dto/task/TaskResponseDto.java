@@ -17,4 +17,5 @@ public class TaskResponseDto {
     private LocalDate dueDate;
     private Long projectId;
     private Long assigneeId;
+    private Long labelId;
 }

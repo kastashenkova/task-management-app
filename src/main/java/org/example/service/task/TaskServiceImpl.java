@@ -7,9 +7,11 @@ import org.example.dto.task.TaskRequestDto;
 import org.example.dto.task.TaskResponseDto;
 import org.example.exception.GoogleCalendarException;
 import org.example.mapper.TaskMapper;
+import org.example.model.label.Label;
 import org.example.model.project.Project;
 import org.example.model.task.Task;
 import org.example.model.user.User;
+import org.example.repository.label.LabelRepository;
 import org.example.repository.project.ProjectRepository;
 import org.example.repository.task.TaskRepository;
 import org.example.repository.task.specification.TaskSearchParameters;
@@ -35,6 +37,7 @@ public class TaskServiceImpl implements TaskService {
     private final TaskSpecificationBuilder taskSpecificationBuilder;
     private final GoogleCalendarService googleCalendarService;
     private final WhatsAppService whatsAppService;
+    private final LabelRepository labelRepository;
 
     @Override
     @Transactional
@@ -50,6 +53,12 @@ public class TaskServiceImpl implements TaskService {
                 .orElseThrow(() -> new EntityNotFoundException(
                         "User not found: " + taskRequestDto.getAssigneeId()));
         task.setAssignee(assignee);
+
+        Label label = labelRepository.findById(taskRequestDto.getLabelId())
+                        .orElseThrow(() -> new EntityNotFoundException(
+                                "Label not found: " + taskRequestDto.getLabelId()
+                        ));
+        task.setLabel(label);
 
         taskRepository.save(task);
 
@@ -127,6 +136,12 @@ public class TaskServiceImpl implements TaskService {
                 .orElseThrow(() -> new EntityNotFoundException(
                         "User with such id not found: " + taskRequestDto.getAssigneeId()));
         task.setAssignee(assignee);
+
+        Label label = labelRepository.findById(taskRequestDto.getLabelId())
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Label not found: " + taskRequestDto.getLabelId()
+                ));
+        task.setLabel(label);
 
         try {
             Long adminId = getCurrentUser().getId();

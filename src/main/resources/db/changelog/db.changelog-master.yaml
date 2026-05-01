@@ -12,18 +12,18 @@ databaseChangeLog:
   - include:
       file: db/changelog/changes/06-fill-projects-table-with-default-projects.yaml
   - include:
-      file: db/changelog/changes/07-create-tasks-table.yaml
+      file: db/changelog/changes/07-create-labels-table.yaml
   - include:
-      file: db/changelog/changes/08-fill-tasks-table-with-default-tasks.yaml
+      file: db/changelog/changes/08-insert-labels.yaml
   - include:
-      file: db/changelog/changes/09-create-comments-table.yaml
+      file: db/changelog/changes/09-create-tasks-table.yaml
   - include:
-      file: db/changelog/changes/10-fill-comments-table-with-default-comments.yaml
+      file: db/changelog/changes/10-fill-tasks-table-with-default-tasks.yaml
   - include:
-      file: db/changelog/changes/11-create-attachments-table.yaml
+      file: db/changelog/changes/11-create-comments-table.yaml
   - include:
-      file: db/changelog/changes/12-fill-attachments-table-with-default-attachments.yaml
+      file: db/changelog/changes/12-fill-comments-table-with-default-comments.yaml
   - include:
-      file: db/changelog/changes/13-create-labels-table.yaml
+      file: db/changelog/changes/13-create-attachments-table.yaml
   - include:
-      file: db/changelog/changes/14-fill-labels-table-with-default-labels.yaml
+      file: db/changelog/changes/14-fill-attachments-table-with-default-attachments.yaml

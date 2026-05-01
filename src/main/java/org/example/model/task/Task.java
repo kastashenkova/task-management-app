@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
+import org.example.model.label.Label;
 import org.example.model.project.Project;
 import org.example.model.user.User;
 import org.hibernate.annotations.SQLDelete;
@@ -55,4 +56,8 @@ public class Task {
 
     @Column
     private String calendarEventId;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "label_id", nullable = false)
+    private Label label;
 }
