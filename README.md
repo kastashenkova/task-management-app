@@ -90,12 +90,11 @@ Just fill your `.env` file with appropriate variable by generating your own Drop
 > You can also join Dropbox in the way like we join Google Calendar API now (see below). OAuth 2.0 can give you more flexibility and safety; nevertheless, Dropbox API access token is easier to implement and works quicker locally.
 
 #### ⭐ WhatsApp notification
-Task assignment notifications are sent via WhatsApp Business API (Meta Cloud API).
+Task assignment notifications are sent via WhatsApp Business API (Meta Cloud API). Also, we use Meta API message template with Google Calendar event reference in such messages.
 
-<img width="200" height="252" alt="image" src="https://github.com/user-attachments/assets/28c7969c-9c16-43ac-8646-2950764b3517" />
+<img width="200" height="263" alt="image" src="https://github.com/user-attachments/assets/9d4c4a32-7283-407d-a628-981e8a1553aa" />
 
-> Due to Meta's policy, the system can only send free-form text messages to a user
-within a **24-hour window** after that user sends a message to the business account first. Each assignee must send any message to the business WhatsApp number before they can receive task notifications.
+> Due to Meta's policy, the system can only send free-form text messages to a user within a **24-hour window** after that user sends a message to the business account first. Each assignee must send any message to the business WhatsApp number before they can receive task notifications.
 
 1. Do not forget to fill your `.env` file with appropriate variables by setting up your own Meta API
 2. Open WhatsApp
