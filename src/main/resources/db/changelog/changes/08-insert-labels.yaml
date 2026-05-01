@@ -11,27 +11,7 @@ databaseChangeLog:
                   value: "Bug Fix"
               - column:
                   name: color
-                  value: "#FF0000"
-
-        - insert:
-            tableName: labels
-            columns:
-              - column:
-                  name: name
-                  value: "Feature"
-              - column:
-                  name: color
-                  value: "#00CC00"
-
-        - insert:
-            tableName: labels
-            columns:
-              - column:
-                  name: name
-                  value: "Documentation"
-              - column:
-                  name: color
-                  value: "#0066FF"
+                  value: "LAVENDER"
 
         - insert:
             tableName: labels
@@ -41,17 +21,17 @@ databaseChangeLog:
                   value: "Code Review"
               - column:
                   name: color
-                  value: "#FF9900"
+                  value: "SAGE"
 
         - insert:
             tableName: labels
             columns:
               - column:
                   name: name
-                  value: "High Priority"
+                  value: "Documentation"
               - column:
                   name: color
-                  value: "#CC0000"
+                  value: "GRAPE"
 
         - insert:
             tableName: labels
@@ -61,7 +41,27 @@ databaseChangeLog:
                   value: "Testing"
               - column:
                   name: color
-                  value: "#9900CC"
+                  value: "FLAMINGO"
+
+        - insert:
+            tableName: labels
+            columns:
+              - column:
+                  name: name
+                  value: "In Review"
+              - column:
+                  name: color
+                  value: "BANANA"
+
+        - insert:
+            tableName: labels
+            columns:
+              - column:
+                  name: name
+                  value: "Needs Attention"
+              - column:
+                  name: color
+                  value: "TANGERINE"
 
         - insert:
             tableName: labels
@@ -71,7 +71,7 @@ databaseChangeLog:
                   value: "DevOps"
               - column:
                   name: color
-                  value: "#666666"
+                  value: "PEACOCK"
 
         - insert:
             tableName: labels
@@ -81,7 +81,7 @@ databaseChangeLog:
                   value: "Security"
               - column:
                   name: color
-                  value: "#CC6600"
+                  value: "BLUEBERRY"
 
         - insert:
             tableName: labels
@@ -91,14 +91,24 @@ databaseChangeLog:
                   value: "Performance"
               - column:
                   name: color
-                  value: "#006666"
+                  value: "BASIL"
 
         - insert:
             tableName: labels
             columns:
               - column:
                   name: name
-                  value: "Technical Debt"
+                  value: "Blocked"
               - column:
                   name: color
-                  value: "#999900"
+                  value: "GRAPHITE"
+
+        - insert:
+            tableName: labels
+            columns:
+              - column:
+                  name: name
+                  value: "Urgent"
+              - column:
+                  name: color
+                  value: "TOMATO"

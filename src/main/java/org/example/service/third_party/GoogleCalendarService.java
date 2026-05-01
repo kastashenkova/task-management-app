@@ -40,6 +40,7 @@ public class GoogleCalendarService {
                 .setStart(toEventDateTime(start))
                 .setEnd(toEventDateTime(end))
                 .setStatus("confirmed")
+                .setColorId(String.valueOf(task.getLabel().getId()))
                 .setGuestsCanSeeOtherGuests(true)
                 .setGuestsCanModify(false)
                 .setGuestsCanInviteOthers(false);

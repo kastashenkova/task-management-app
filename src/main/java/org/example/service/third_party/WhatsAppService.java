@@ -85,7 +85,7 @@ public class WhatsAppService {
                 escapeJson(String.valueOf(task.getProject().getId())),
                 escapeJson(task.getProject().getName()),
                 escapeJson(task.getName()),
-                escapeJson(calendarEventUrl)
+                escapeJson(extractEid(calendarEventUrl))
         );
 
         HttpHeaders headers = new HttpHeaders();
@@ -117,5 +117,16 @@ public class WhatsAppService {
                 .replace("\"", "\\\"")
                 .replace("\n", "\\n")
                 .replace("\r", "");
+    }
+
+    private String extractEid(String htmlLink) {
+        if (htmlLink == null) {
+            return "";
+        }
+        int index = htmlLink.indexOf("eid=");
+        if (index == -1) {
+            return "";
+        }
+        return htmlLink.substring(index + 4);
     }
 }
