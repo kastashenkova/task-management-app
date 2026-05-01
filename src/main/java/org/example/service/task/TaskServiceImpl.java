@@ -5,6 +5,7 @@ import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.task.TaskRequestDto;
 import org.example.dto.task.TaskResponseDto;
+import org.example.exception.GoogleCalendarException;
 import org.example.mapper.TaskMapper;
 import org.example.model.project.Project;
 import org.example.model.task.Task;
@@ -14,6 +15,7 @@ import org.example.repository.task.TaskRepository;
 import org.example.repository.task.specification.TaskSearchParameters;
 import org.example.repository.task.specification.TaskSpecificationBuilder;
 import org.example.repository.user.UserRepository;
+import org.example.service.third_party.CalendarEventResult;
 import org.example.service.third_party.WhatsAppService;
 import org.example.service.third_party.GoogleCalendarService;
 import org.springframework.data.domain.Page;
@@ -51,18 +53,23 @@ public class TaskServiceImpl implements TaskService {
 
         taskRepository.save(task);
 
+        CalendarEventResult event = null;
         try {
-            whatsAppService.sendTaskAssignmentWhatsApp(task, assignee);
+            Long adminId = getCurrentUser().getId();
+            event = googleCalendarService.createEvent(task, adminId);
+            task.setCalendarEventId(event.eventId());
         } catch (Exception e) {
-            System.err.println("WhatsApp message failed: " + e);
+            System.err.println("Error while saving event: " + e);
+        }
+
+        if (event == null) {
+            throw new GoogleCalendarException("Calendar event not found: " + task.getCalendarEventId());
         }
 
         try {
-            Long adminId = getCurrentUser().getId();
-            String eventId = googleCalendarService.createEvent(task, adminId);
-            task.setCalendarEventId(eventId);
+            whatsAppService.sendTaskAssignmentWhatsApp(task, assignee, event.eventUrl());
         } catch (Exception e) {
-            System.err.println("Error while saving event: " + e);
+            System.err.println("WhatsApp message failed: " + e);
         }
 
         return taskMapper.toDto(task);

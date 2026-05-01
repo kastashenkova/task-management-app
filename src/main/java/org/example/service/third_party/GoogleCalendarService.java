@@ -22,7 +22,7 @@ public class GoogleCalendarService {
 
     private final GoogleAuthorizationCodeFlow flow;
 
-    public String createEvent(Task task, Long adminId) throws Exception {
+    public CalendarEventResult createEvent(Task task, Long adminId) throws Exception {
         Calendar client = getCalendarClient(adminId);
 
         ZonedDateTime start = ZonedDateTime.now(KYIV_ZONE);
@@ -56,7 +56,7 @@ public class GoogleCalendarService {
                 .setSendUpdates("all")
                 .execute();
 
-        return created.getId();
+        return new CalendarEventResult(created.getId(), created.getHtmlLink());
     }
 
     public void updateEvent(Task task, Long adminId) throws Exception {
