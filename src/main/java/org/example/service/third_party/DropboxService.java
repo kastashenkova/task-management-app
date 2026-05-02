@@ -1,4 +1,4 @@
-package org.example.service.attachment;
+package org.example.service.third_party;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
