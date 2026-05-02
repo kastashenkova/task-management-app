@@ -123,7 +123,7 @@ Steps to reproduce below.
 
 ##### 🔎 Build your project with `mvn clean package` and use `mvn clean verify` for CI check
 
-## 🚀 Live Demo & Documentation API 🚀
+## 🚀 Demo & Documentation API
 The application has been deployed through AWS.
 
 Swagger documentation is available at [http://35.153.183.93/api/swagger-ui/index.html](http://35.153.183.93/api/swagger-ui/index.html)
