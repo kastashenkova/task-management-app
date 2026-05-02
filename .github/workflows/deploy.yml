@@ -33,8 +33,8 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build --target prod -t public.ecr.aws/g1j8p1h6/task-management-api:v01 .
-          docker push public.ecr.aws/g1j8p1h6/task-management-api:v01
+          docker build --target prod -t public.ecr.aws/d9i9y2v2/kastashenkova/task-management-api:latest .
+          docker push public.ecr.aws/d9i9y2v2/kastashenkova/task-management-api:latest
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.0.0
@@ -42,14 +42,19 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ec2-user
           key: ${{ secrets.EC2_SSH_KEY }}
+          envs: AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY
           script: |
+            export AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}"
+            export AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+            export AWS_DEFAULT_REGION="us-east-1"
+
             aws ecr-public get-login-password --region us-east-1 | \
               sudo docker login --username AWS --password-stdin public.ecr.aws
 
             sudo docker stop task-management-api || true
             sudo docker rm task-management-api || true
 
-            sudo docker pull public.ecr.aws/g1j8p1h6/task-management-api:v01
+            sudo docker pull public.ecr.aws/d9i9y2v2/kastashenkova/task-management-api:latest
 
             sudo docker run -d \
               --name task-management-api \
@@ -60,4 +65,4 @@ jobs:
               -e SPRING_DATASOURCE_PASSWORD="${{ secrets.SPRING_DATASOURCE_PASSWORD }}" \
               -e DROPBOX_ACCESS_TOKEN="${{ secrets.DROPBOX_ACCESS_TOKEN }}" \
               -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
-              public.ecr.aws/g1j8p1h6/task-management-api:v01
+              public.ecr.aws/d9i9y2v2/kastashenkova/task-management-api:latest
