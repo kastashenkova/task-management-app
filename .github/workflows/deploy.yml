@@ -50,22 +50,36 @@ jobs:
             aws ecr-public get-login-password --region us-east-1 | \
               sudo -E docker login --username AWS --password-stdin public.ecr.aws
 
-            sudo docker ps -q --filter "publish=80" | xargs -r sudo docker stop
-            sudo docker ps -aq --filter "publish=80" | xargs -r sudo docker rm
+            sudo docker network create task-management-net 2>/dev/null || true
 
-            sudo docker stop task-management-api || true
-            sudo docker rm task-management-api || true
+            sudo docker network connect task-management-net task-management-db 2>/dev/null || true
+
+            sudo docker stop task-management-api 2>/dev/null || true
+            sudo docker rm task-management-api 2>/dev/null || true
 
             sudo docker pull public.ecr.aws/d9i9y2v2/kastashenkova/task-management-api:latest
 
             sudo docker run -d \
               --name task-management-api \
               --restart unless-stopped \
+              --network task-management-net \
               -p 80:8090 \
               -e SERVER_PORT=8090 \
-              -e SPRING_DATASOURCE_URL="${{ secrets.SPRING_DATASOURCE_URL }}" \
-              -e SPRING_DATASOURCE_USERNAME="${{ secrets.SPRING_DATASOURCE_USERNAME }}" \
-              -e SPRING_DATASOURCE_PASSWORD="${{ secrets.SPRING_DATASOURCE_PASSWORD }}" \
-              -e DROPBOX_ACCESS_TOKEN="${{ secrets.DROPBOX_ACCESS_TOKEN }}" \
+              -e SERVER_CONTEXT_PATH=/api \
+              -e DB_URL="jdbc:postgresql://task-management-db:5432/task-management-system" \
+              -e DB_USERNAME="${{ secrets.DB_USERNAME }}" \
+              -e DB_PASSWORD="${{ secrets.DB_PASSWORD }}" \
               -e JWT_SECRET="${{ secrets.JWT_SECRET }}" \
+              -e JWT_EXPIRATION=900000 \
+              -e JWT_REFRESH_EXPIRATION=3000000 \
+              -e JWT_ISSUER=task-management-app \
+              -e JWT_AUDIENCE=task-management-api \
+              -e DROPBOX_ACCESS_TOKEN="${{ secrets.DROPBOX_ACCESS_TOKEN }}" \
+              -e GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}" \
+              -e GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}" \
+              -e GOOGLE_REDIRECT_URI="${{ secrets.GOOGLE_REDIRECT_URI }}" \
+              -e MAIL_USERNAME="${{ secrets.MAIL_USERNAME }}" \
+              -e MAIL_PASSWORD="${{ secrets.MAIL_PASSWORD }}" \
+              -e META_ACCESS_TOKEN="${{ secrets.META_ACCESS_TOKEN }}" \
+              -e PHONE_NUMBER_ID="${{ secrets.PHONE_NUMBER_ID }}" \
               public.ecr.aws/d9i9y2v2/kastashenkova/task-management-api:latest
