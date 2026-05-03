@@ -24,8 +24,9 @@ Manage tasks and projects effectively through a web-based application. This syst
 - Docker and Swagger usage
 - +80% test coverage (both unit and integration testing)
 - CI/CD checkstyle pipeline: custom & Qodana
+- AWS CI for flexible and rapid updates deployment
 
-<img width="414" height="200" alt="image" src="https://github.com/user-attachments/assets/a4bb1d26-68e9-4b2e-b65d-8951a1ca6af5" />
+<img width="400" height="145" alt="Знімок екрана 2026-05-03 165555" src="https://github.com/user-attachments/assets/4d21bd26-4ba0-4807-955a-2cc3b4aca07d" />
 
 ## 📌 API endpoints
 #### 🔑 Auth Controller 🔑
