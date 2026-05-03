@@ -1,4 +1,5 @@
-# 🗓️ Task Management App 🗓️
+<img width="1280" height="486" alt="image" src="https://github.com/user-attachments/assets/d88575d4-ac03-4fcb-9c2e-e8c0cf677229" />
+
 Manage tasks and projects effectively through a web-based application. This system enables task creation, assignment, progress tracking, and completion.
 
 ## 📁 Stack
@@ -13,7 +14,7 @@ Manage tasks and projects effectively through a web-based application. This syst
 - ACID, CRUD and SOLID adherence
 - PostgreSQL and Dropbox API intercommunication
   
-<img width="1355" height="137" alt="image" src="https://github.com/user-attachments/assets/e8d8b3aa-bad1-43d6-b77a-db8eadce7d76" />
+<img width="1751" height="177" alt="image" src="https://github.com/user-attachments/assets/ceb8d706-8bfa-438b-bb11-3aaf7632024f" />
 
 - Internal security with JWT token and external security with OAuth2 flow
 - Role allocation (ADMIN acts as a project manager who creates and assigns work, USER acts as a developer who executes tasks) 🔐
@@ -26,7 +27,7 @@ Manage tasks and projects effectively through a web-based application. This syst
 - CI/CD checkstyle pipeline: custom & Qodana
 - AWS CI for flexible and rapid updates deployment
 
-<img width="400" height="145" alt="Знімок екрана 2026-05-03 165555" src="https://github.com/user-attachments/assets/4d21bd26-4ba0-4807-955a-2cc3b4aca07d" />
+<img width="806" height="293" alt="Знімок екрана 2026-05-03 165555" src="https://github.com/user-attachments/assets/0bbdc1a9-001c-4b82-8994-c30230003267" />
 
 ## 📌 API endpoints
 #### 🔑 Auth Controller 🔑
@@ -78,7 +79,7 @@ Manage tasks and projects effectively through a web-based application. This syst
 We allow labels to be assigned to tasks for better organization. In our migrations we have default label colors, which are possible Google Calendar event colors (i.e. `11 TOMATO`, `6 TANGERINE`, `2 SAGE`). You can set any label to any task.
 Mind: correspondence between label color and task priority is **on user** since user can create their own labels. However, we highly recommend setting `2 SAGE` for `LOW` priority tasks, `6 TANGERINE` for `MEDIUM` priority tasks and `11 TOMATO` for `HIGH` priority tasks.
 
-<img width="544" height="150" alt="Знімок екрана 2026-05-01 115510" src="https://github.com/user-attachments/assets/19804edc-c7b4-4a8b-aba9-c8772f238fbf" />
+<img width="1491" height="411" alt="Знімок екрана 2026-05-01 115510" src="https://github.com/user-attachments/assets/74d6c5d8-c06d-4ebd-a357-37d4c20aa54a" />
 
 > Due to Google Calendar's policy, task's label color is visible only for ADMIN (assigner), but it can be changed in assignee's calendar manually as well.
 
@@ -93,14 +94,14 @@ Steps to reproduce below.
 #### ⭐ Dropbox Database
 Just fill your `.env` file with appropriate variable by generating your own Dropbox access token
 
-<img width="200" height="269" alt="image" src="https://github.com/user-attachments/assets/283f0857-8d2b-42ff-b2fb-f7027a7cf20b" />
+<img width="552" height="742" alt="image" src="https://github.com/user-attachments/assets/2e7821ab-b48b-4201-833d-8cedf1fa2b37" />
 
 > You can also join Dropbox in the way like we join Google Calendar API now (see below). OAuth 2.0 can give you more flexibility and safety; nevertheless, Dropbox API access token is easier to implement and works quicker locally.
 
 #### ⭐ WhatsApp notification
 Task assignment notifications are sent via WhatsApp Business API (Meta Cloud API). Also, we use Meta API message template with Google Calendar event reference in such messages.
 
-<img width="200" height="263" alt="image" src="https://github.com/user-attachments/assets/9d4c4a32-7283-407d-a628-981e8a1553aa" />
+<img width="600" height="790" alt="image" src="https://github.com/user-attachments/assets/52195ea6-9150-4622-ac9f-b38064aba804" />
 
 > Due to Meta's policy, the system can only send free-form text messages to a user within a **24-hour window** after that user sends a message to the business account first. Each assignee must send any message to the business WhatsApp number before they can receive task notifications.
 
@@ -120,11 +121,26 @@ Steps to reproduce below.
 3. Apply for `GET /api/auth/google/authorize` endpoint to get special link for Google Calendar integration into your profile (as a project manager)
 4. After successful page message return to the app's main page and test the system with assigning tasks to some users
 
-<img width="500" height="137" alt="image" src="https://github.com/user-attachments/assets/7d0e678e-2a7f-4448-b833-fe32df33e06e" />
+<img width="1434" height="393" alt="image" src="https://github.com/user-attachments/assets/074f86f8-1599-4be5-bd2f-a86ef1ccecde" />
 
 ##### 🔎 Build your project with `mvn clean package` and use `mvn clean verify` for CI check
+
+## 👣 Postman imitation
+Explore API endpoints collection here:
+
+Steps to reproduce below.
+1. Import the collection — Open Postman, click `Import`, and select the provided `.json` collection file.
+2. Set up environment variables — Configure the required variables in a `Postman Environment` to match your local or remote setup.
+3. Authenticate — Run the authentication request first to obtain a token.
+4. Explore available requests — Browse the collection folders to find grouped endpoints; each request includes a description of its purpose and expected parameters.
+5. Send requests — Select any request, adjust path parameters or the request body as needed, click `Send` to interact with the API directly.
+6. Use it for testing — The collection can be run as a full test suite via the `Collection Runner` or with `Newman` for automated testing.
 
 ## 🚀 Demo & Documentation API
 The application has been deployed through AWS.
 
 Swagger documentation is available at [http://35.153.183.93/api/swagger-ui/index.html](http://35.153.183.93/api/swagger-ui/index.html)
+
+## 🎥 Demo Video
+
+See here: 
