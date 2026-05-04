@@ -125,21 +125,26 @@ Steps to reproduce below.
 
 ##### 🔎 Build your project with `mvn clean package` and use `mvn clean verify` for CI check
 
-## 🚀 Documentation API
-**Swagger** documentation is available at [http://35.153.183.93/api/swagger-ui/index.html](http://35.153.183.93/api/swagger-ui/index.html)
+## 👣 Postman API
+**API endpoints collection** is available at https://www.postman.com/astashenkova-katya-2138811/task-management-app
 
-**Postman** documentation is available at https://documenter.getpostman.com/view/51183420/2sBXqKp1Ap
-
-## 👣 Postman imitation
-Explore API endpoints collection here: https://www.postman.com/astashenkova-katya-2138811/task-management-app
+**Documentation** is available at https://documenter.getpostman.com/view/51183420/2sBXqKp1Ap
 
 Steps to reproduce below.
-1. Import the collection — Open Postman, click `Import`, and select the provided `.json` collection file.
-2. Set up environment variables — Configure the required variables in a `Postman Environment` to match your local or remote setup.
-3. Authenticate — Run the authentication request first to obtain a token.
-4. Explore available requests — Browse the collection folders to find grouped endpoints; each request includes a description of its purpose and expected parameters.
-5. Send requests — Select any request, adjust path parameters or the request body as needed, click `Send` to interact with the API directly.
-6. Use it for testing — The collection can be run as a full test suite via the `Collection Runner` or with `Newman` for automated testing.
+1. **Authenticate** — Run the authentication request first to obtain a token
+2. **Connect Google Calendar** — Run the authentication request first in order to get your connection link, past this link into your browser and select your email, after successfull message return back
+3. **Explore available requests** — Browse the collection folders to find grouped endpoints; each request includes a description of its purpose and expected parameters
+4. **Send requests** — Select any request, adjust path parameters or the request body as needed, click `Send` to interact with the API directly
+5. **Use it for testing** — The collection can be run as a full test suite via the `Collection Runner` or with `Newman` for automated testing
+
+## 🚀 Swagger API
+Documentation is available at http://35.153.183.93/api/swagger-ui/index.html
+
+Steps to reproduce below.
+1. **Authenticate** — Run the authentication request first to obtain a token
+2. **Connect Google Calendar** — Run the authentication request first in order to get your connection link, past this link into your browser and select your email, after successfull message return back
+3. **Explore available requests** — Each controller includes a short description of its purpose
+4. **Send requests** — Select any request, click `Try it out`, adjust path parameters or the request body as needed, click `Execute` to interact with the API directly
 
 ## 🎥 Demo video
 
