@@ -94,14 +94,14 @@ Steps to reproduce below.
 #### ⭐ Dropbox Database
 Just fill your `.env` file with appropriate variable by generating your own Dropbox access token
 
-<img width="552" height="742" alt="image" src="https://github.com/user-attachments/assets/2e7821ab-b48b-4201-833d-8cedf1fa2b37" />
+<img width="400" height="538" alt="image" src="https://github.com/user-attachments/assets/2e7821ab-b48b-4201-833d-8cedf1fa2b37" />
 
 > You can also join Dropbox in the way like we join Google Calendar API now (see below). OAuth 2.0 can give you more flexibility and safety; nevertheless, Dropbox API access token is easier to implement and works quicker locally.
 
 #### ⭐ WhatsApp notification
 Task assignment notifications are sent via WhatsApp Business API (Meta Cloud API). Also, we use Meta API message template with Google Calendar event reference in such messages.
 
-<img width="600" height="790" alt="image" src="https://github.com/user-attachments/assets/52195ea6-9150-4622-ac9f-b38064aba804" />
+<img width="400" height="526" alt="image" src="https://github.com/user-attachments/assets/52195ea6-9150-4622-ac9f-b38064aba804" />
 
 > Due to Meta's policy, the system can only send free-form text messages to a user within a **24-hour window** after that user sends a message to the business account first. Each assignee must send any message to the business WhatsApp number before they can receive task notifications.
 
@@ -125,8 +125,13 @@ Steps to reproduce below.
 
 ##### 🔎 Build your project with `mvn clean package` and use `mvn clean verify` for CI check
 
+## 🚀 Documentation API
+**Swagger** documentation is available at [http://35.153.183.93/api/swagger-ui/index.html](http://35.153.183.93/api/swagger-ui/index.html)
+
+**Postman** documentation is available at https://documenter.getpostman.com/view/51183420/2sBXqKp1Ap
+
 ## 👣 Postman imitation
-Explore API endpoints collection here:
+Explore API endpoints collection here: https://www.postman.com/astashenkova-katya-2138811/task-management-app
 
 Steps to reproduce below.
 1. Import the collection — Open Postman, click `Import`, and select the provided `.json` collection file.
@@ -136,11 +141,6 @@ Steps to reproduce below.
 5. Send requests — Select any request, adjust path parameters or the request body as needed, click `Send` to interact with the API directly.
 6. Use it for testing — The collection can be run as a full test suite via the `Collection Runner` or with `Newman` for automated testing.
 
-## 🚀 Demo & Documentation API
-The application has been deployed through AWS.
-
-Swagger documentation is available at [http://35.153.183.93/api/swagger-ui/index.html](http://35.153.183.93/api/swagger-ui/index.html)
-
-## 🎥 Demo Video
+## 🎥 Demo video
 
 See here: 
