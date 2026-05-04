@@ -138,7 +138,7 @@ Steps to reproduce below.
 5. **Use it for testing** — The collection can be run as a full test suite via the `Collection Runner` or with `Newman` for automated testing
 
 ## 🚀 Swagger API
-Documentation is available at http://35.153.183.93/api/swagger-ui/index.html
+**Documentation API** is available at http://35.153.183.93/api/swagger-ui/index.html
 
 Steps to reproduce below.
 1. **Authenticate** — Run the authentication request first to obtain a token
