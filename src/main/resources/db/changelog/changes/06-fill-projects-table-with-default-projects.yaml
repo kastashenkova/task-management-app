@@ -112,7 +112,7 @@ databaseChangeLog:
                   value: "2026-04-01"
               - column:
                   name: end_date
-                  value: "2026-09-30"
+                  value: "2026-12-31"
               - column:
                   name: status
                   value: "INITIATED"
