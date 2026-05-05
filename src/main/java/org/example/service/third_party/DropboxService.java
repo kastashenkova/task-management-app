@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.Map;
-import java.util.Objects;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -128,12 +127,10 @@ public class DropboxService {
                 .bodyToMono(Map.class)
                 .block();
 
-        System.out.println("Dropbox token response: " + response);
-        System.out.println("expires_in type: " + response.get("expires_in").getClass().getName());
-        System.out.println("expires_in value: " + response.get("expires_in"));
-
-        this.accessToken = (String) response.get("access_token");
-        long expiresIn = ((Number) response.get("expires_in")).longValue();
-        this.tokenExpiresAt = Instant.now().plusSeconds(expiresIn);
+        if (response != null) {
+            this.accessToken = (String) response.get("access_token");
+            long expiresIn = ((Number) response.get("expires_in")).longValue();
+            this.tokenExpiresAt = Instant.now().plusSeconds(expiresIn);
+        }
     }
 }
