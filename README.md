@@ -89,6 +89,8 @@ Steps to reproduce below.
 1. Copy `.env.sample` file to new `.env` file
 2. Fill your `.env` file with required environment variables
 3. Run Docker application
+
+> Mind: for prod stage, you may need to get ngrok host for appropriate callback. For this, enter `ngrok http 35.153.183.93:80` into your ngrok terminal.
    
 ### Third-party API integration
 #### ⭐ Dropbox Database
@@ -148,4 +150,4 @@ Steps to reproduce below.
 
 ## 🎥 Demo video
 
-See here: 
+https://www.loom.com/share/e7d685da17f44ff4bea51d4158ecc051
