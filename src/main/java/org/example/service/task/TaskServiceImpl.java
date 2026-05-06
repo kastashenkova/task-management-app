@@ -170,7 +170,7 @@ public class TaskServiceImpl implements TaskService {
             throw new RuntimeException("Error while deleting event: " + e.getMessage());
         }
 
-        taskRepository.deleteTaskById(id);
+        taskRepository.deleteById(id);
     }
 
     @Override

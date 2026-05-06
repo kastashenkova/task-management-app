@@ -1,0 +1,6 @@
+INSERT INTO projects (id, name, description, start_date, end_date, status, is_deleted) VALUES
+                                                                               (1, 'E-Commerce Platform', 'Development of a full-featured online store with product catalog and payment system', '2026-01-15', '2026-06-30', 'IN_PROGRESS', false),
+                                                                               (2, 'Mobile Banking App', 'Mobile application for managing bank accounts, transactions and money transfers', '2025-11-01', '2026-04-15', 'COMPLETED', false),
+                                                                               (3, 'HR Management System', 'Human resources management system with time tracking and payroll calculation modules', '2026-03-01', '2026-12-31', 'INITIATED', false),
+                                                                               (4, 'AI Chatbot Integration', 'Integration of an AI-powered chatbot to automate customer support and reduce response time', '2026-05-01', '2026-08-20', 'IN_PROGRESS', false),
+                                                                               (5, 'Data Analytics Dashboard', 'Interactive dashboard for visualizing business metrics, KPIs and sales analytics', '2025-09-10', '2026-12-31', 'COMPLETED', false);
