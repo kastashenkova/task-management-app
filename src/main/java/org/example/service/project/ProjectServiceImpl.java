@@ -34,6 +34,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<ProjectResponseDto> getProjects(Pageable pageable) {
         if (isAdmin()) {
             return projectRepository.findAll(pageable).map(projectMapper::toDto);
@@ -44,6 +45,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ProjectResponseDto getProjectById(Long id) {
         if (!isAdmin()) {
             User user = getCurrentUser();
@@ -94,6 +96,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<ProjectResponseDto> search(ProjectSearchParameters searchParameters, Pageable pageable) {
         Specification<Project> projectSpecification = projectSpecificationBuilder
                 .buildSpecification(searchParameters);

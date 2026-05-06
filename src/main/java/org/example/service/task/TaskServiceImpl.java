@@ -85,6 +85,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<TaskResponseDto> getTasksForProject(Long projectId, Pageable pageable) {
         if (!isAdmin()) {
             User user = getCurrentUser();
@@ -101,6 +102,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public TaskResponseDto getTaskById(Long id) {
         return taskMapper.toDto(getById(id));
     }
@@ -174,6 +176,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<TaskResponseDto> search(TaskSearchParameters searchParameters, Pageable pageable) {
         Specification<Task> taskSpecification = taskSpecificationBuilder
                 .buildSpecification(searchParameters);

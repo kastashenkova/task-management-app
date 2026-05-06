@@ -80,6 +80,9 @@ public class UserServiceImpl implements UserService {
         if (userRequestDto.getEmail() != null && !userRequestDto.getEmail().isEmpty()) {
             user.setEmail(userRequestDto.getEmail());
         }
+        if (userRequestDto.getPhoneNumber() != null && !userRequestDto.getPhoneNumber().isEmpty()) {
+            user.setPhoneNumber(userRequestDto.getPhoneNumber());
+        }
         if (userRequestDto.getFirstName() != null && !userRequestDto.getFirstName().isEmpty()) {
             user.setFirstName(userRequestDto.getFirstName());
         }

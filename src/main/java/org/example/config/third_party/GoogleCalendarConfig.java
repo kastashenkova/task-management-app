@@ -18,8 +18,6 @@ public class GoogleCalendarConfig {
     private String clientId;
     @Value("${google.client.secret}")
     private String clientSecret;
-    @Value("${google.redirect.uri}")
-    private String redirectUri;
 
     @Bean
     public GoogleAuthorizationCodeFlow googleAuthorizationCodeFlow() throws Exception {
