@@ -2,8 +2,10 @@ package org.example.util;
 
 import java.time.LocalDate;
 import org.example.dto.project.ProjectResponseDto;
+import org.example.dto.task.TaskResponseDto;
 import org.example.dto.user.registration.UserResponseDto;
 import org.example.model.project.Status;
+import org.example.model.task.Priority;
 
 public class TestUtil {
 
@@ -66,10 +68,40 @@ public class TestUtil {
         ProjectResponseDto project = new ProjectResponseDto();
         project.setId(2L);
         project.setName("Mobile Banking App");
-        project.setDescription("Mobile application for managing bank accounts, transactions and money transfers");
+        project.setDescription("Mobile application for managing bank accounts,"
+                + " transactions and money transfers");
         project.setStartDate(LocalDate.of(2025, 11, 1));
         project.setEndDate(LocalDate.of(2026, 4, 15));
         project.setStatus(Status.COMPLETED);
         return project;
+    }
+
+    public static TaskResponseDto BuildPayrollModuleTaskDto() {
+        TaskResponseDto task = new TaskResponseDto();
+        task.setId(3L);
+        task.setName("Build Payroll Module");
+        task.setDescription("Develop salary calculation module with tax deductions "
+                + "and automated monthly payslip generation");
+        task.setPriority(Priority.MEDIUM);
+        task.setStatus(org.example.model.task.Status.NOT_STARTED);
+        task.setDueDate(LocalDate.of(2026, 7, 15));
+        task.setProjectId(3L);
+        task.setAssigneeId(3L);
+        task.setLabelId(6L);
+        return task;
+    }
+
+    public static TaskResponseDto AddPaymentCountryTaskDto() {
+        TaskResponseDto task = new TaskResponseDto();
+        task.setId(3L);
+        task.setName("Add Payment Country");
+        task.setDescription("Add country #170 to the payment system");
+        task.setPriority(Priority.HIGH);
+        task.setStatus(org.example.model.task.Status.IN_PROGRESS);
+        task.setDueDate(LocalDate.of(2026, 10, 26));
+        task.setProjectId(2L);
+        task.setAssigneeId(3L);
+        task.setLabelId(11L);
+        return task;
     }
 }

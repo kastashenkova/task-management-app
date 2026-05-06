@@ -1,4 +1,4 @@
-package org.example.service;
+package org.example.service.task;
 
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.extension.ExtendWith;

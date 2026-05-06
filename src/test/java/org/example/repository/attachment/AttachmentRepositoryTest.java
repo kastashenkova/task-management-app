@@ -1,9 +1,8 @@
-package org.example.repository;
+package org.example.repository.attachment;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.example.model.Attachment;
-import org.example.repository.attachment.AttachmentRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

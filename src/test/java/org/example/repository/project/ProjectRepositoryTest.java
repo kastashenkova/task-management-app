@@ -1,4 +1,4 @@
-package org.example.repository;
+package org.example.repository.project;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Optional;
 import org.example.model.project.Project;
-import org.example.repository.project.ProjectRepository;
 import org.example.repository.project.specification.EndDateSpecificationProvider;
 import org.example.repository.project.specification.ProjectSearchParameters;
 import org.example.repository.project.specification.ProjectSpecificationBuilder;

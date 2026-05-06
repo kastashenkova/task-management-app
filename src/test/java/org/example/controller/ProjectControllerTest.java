@@ -72,6 +72,31 @@ public class ProjectControllerTest {
 
     @WithMockUser(username = "ADMIN", roles = "ADMIN")
     @Test
+    @DisplayName("""
+           Should return empty list
+           """)
+    void getProjects_noProjects_ReturnsEmptyList() throws Exception {
+        MvcResult result = mockMvc.perform(get("/projects"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String json = result.getResponse().getContentAsString();
+
+        JsonNode root = objectMapper.readTree(json);
+        JsonNode contentNode = root.get("content");
+
+        List<ProjectResponseDto> actualList = objectMapper.readValue(
+                contentNode.toString(),
+                objectMapper.getTypeFactory()
+                        .constructParametricType(List.class, ProjectResponseDto.class)
+        );
+
+        assertNotNull(actualList);
+        assertEquals(0, actualList.size());
+    }
+
+    @WithMockUser(username = "ADMIN", roles = "ADMIN")
+    @Test
     @Sql(scripts = "classpath:database/projects/add-projects-to-projects-table.sql",
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = "classpath:database/projects/delete-projects-from-projects-table.sql",
@@ -115,7 +140,7 @@ public class ProjectControllerTest {
                 .andReturn();
     }
 
-    @WithMockUser(username = "admin", roles = {"ADMIN"})
+    @WithMockUser(username = "ADMIN", roles = "ADMIN")
     @Test
     @DisplayName("""
            Create a new Project

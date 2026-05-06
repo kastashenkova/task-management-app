@@ -1,4 +1,4 @@
-package org.example.repository;
+package org.example.repository.task;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.Optional;
 import org.example.model.task.Task;
 import org.example.model.user.User;
-import org.example.repository.task.TaskRepository;
 import org.example.repository.task.specification.PrioritySpecificationProvider;
 import org.example.repository.task.specification.StatusSpecificationProvider;
 import org.example.repository.task.specification.TaskSearchParameters;
