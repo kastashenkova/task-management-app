@@ -11,8 +11,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
-    void deleteTaskById(Long id);
-
     Page<Task> findAllByProject_Id(Long projectId, Pageable pageable);
 
     Optional<Task> findTaskByIdAndAssignee(Long id, User assignee);
