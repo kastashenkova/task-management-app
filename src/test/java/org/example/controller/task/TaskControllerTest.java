@@ -1,4 +1,4 @@
-package org.example.controller;
+package org.example.controller.task;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -56,13 +56,13 @@ public class TaskControllerTest {
             "classpath:database/projects/add-projects-to-projects-table.sql",
             "classpath:database/users/add-roles-to-roles-table.sql",
             "classpath:database/users/add-users-to-users-table.sql",
-            "classpath:database/tasks/add-labels-to-labels-table.sql",
+            "classpath:database/labels/add-labels-to-labels-table.sql",
             "classpath:database/tasks/add-tasks-to-tasks-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = {
             "classpath:database/tasks/delete-tasks-from-tasks-table.sql",
-            "classpath:database/tasks/delete-labels-from-labels-table.sql",
+            "classpath:database/labels/delete-labels-from-labels-table.sql",
             "classpath:database/projects/delete-projects-from-projects-table.sql",
             "classpath:database/users/delete-users-from-users-table.sql",
             "classpath:database/users/delete-roles-from-roles-table.sql"
@@ -93,23 +93,23 @@ public class TaskControllerTest {
 
     @WithMockUser(username = "john.carter", roles = "ADMIN")
     @Test
-    @DisplayName("""
-           Should return empty list
-           """)
     @Sql(scripts = {
             "classpath:database/projects/add-projects-to-projects-table.sql",
             "classpath:database/users/add-roles-to-roles-table.sql",
             "classpath:database/users/add-users-to-users-table.sql",
-            "classpath:database/tasks/add-labels-to-labels-table.sql"
+            "classpath:database/labels/add-labels-to-labels-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = {
-            "classpath:database/tasks/delete-labels-from-labels-table.sql",
+            "classpath:database/labels/delete-labels-from-labels-table.sql",
             "classpath:database/projects/delete-projects-from-projects-table.sql",
             "classpath:database/users/delete-users-from-users-table.sql",
             "classpath:database/users/delete-roles-from-roles-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    @DisplayName("""
+           Should return empty list
+           """)
     void getTasks_noTasksWithinProject_ReturnsEmptyList() throws Exception {
         MvcResult result = mockMvc.perform(get("/tasks?projectId=2"))
                 .andExpect(status().isOk())
@@ -136,13 +136,13 @@ public class TaskControllerTest {
             "classpath:database/projects/add-projects-to-projects-table.sql",
             "classpath:database/users/add-roles-to-roles-table.sql",
             "classpath:database/users/add-users-to-users-table.sql",
-            "classpath:database/tasks/add-labels-to-labels-table.sql",
+            "classpath:database/labels/add-labels-to-labels-table.sql",
             "classpath:database/tasks/add-tasks-to-tasks-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = {
             "classpath:database/tasks/delete-tasks-from-tasks-table.sql",
-            "classpath:database/tasks/delete-labels-from-labels-table.sql",
+            "classpath:database/labels/delete-labels-from-labels-table.sql",
             "classpath:database/projects/delete-projects-from-projects-table.sql",
             "classpath:database/users/delete-users-from-users-table.sql",
             "classpath:database/users/delete-roles-from-roles-table.sql",
@@ -177,13 +177,13 @@ public class TaskControllerTest {
             "classpath:database/projects/add-projects-to-projects-table.sql",
             "classpath:database/users/add-roles-to-roles-table.sql",
             "classpath:database/users/add-users-to-users-table.sql",
-            "classpath:database/tasks/add-labels-to-labels-table.sql",
+            "classpath:database/labels/add-labels-to-labels-table.sql",
             "classpath:database/tasks/add-tasks-to-tasks-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = {
             "classpath:database/tasks/delete-tasks-from-tasks-table.sql",
-            "classpath:database/tasks/delete-labels-from-labels-table.sql",
+            "classpath:database/labels/delete-labels-from-labels-table.sql",
             "classpath:database/projects/delete-projects-from-projects-table.sql",
             "classpath:database/users/delete-users-from-users-table.sql",
             "classpath:database/users/delete-roles-from-roles-table.sql",
@@ -208,15 +208,15 @@ public class TaskControllerTest {
             "classpath:database/projects/add-projects-to-projects-table.sql",
             "classpath:database/users/add-roles-to-roles-table.sql",
             "classpath:database/users/add-users-to-users-table.sql",
-            "classpath:database/tasks/add-labels-to-labels-table.sql"
+            "classpath:database/labels/add-labels-to-labels-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = {
             "classpath:database/tasks/delete-tasks-from-tasks-table.sql",
-            "classpath:database/tasks/delete-labels-from-labels-table.sql",
+            "classpath:database/labels/delete-labels-from-labels-table.sql",
             "classpath:database/projects/delete-projects-from-projects-table.sql",
             "classpath:database/users/delete-users-from-users-table.sql",
-            "classpath:database/users/delete-roles-from-roles-table.sql",
+            "classpath:database/users/delete-roles-from-roles-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void createTask_validRequestDto_ReturnsCreatedTask() throws Exception {
@@ -264,16 +264,16 @@ public class TaskControllerTest {
             "classpath:database/projects/add-projects-to-projects-table.sql",
             "classpath:database/users/add-roles-to-roles-table.sql",
             "classpath:database/users/add-users-to-users-table.sql",
-            "classpath:database/tasks/add-labels-to-labels-table.sql",
+            "classpath:database/labels/add-labels-to-labels-table.sql",
             "classpath:database/tasks/add-tasks-to-tasks-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = {
             "classpath:database/tasks/delete-tasks-from-tasks-table.sql",
-            "classpath:database/tasks/delete-labels-from-labels-table.sql",
+            "classpath:database/labels/delete-labels-from-labels-table.sql",
             "classpath:database/projects/delete-projects-from-projects-table.sql",
             "classpath:database/users/delete-users-from-users-table.sql",
-            "classpath:database/users/delete-roles-from-roles-table.sql",
+            "classpath:database/users/delete-roles-from-roles-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void updateTaskById_validRequestDto_ReturnsUpdatedTask() throws Exception {
@@ -320,16 +320,16 @@ public class TaskControllerTest {
             "classpath:database/projects/add-projects-to-projects-table.sql",
             "classpath:database/users/add-roles-to-roles-table.sql",
             "classpath:database/users/add-users-to-users-table.sql",
-            "classpath:database/tasks/add-labels-to-labels-table.sql",
+            "classpath:database/labels/add-labels-to-labels-table.sql",
             "classpath:database/tasks/add-tasks-to-tasks-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = {
             "classpath:database/tasks/delete-tasks-from-tasks-table.sql",
-            "classpath:database/tasks/delete-labels-from-labels-table.sql",
+            "classpath:database/labels/delete-labels-from-labels-table.sql",
             "classpath:database/projects/delete-projects-from-projects-table.sql",
             "classpath:database/users/delete-users-from-users-table.sql",
-            "classpath:database/users/delete-roles-from-roles-table.sql",
+            "classpath:database/users/delete-roles-from-roles-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @DisplayName("""
@@ -363,16 +363,16 @@ public class TaskControllerTest {
             "classpath:database/projects/add-projects-to-projects-table.sql",
             "classpath:database/users/add-roles-to-roles-table.sql",
             "classpath:database/users/add-users-to-users-table.sql",
-            "classpath:database/tasks/add-labels-to-labels-table.sql",
+            "classpath:database/labels/add-labels-to-labels-table.sql",
             "classpath:database/tasks/add-tasks-to-tasks-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = {
             "classpath:database/tasks/delete-tasks-from-tasks-table.sql",
-            "classpath:database/tasks/delete-labels-from-labels-table.sql",
+            "classpath:database/labels/delete-labels-from-labels-table.sql",
             "classpath:database/projects/delete-projects-from-projects-table.sql",
             "classpath:database/users/delete-users-from-users-table.sql",
-            "classpath:database/users/delete-roles-from-roles-table.sql",
+            "classpath:database/users/delete-roles-from-roles-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @DisplayName("""
@@ -403,16 +403,16 @@ public class TaskControllerTest {
             "classpath:database/projects/add-projects-to-projects-table.sql",
             "classpath:database/users/add-roles-to-roles-table.sql",
             "classpath:database/users/add-users-to-users-table.sql",
-            "classpath:database/tasks/add-labels-to-labels-table.sql",
+            "classpath:database/labels/add-labels-to-labels-table.sql",
             "classpath:database/tasks/add-tasks-to-tasks-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = {
             "classpath:database/tasks/delete-tasks-from-tasks-table.sql",
-            "classpath:database/tasks/delete-labels-from-labels-table.sql",
+            "classpath:database/labels/delete-labels-from-labels-table.sql",
             "classpath:database/projects/delete-projects-from-projects-table.sql",
             "classpath:database/users/delete-users-from-users-table.sql",
-            "classpath:database/users/delete-roles-from-roles-table.sql",
+            "classpath:database/users/delete-roles-from-roles-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @DisplayName("""
@@ -446,16 +446,16 @@ public class TaskControllerTest {
             "classpath:database/projects/add-projects-to-projects-table.sql",
             "classpath:database/users/add-roles-to-roles-table.sql",
             "classpath:database/users/add-users-to-users-table.sql",
-            "classpath:database/tasks/add-labels-to-labels-table.sql",
+            "classpath:database/labels/add-labels-to-labels-table.sql",
             "classpath:database/tasks/add-tasks-to-tasks-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = {
             "classpath:database/tasks/delete-tasks-from-tasks-table.sql",
-            "classpath:database/tasks/delete-labels-from-labels-table.sql",
+            "classpath:database/labels/delete-labels-from-labels-table.sql",
             "classpath:database/projects/delete-projects-from-projects-table.sql",
             "classpath:database/users/delete-users-from-users-table.sql",
-            "classpath:database/users/delete-roles-from-roles-table.sql",
+            "classpath:database/users/delete-roles-from-roles-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     @DisplayName("""

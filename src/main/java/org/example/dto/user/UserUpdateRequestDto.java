@@ -13,19 +13,19 @@ import org.hibernate.validator.constraints.Length;
         second = "repeatPassword",
         message = "Password and repeated password do not match")
 public class UserUpdateRequestDto {
-    @Length(min = 3, max = 35)
+    @Length(min = 3, max = 35, message = "{validation.username.size}")
     private String username;
-    @Email
+    @Email(message = "{validation.email.invalid}")
     private String email;
     @Length(min = 8, max = 13)
     @Pattern(
             regexp = "^(\\+380|0)\\d{9}$",
-            message = "Phone number must be in format +380XXXXXXXXX or 0XXXXXXXXX"
+            message = "{validation.phone.invalid}"
     )
     private String phoneNumber;
-    @Length(min = 8, max = 35)
+    @Length(min = 8, max = 35, message = "{validation.password.size}")
     private String password;
-    @Length(min = 8, max = 35)
+    @Length(min = 8, max = 35, message = "{validation.password.size}")
     private String repeatPassword;
     private String firstName;
     private String lastName;

@@ -1,4 +1,4 @@
-package org.example.controller;
+package org.example.controller.project;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

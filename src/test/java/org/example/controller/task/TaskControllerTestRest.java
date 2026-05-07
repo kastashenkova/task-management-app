@@ -1,10 +1,10 @@
-package org.example.controller;
+package org.example.controller.task;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.Objects;
-import org.example.dto.project.ProjectResponseDto;
+import org.example.dto.task.TaskResponseDto;
 import org.example.dto.user.login.UserLoginRequestDto;
 import org.example.dto.user.login.UserLoginResponseDto;
 import org.example.util.RestPage;
@@ -24,18 +24,22 @@ import org.springframework.web.client.RestClient;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 @Sql(scripts = {
+        "classpath:database/projects/add-projects-to-projects-table.sql",
         "classpath:database/users/add-roles-to-roles-table.sql",
         "classpath:database/users/add-users-to-users-table.sql",
-        "classpath:database/projects/add-projects-to-projects-table.sql"
+        "classpath:database/labels/add-labels-to-labels-table.sql",
+        "classpath:database/tasks/add-tasks-to-tasks-table.sql"
 },
         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
 @Sql(scripts = {
+        "classpath:database/tasks/delete-tasks-from-tasks-table.sql",
+        "classpath:database/labels/delete-labels-from-labels-table.sql",
         "classpath:database/projects/delete-projects-from-projects-table.sql",
         "classpath:database/users/delete-users-from-users-table.sql",
-        "classpath:database/users/delete-roles-from-roles-table.sql"
+        "classpath:database/users/delete-roles-from-roles-table.sql",
 },
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS)
-public class ProjectControllerTestRest {
+public class TaskControllerTestRest {
 
     @LocalServerPort
     private int port;
@@ -51,9 +55,9 @@ public class ProjectControllerTestRest {
 
     @Test
     @DisplayName("""
-                 Returns all projects
+                 Search tasks by priority
                  """)
-    void getProjects_fiveProjects_ReturnsExpectedList() {
+    void search_samePriority_ReturnsAllTasksWithTheSamePriority() {
         UserLoginRequestDto loginRequest = new UserLoginRequestDto();
         loginRequest.setUsername("john.carter");
         loginRequest.setPassword("admin123");
@@ -68,12 +72,12 @@ public class ProjectControllerTestRest {
         assertNotNull(loginResponse);
         String token = loginResponse.token();
 
-        ResponseEntity<RestPage<ProjectResponseDto>> response = restClient.get()
-                .uri("/projects")
+        ResponseEntity<RestPage<TaskResponseDto>> response = restClient.get()
+                .uri("/tasks/search?priorities=HIGH")
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
                 .retrieve()
                 .toEntity(new ParameterizedTypeReference<>() {});
 
-        assertEquals(5, Objects.requireNonNull(response.getBody()).getContent().size());
+        assertEquals(2, Objects.requireNonNull(response.getBody()).getContent().size());
     }
 }

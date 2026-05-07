@@ -1,9 +1,16 @@
 package org.example.util;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import org.example.dto.attachment.AttachmentResponseDto;
+import org.example.dto.comment.CommentRequestDto;
+import org.example.dto.comment.CommentResponseDto;
+import org.example.dto.label.LabelResponseDto;
 import org.example.dto.project.ProjectResponseDto;
 import org.example.dto.task.TaskResponseDto;
 import org.example.dto.user.registration.UserResponseDto;
+import org.example.model.label.Color;
 import org.example.model.project.Status;
 import org.example.model.task.Priority;
 
@@ -103,5 +110,33 @@ public class TestUtil {
         task.setAssigneeId(3L);
         task.setLabelId(11L);
         return task;
+    }
+
+    public static CommentResponseDto AddRefreshTokenCommentDto() {
+        CommentResponseDto comment = new CommentResponseDto();
+        comment.setId(3L);
+        comment.setTaskId(2L);
+        comment.setUserId(5L);
+        comment.setText("Please, also add refresh token support before closing this task");
+        comment.setTimestamp(LocalDateTime.now());
+        return comment;
+    }
+
+    public static LabelResponseDto PullRequestLabelDto() {
+        LabelResponseDto label = new LabelResponseDto();
+        label.setId(12L);
+        label.setName("Pull Request");
+        label.setColor(Color.SAGE);
+        return label;
+    }
+
+    public static AttachmentResponseDto TestAttachmentDto() {
+        AttachmentResponseDto attachment = new AttachmentResponseDto();
+        attachment.setId(1L);
+        attachment.setTaskId(1L);
+        attachment.setDropboxFileId("dbx_file_test-id");
+        attachment.setFilename("file_test-id");
+        attachment.setUploadDate(LocalDate.of(2026, 1, 1).atStartOfDay());
+        return attachment;
     }
 }
