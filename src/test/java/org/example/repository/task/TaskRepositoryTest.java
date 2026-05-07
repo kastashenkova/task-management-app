@@ -1,4 +1,4 @@
-package org.example.repository;
+package org.example.repository.task;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.Optional;
 import org.example.model.task.Task;
 import org.example.model.user.User;
-import org.example.repository.task.TaskRepository;
 import org.example.repository.task.specification.PrioritySpecificationProvider;
 import org.example.repository.task.specification.StatusSpecificationProvider;
 import org.example.repository.task.specification.TaskSearchParameters;
@@ -54,13 +53,13 @@ public class TaskRepositoryTest {
             "classpath:database/projects/add-projects-to-projects-table.sql",
             "classpath:database/users/add-roles-to-roles-table.sql",
             "classpath:database/users/add-users-to-users-table.sql",
-            "classpath:database/tasks/add-labels-to-labels-table.sql",
+            "classpath:database/labels/add-labels-to-labels-table.sql",
             "classpath:database/tasks/add-tasks-to-tasks-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = {
             "classpath:database/tasks/delete-tasks-from-tasks-table.sql",
-            "classpath:database/tasks/delete-labels-from-labels-table.sql",
+            "classpath:database/labels/delete-labels-from-labels-table.sql",
             "classpath:database/projects/delete-projects-from-projects-table.sql",
             "classpath:database/users/delete-users-from-users-table.sql",
             "classpath:database/users/delete-roles-from-roles-table.sql",
@@ -87,13 +86,13 @@ public class TaskRepositoryTest {
             "classpath:database/projects/add-projects-to-projects-table.sql",
             "classpath:database/users/add-roles-to-roles-table.sql",
             "classpath:database/users/add-users-to-users-table.sql",
-            "classpath:database/tasks/add-labels-to-labels-table.sql",
+            "classpath:database/labels/add-labels-to-labels-table.sql",
             "classpath:database/tasks/add-tasks-to-tasks-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = {
             "classpath:database/tasks/delete-tasks-from-tasks-table.sql",
-            "classpath:database/tasks/delete-labels-from-labels-table.sql",
+            "classpath:database/labels/delete-labels-from-labels-table.sql",
             "classpath:database/projects/delete-projects-from-projects-table.sql",
             "classpath:database/users/delete-users-from-users-table.sql",
             "classpath:database/users/delete-roles-from-roles-table.sql",
@@ -120,13 +119,13 @@ public class TaskRepositoryTest {
             "classpath:database/projects/add-projects-to-projects-table.sql",
             "classpath:database/users/add-roles-to-roles-table.sql",
             "classpath:database/users/add-users-to-users-table.sql",
-            "classpath:database/tasks/add-labels-to-labels-table.sql",
+            "classpath:database/labels/add-labels-to-labels-table.sql",
             "classpath:database/tasks/add-tasks-to-tasks-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = {
             "classpath:database/tasks/delete-tasks-from-tasks-table.sql",
-            "classpath:database/tasks/delete-labels-from-labels-table.sql",
+            "classpath:database/labels/delete-labels-from-labels-table.sql",
             "classpath:database/projects/delete-projects-from-projects-table.sql",
             "classpath:database/users/delete-users-from-users-table.sql",
             "classpath:database/users/delete-roles-from-roles-table.sql",
@@ -152,13 +151,13 @@ public class TaskRepositoryTest {
             "classpath:database/projects/add-projects-to-projects-table.sql",
             "classpath:database/users/add-roles-to-roles-table.sql",
             "classpath:database/users/add-users-to-users-table.sql",
-            "classpath:database/tasks/add-labels-to-labels-table.sql",
+            "classpath:database/labels/add-labels-to-labels-table.sql",
             "classpath:database/tasks/add-tasks-to-tasks-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = {
             "classpath:database/tasks/delete-tasks-from-tasks-table.sql",
-            "classpath:database/tasks/delete-labels-from-labels-table.sql",
+            "classpath:database/labels/delete-labels-from-labels-table.sql",
             "classpath:database/projects/delete-projects-from-projects-table.sql",
             "classpath:database/users/delete-users-from-users-table.sql",
             "classpath:database/users/delete-roles-from-roles-table.sql",
@@ -178,13 +177,13 @@ public class TaskRepositoryTest {
             "classpath:database/projects/add-projects-to-projects-table.sql",
             "classpath:database/users/add-roles-to-roles-table.sql",
             "classpath:database/users/add-users-to-users-table.sql",
-            "classpath:database/tasks/add-labels-to-labels-table.sql",
+            "classpath:database/labels/add-labels-to-labels-table.sql",
             "classpath:database/tasks/add-tasks-to-tasks-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = {
             "classpath:database/tasks/delete-tasks-from-tasks-table.sql",
-            "classpath:database/tasks/delete-labels-from-labels-table.sql",
+            "classpath:database/labels/delete-labels-from-labels-table.sql",
             "classpath:database/projects/delete-projects-from-projects-table.sql",
             "classpath:database/users/delete-users-from-users-table.sql",
             "classpath:database/users/delete-roles-from-roles-table.sql",
@@ -204,13 +203,13 @@ public class TaskRepositoryTest {
             "classpath:database/projects/add-projects-to-projects-table.sql",
             "classpath:database/users/add-roles-to-roles-table.sql",
             "classpath:database/users/add-users-to-users-table.sql",
-            "classpath:database/tasks/add-labels-to-labels-table.sql",
+            "classpath:database/labels/add-labels-to-labels-table.sql",
             "classpath:database/tasks/add-tasks-to-tasks-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = {
             "classpath:database/tasks/delete-tasks-from-tasks-table.sql",
-            "classpath:database/tasks/delete-labels-from-labels-table.sql",
+            "classpath:database/labels/delete-labels-from-labels-table.sql",
             "classpath:database/projects/delete-projects-from-projects-table.sql",
             "classpath:database/users/delete-users-from-users-table.sql",
             "classpath:database/users/delete-roles-from-roles-table.sql",
@@ -232,13 +231,13 @@ public class TaskRepositoryTest {
             "classpath:database/projects/add-projects-to-projects-table.sql",
             "classpath:database/users/add-roles-to-roles-table.sql",
             "classpath:database/users/add-users-to-users-table.sql",
-            "classpath:database/tasks/add-labels-to-labels-table.sql",
+            "classpath:database/labels/add-labels-to-labels-table.sql",
             "classpath:database/tasks/add-tasks-to-tasks-table.sql"
     },
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = {
             "classpath:database/tasks/delete-tasks-from-tasks-table.sql",
-            "classpath:database/tasks/delete-labels-from-labels-table.sql",
+            "classpath:database/labels/delete-labels-from-labels-table.sql",
             "classpath:database/projects/delete-projects-from-projects-table.sql",
             "classpath:database/users/delete-users-from-users-table.sql",
             "classpath:database/users/delete-roles-from-roles-table.sql",

@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 public class RoleDto {
     @NotBlank
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 20, message = "{validation.role.size}")
     private String name;
 }

@@ -8,15 +8,9 @@ import org.example.dto.label.LabelResponseDto;
 import org.example.service.label.LabelService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Labels management",
         description = "Endpoints for managing labels")
@@ -30,6 +24,7 @@ public class LabelController {
     @Operation(summary = "Create a new label",
             description = "Create a new label")
     @PreAuthorize("hasRole('ADMIN')")
+    @ResponseStatus(HttpStatus.CREATED)
     public LabelResponseDto createLabel(@RequestBody LabelRequestDto labelRequestDto) {
         return labelService.createLabel(labelRequestDto);
     }
@@ -55,6 +50,7 @@ public class LabelController {
     @Operation(summary = "Delete label",
             description = "Delete label by its id")
     @PreAuthorize("hasRole('ADMIN')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteLabelById(@PathVariable Long id) {
         labelService.deleteLabelById(id);
     }

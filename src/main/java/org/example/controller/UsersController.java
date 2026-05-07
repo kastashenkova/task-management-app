@@ -2,6 +2,7 @@ package org.example.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.user.RoleDto;
 import org.example.dto.user.UserUpdateRequestDto;
@@ -48,7 +49,7 @@ public class UsersController {
     @Operation(summary = "Update profile info",
             description = "Update my profile info")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public UserResponseDto updateMyInfo(@RequestBody UserUpdateRequestDto userRequestDto) {
+    public UserResponseDto updateMyInfo(@RequestBody @Valid UserUpdateRequestDto userRequestDto) {
         return userService.updateMyInfo(userRequestDto);
     }
 }

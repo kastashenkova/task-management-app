@@ -12,6 +12,6 @@ public class CommentRequestDto {
     @NotEmpty
     private Long taskId;
     @NotBlank
-    @Length(min = 1, max = 500)
+    @Length(min = 1, max = 500, message = "{validation.text.size}")
     private String text;
 }
