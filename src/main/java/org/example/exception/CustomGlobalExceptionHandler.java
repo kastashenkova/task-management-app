@@ -1,5 +1,6 @@
 package org.example.exception;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,14 +21,11 @@ public class CustomGlobalExceptionHandler {
     public ResponseEntity<ValidationErrorResponse> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
 
-        Map<String, String> errors = ex.getBindingResult()
-                .getFieldErrors()
-                .stream()
-                .collect(Collectors.toMap(
-                        FieldError::getField,
-                        DefaultMessageSourceResolvable::getDefaultMessage,
-                        (a, b) -> a
-                ));
+        Map<String, String> errors = new HashMap<>();
+        for (FieldError fieldError : ex.getBindingResult()
+                .getFieldErrors()) {
+            errors.putIfAbsent(fieldError.getField(), fieldError.getDefaultMessage());
+        }
 
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
