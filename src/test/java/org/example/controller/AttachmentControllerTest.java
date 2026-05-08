@@ -160,7 +160,7 @@ public class AttachmentControllerTest {
         byte[] fileContent = "Test Content".getBytes();
         MockMultipartFile mockFile = new MockMultipartFile(
                 "file",
-                "test.pdf",
+                "build-payroll-module_test.pdf",
                 MediaType.APPLICATION_PDF_VALUE,
                 fileContent
         );
@@ -181,7 +181,7 @@ public class AttachmentControllerTest {
                 .getResponse()
                 .getContentAsString(), AttachmentResponseDto.class);
 
-        AttachmentResponseDto expected = TestUtil.TestAttachmentDto();
+        AttachmentResponseDto expected = TestUtil.AttachmentForBuildPayrollModuleTaskDto();
 
         assertNotNull(actual);
         assertNotNull(actual.getId());

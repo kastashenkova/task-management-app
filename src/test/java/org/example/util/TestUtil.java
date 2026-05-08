@@ -146,13 +146,23 @@ public class TestUtil {
         return label;
     }
 
-    public static AttachmentResponseDto TestAttachmentDto() {
+    public static AttachmentResponseDto AttachmentForBuildPayrollModuleTaskDto() {
         AttachmentResponseDto attachment = new AttachmentResponseDto();
         attachment.setId(1L);
         attachment.setTaskId(1L);
         attachment.setDropboxFileId("dbx_file_test-id");
         attachment.setFilename("file_test-id");
         attachment.setUploadDate(LocalDate.of(2026, 1, 1).atStartOfDay());
+        return attachment;
+    }
+
+    public static AttachmentResponseDto AttachmentForAddPaymentCountryTaskDto() {
+        AttachmentResponseDto attachment = new AttachmentResponseDto();
+        attachment.setId(2L);
+        attachment.setTaskId(1L);
+        attachment.setDropboxFileId("dbx_add-payment-country_test-id");
+        attachment.setFilename("file_test-id");
+        attachment.setUploadDate(LocalDate.of(2026, 2, 2).atStartOfDay());
         return attachment;
     }
 }
