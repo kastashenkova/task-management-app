@@ -2,12 +2,14 @@ package org.example.dto.project;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.example.model.project.Status;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
+@Accessors(chain = true)
 public class ProjectResponseDto {
     private Long id;
     private String name;

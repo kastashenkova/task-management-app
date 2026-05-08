@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.example.model.label.Label;
 import org.example.model.project.Project;
 import org.example.model.user.User;
@@ -26,6 +27,7 @@ import org.hibernate.annotations.SQLRestriction;
 @SQLDelete(sql = "UPDATE tasks SET is_deleted = true WHERE id = ?")
 @SQLRestriction("is_deleted = false")
 @Table(name = "tasks")
+@Accessors(chain = true)
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

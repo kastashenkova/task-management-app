@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.example.dto.user.registration.annotation.FieldMatch;
 import org.hibernate.validator.constraints.Length;
 
@@ -12,20 +13,21 @@ import org.hibernate.validator.constraints.Length;
 @FieldMatch(first = "password",
         second = "repeatPassword",
         message = "Password and repeated password do not match")
+@Accessors(chain = true)
 public class UserUpdateRequestDto {
-    @Length(min = 3, max = 35)
+    @Length(min = 3, max = 35, message = "{validation.username.size}")
     private String username;
-    @Email
+    @Email(message = "{validation.email.invalid}")
     private String email;
     @Length(min = 8, max = 13)
     @Pattern(
             regexp = "^(\\+380|0)\\d{9}$",
-            message = "Phone number must be in format +380XXXXXXXXX or 0XXXXXXXXX"
+            message = "{validation.phone.invalid}"
     )
     private String phoneNumber;
-    @Length(min = 8, max = 35)
+    @Length(min = 8, max = 35, message = "{validation.password.size}")
     private String password;
-    @Length(min = 8, max = 35)
+    @Length(min = 8, max = 35, message = "{validation.password.size}")
     private String repeatPassword;
     private String firstName;
     private String lastName;

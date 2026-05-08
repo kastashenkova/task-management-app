@@ -1,11 +1,10 @@
-package org.example.repository;
+package org.example.repository.comment;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.example.model.Comment;
-import org.example.repository.comment.CommentRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,7 @@ public class CommentRepositoryTest {
             "classpath:database/projects/add-projects-to-projects-table.sql",
             "classpath:database/users/add-roles-to-roles-table.sql",
             "classpath:database/users/add-users-to-users-table.sql",
-            "classpath:database/tasks/add-labels-to-labels-table.sql",
+            "classpath:database/labels/add-labels-to-labels-table.sql",
             "classpath:database/tasks/add-tasks-to-tasks-table.sql",
             "classpath:database/comments/add-comments-to-comments-table.sql",
     },
@@ -41,7 +40,7 @@ public class CommentRepositoryTest {
     @Sql(scripts = {
             "classpath:database/comments/delete-comments-from-comments-table.sql",
             "classpath:database/tasks/delete-tasks-from-tasks-table.sql",
-            "classpath:database/tasks/delete-labels-from-labels-table.sql",
+            "classpath:database/labels/delete-labels-from-labels-table.sql",
             "classpath:database/projects/delete-projects-from-projects-table.sql",
             "classpath:database/users/delete-users-from-users-table.sql",
             "classpath:database/users/delete-roles-from-roles-table.sql",
@@ -61,7 +60,7 @@ public class CommentRepositoryTest {
             "classpath:database/projects/add-projects-to-projects-table.sql",
             "classpath:database/users/add-roles-to-roles-table.sql",
             "classpath:database/users/add-users-to-users-table.sql",
-            "classpath:database/tasks/add-labels-to-labels-table.sql",
+            "classpath:database/labels/add-labels-to-labels-table.sql",
             "classpath:database/tasks/add-tasks-to-tasks-table.sql",
             "classpath:database/comments/add-comments-to-comments-table.sql",
     },
@@ -69,7 +68,7 @@ public class CommentRepositoryTest {
     @Sql(scripts = {
             "classpath:database/comments/delete-comments-from-comments-table.sql",
             "classpath:database/tasks/delete-tasks-from-tasks-table.sql",
-            "classpath:database/tasks/delete-labels-from-labels-table.sql",
+            "classpath:database/labels/delete-labels-from-labels-table.sql",
             "classpath:database/projects/delete-projects-from-projects-table.sql",
             "classpath:database/users/delete-users-from-users-table.sql",
             "classpath:database/users/delete-roles-from-roles-table.sql",
@@ -89,7 +88,7 @@ public class CommentRepositoryTest {
             "classpath:database/projects/add-projects-to-projects-table.sql",
             "classpath:database/users/add-roles-to-roles-table.sql",
             "classpath:database/users/add-users-to-users-table.sql",
-            "classpath:database/tasks/add-labels-to-labels-table.sql",
+            "classpath:database/labels/add-labels-to-labels-table.sql",
             "classpath:database/tasks/add-tasks-to-tasks-table.sql",
             "classpath:database/comments/add-comments-to-comments-table.sql",
     },
@@ -97,7 +96,7 @@ public class CommentRepositoryTest {
     @Sql(scripts = {
             "classpath:database/comments/delete-comments-from-comments-table.sql",
             "classpath:database/tasks/delete-tasks-from-tasks-table.sql",
-            "classpath:database/tasks/delete-labels-from-labels-table.sql",
+            "classpath:database/labels/delete-labels-from-labels-table.sql",
             "classpath:database/projects/delete-projects-from-projects-table.sql",
             "classpath:database/users/delete-users-from-users-table.sql",
             "classpath:database/users/delete-roles-from-roles-table.sql",
@@ -116,7 +115,7 @@ public class CommentRepositoryTest {
             "classpath:database/projects/add-projects-to-projects-table.sql",
             "classpath:database/users/add-roles-to-roles-table.sql",
             "classpath:database/users/add-users-to-users-table.sql",
-            "classpath:database/tasks/add-labels-to-labels-table.sql",
+            "classpath:database/labels/add-labels-to-labels-table.sql",
             "classpath:database/tasks/add-tasks-to-tasks-table.sql",
             "classpath:database/comments/add-comments-to-comments-table.sql",
     },
@@ -124,7 +123,7 @@ public class CommentRepositoryTest {
     @Sql(scripts = {
             "classpath:database/comments/delete-comments-from-comments-table.sql",
             "classpath:database/tasks/delete-tasks-from-tasks-table.sql",
-            "classpath:database/tasks/delete-labels-from-labels-table.sql",
+            "classpath:database/labels/delete-labels-from-labels-table.sql",
             "classpath:database/projects/delete-projects-from-projects-table.sql",
             "classpath:database/users/delete-users-from-users-table.sql",
             "classpath:database/users/delete-roles-from-roles-table.sql",

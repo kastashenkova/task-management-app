@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.example.model.task.Priority;
 import org.example.model.task.Status;
 import org.hibernate.validator.constraints.Length;
@@ -12,18 +13,19 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Setter
+@Accessors(chain = true)
 public class TaskRequestDto {
     @NotBlank
-    @Length(min = 1, max = 100)
+    @Length(min = 1, max = 100, message = "{validation.name.size}")
     private String name;
     @NotBlank
-    @Length(min = 1, max = 500)
+    @Length(min = 1, max = 500, message = "{validation.description.size}")
     private String description;
     @NotBlank
-    @Length(min = 1, max = 20)
+    @Length(min = 1, max = 20, message = "{validation.priority.size}")
     private Priority priority;
     @NotBlank
-    @Length(min = 1, max = 20)
+    @Length(min = 1, max = 20, message = "{validation.status.size}")
     private Status status;
     @NotBlank
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
