@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.checkerframework.checker.regex.qual.Regex;
 import org.example.dto.user.registration.annotation.FieldMatch;
 import org.example.model.user.Role;
@@ -17,6 +18,7 @@ import java.util.Set;
 @FieldMatch(first = "password",
         second = "repeatPassword",
         message = "Password and repeated password do not match")
+@Accessors(chain = true)
 public class UserRegistrationRequestDto {
     @NotBlank
     @Length(min = 3, max = 35, message = "{validation.username.size}")

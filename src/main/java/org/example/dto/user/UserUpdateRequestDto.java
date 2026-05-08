@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.example.dto.user.registration.annotation.FieldMatch;
 import org.hibernate.validator.constraints.Length;
 
@@ -12,6 +13,7 @@ import org.hibernate.validator.constraints.Length;
 @FieldMatch(first = "password",
         second = "repeatPassword",
         message = "Password and repeated password do not match")
+@Accessors(chain = true)
 public class UserUpdateRequestDto {
     @Length(min = 3, max = 35, message = "{validation.username.size}")
     private String username;

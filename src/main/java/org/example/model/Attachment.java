@@ -12,12 +12,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.example.model.task.Task;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "attachments")
+@Accessors(chain = true)
 public class Attachment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

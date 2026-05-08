@@ -2,9 +2,7 @@ package org.example.util;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
 import org.example.dto.attachment.AttachmentResponseDto;
-import org.example.dto.comment.CommentRequestDto;
 import org.example.dto.comment.CommentResponseDto;
 import org.example.dto.label.LabelResponseDto;
 import org.example.dto.project.ProjectResponseDto;
@@ -122,11 +120,29 @@ public class TestUtil {
         return comment;
     }
 
+    public static CommentResponseDto AddGoogleCloudAPICommentDto() {
+        CommentResponseDto comment = new CommentResponseDto();
+        comment.setId(4L);
+        comment.setTaskId(2L);
+        comment.setUserId(5L);
+        comment.setText("Please, provide relevant connection with Google Cloud API");
+        comment.setTimestamp(LocalDateTime.now());
+        return comment;
+    }
+
     public static LabelResponseDto PullRequestLabelDto() {
         LabelResponseDto label = new LabelResponseDto();
         label.setId(12L);
         label.setName("Pull Request");
         label.setColor(Color.SAGE);
+        return label;
+    }
+
+    public static LabelResponseDto MergeConflictLabelDto() {
+        LabelResponseDto label = new LabelResponseDto();
+        label.setId(13L);
+        label.setName("Merge Conflict");
+        label.setColor(Color.GRAPE);
         return label;
     }
 

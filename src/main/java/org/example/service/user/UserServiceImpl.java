@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
             user.setLastName(userRequestDto.getLastName());
         }
         if (userRequestDto.getPassword() != null && !userRequestDto.getPassword().isEmpty()) {
-            user.setPassword(userRequestDto.getPassword());
+            user.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
         }
         userRepository.save(user);
         return userMapper.toDto(user);

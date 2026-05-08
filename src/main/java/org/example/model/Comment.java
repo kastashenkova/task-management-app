@@ -13,6 +13,7 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.example.model.task.Task;
 import org.example.model.user.User;
 import org.hibernate.annotations.SQLDelete;
@@ -24,6 +25,7 @@ import org.hibernate.annotations.SQLRestriction;
 @SQLDelete(sql = "UPDATE comments SET is_deleted = true WHERE id = ?")
 @SQLRestriction("is_deleted = false")
 @Table(name = "comments")
+@Accessors(chain = true)
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

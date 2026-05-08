@@ -4,12 +4,14 @@ import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.example.model.project.Status;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Setter
+@Accessors(chain = true)
 public class ProjectRequestDto {
     @NotBlank
     @Length(min = 1, max = 100, message = "{validation.name.size}")

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.example.model.task.Priority;
 import org.example.model.task.Status;
 import org.hibernate.validator.constraints.Length;
@@ -12,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Setter
+@Accessors(chain = true)
 public class TaskRequestDto {
     @NotBlank
     @Length(min = 1, max = 100, message = "{validation.name.size}")
