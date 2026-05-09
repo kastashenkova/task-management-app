@@ -202,9 +202,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.wiremock</groupId>
-            <artifactId>wiremock</artifactId>
-            <version>3.13.2</version>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>mockwebserver</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -265,6 +264,15 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.11</version>
+                <configuration>
+                    <excludes>
+                        <exclude>org/example/Application.class</exclude>
+                        <exclude>org/example/dto/**</exclude>
+                        <exclude>org/example/model/**</exclude>
+                        <exclude>org/example/config/**</exclude>
+                        <exclude>org/example/exception/**</exclude>
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>

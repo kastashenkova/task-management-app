@@ -1,29 +1,27 @@
-package org.example.service.third_party;
+package org.example.service.third_party.google_calendar;
 
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
-import com.google.api.services.calendar.model.*;
+import com.google.api.services.calendar.model.Event;
+import com.google.api.services.calendar.model.EventAttendee;
+import com.google.api.services.calendar.model.EventDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import org.example.model.task.Task;
+import org.example.service.third_party.CalendarEventResult;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class GoogleCalendarService {
-    private static final String APP_NAME = "Task Management App";
     private static final ZoneId KYIV_ZONE = ZoneId.of("Europe/Kyiv");
 
-    private final GoogleAuthorizationCodeFlow flow;
+    private final GoogleCalendarClientFactory calendarClientFactory;
 
     public CalendarEventResult createEvent(Task task, Long adminId) throws Exception {
-        Calendar client = getCalendarClient(adminId);
+        Calendar client = calendarClientFactory.getClient(adminId);
 
         ZonedDateTime start = ZonedDateTime.now(KYIV_ZONE);
         ZonedDateTime end = task.getDueDate()
@@ -65,7 +63,7 @@ public class GoogleCalendarService {
             return;
         }
 
-        Calendar client = getCalendarClient(adminId);
+        Calendar client = calendarClientFactory.getClient(adminId);
 
         Event event = client.events()
                 .get("primary", task.getCalendarEventId())
@@ -94,9 +92,11 @@ public class GoogleCalendarService {
     }
 
     public void deleteEvent(Task task, Long adminId) throws Exception {
-        if (task.getCalendarEventId() == null) return;
+        if (task.getCalendarEventId() == null) {
+            return;
+        }
 
-        getCalendarClient(adminId)
+        calendarClientFactory.getClient(adminId)
                 .events()
                 .delete("primary", task.getCalendarEventId())
                 .setSendUpdates("all")
@@ -124,21 +124,5 @@ public class GoogleCalendarService {
                 task.getProject().getId(),
                 task.getProject().getName()
         );
-    }
-
-    private Calendar getCalendarClient(Long adminId) throws Exception {
-        Credential credential = flow.loadCredential(adminId.toString());
-
-        if (credential == null) {
-            throw new IllegalStateException("Admin has not connected Google Calendar");
-        }
-
-        return new Calendar.Builder(
-                GoogleNetHttpTransport.newTrustedTransport(),
-                GsonFactory.getDefaultInstance(),
-                credential
-        )
-                .setApplicationName(APP_NAME)
-                .build();
     }
 }

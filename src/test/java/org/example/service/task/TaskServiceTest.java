@@ -32,7 +32,7 @@ import org.example.repository.task.specification.TaskSearchParameters;
 import org.example.repository.task.specification.TaskSpecificationBuilder;
 import org.example.repository.user.UserRepository;
 import org.example.service.third_party.CalendarEventResult;
-import org.example.service.third_party.GoogleCalendarService;
+import org.example.service.third_party.google_calendar.GoogleCalendarService;
 import org.example.service.third_party.WhatsAppService;
 import org.example.util.TestUtil;
 import org.junit.jupiter.api.DisplayName;
@@ -170,6 +170,27 @@ public class TaskServiceTest {
 
     @Test
     @DisplayName("""
+                Should return Not Found
+                """)
+    void createTask_nonExistingForeignKeyEntity_ReturnsNotFound() throws Exception {
+        TaskRequestDto taskRequestDto = new TaskRequestDto()
+                .setName("Build Payroll Module")
+                .setDescription("Develop salary calculation module with tax deductions "
+                        + "and automated monthly payslip generation")
+                .setPriority(Priority.MEDIUM)
+                .setStatus(org.example.model.task.Status.NOT_STARTED)
+                .setDueDate(LocalDate.of(2026, 7, 15))
+                .setProjectId(3L)
+                .setAssigneeId(3L)
+                .setLabelId(6L);
+
+        assertThrows(EntityNotFoundException.class, () -> taskService.createTask(taskRequestDto));
+
+        verify(taskRepository, times(0)).save(any(Task.class));
+    }
+
+    @Test
+    @DisplayName("""
                 Should return all available tasks
                 """)
     void getTasksForProject_twoTasksInProject_ReturnsAllTasks() {
@@ -237,6 +258,33 @@ public class TaskServiceTest {
 
     @Test
     @DisplayName("""
+                Should return Not Found
+                """)
+    void getTasksForProject_nonExistingProject_ReturnsNotFound() {
+        Pageable pageable = PageRequest.of(0, 10);
+        Long nonExistingProjectId = 10L;
+        User mockUser = new User()
+                .setId(1L)
+                .setUsername("mockUserName");
+
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        when(authentication.getName()).thenReturn(mockUser.getUsername());
+
+        SecurityContextHolder.setContext(securityContext);
+
+        when(userRepository.findByUsername(mockUser.getUsername()))
+                .thenReturn(Optional.of(mockUser));
+        assertThrows(EntityNotFoundException.class,
+                () -> taskService.getTasksForProject(nonExistingProjectId,  pageable));
+
+        verify(taskRepository, times(0))
+                .findAllByProject_Id(nonExistingProjectId, pageable);
+        verify(projectRepository, times(1))
+                .findByAssigneeIdAndId(mockUser.getId(), nonExistingProjectId);
+    }
+
+    @Test
+    @DisplayName("""
                 Should return empty page
                 """)
     void getTasksForProject_noTasks_ReturnsEmptyPage() {
@@ -270,7 +318,6 @@ public class TaskServiceTest {
         verify(taskRepository, times(1))
                 .findAllByProject_Id(eq(mockProjectId), any(Pageable.class));
     }
-
     @Test
     @DisplayName("""
                 Get existing Task by its id
@@ -338,6 +385,7 @@ public class TaskServiceTest {
         verify(taskRepository, times(1))
                 .findTaskByIdAndAssignee(nonExistingTaskId, mockUser);
     }
+
 
     @Test
     @DisplayName("""

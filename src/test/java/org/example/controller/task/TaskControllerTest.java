@@ -21,7 +21,7 @@ import org.example.dto.task.TaskResponseDto;
 import org.example.model.task.Priority;
 import org.example.model.task.Status;
 import org.example.service.third_party.CalendarEventResult;
-import org.example.service.third_party.GoogleCalendarService;
+import org.example.service.third_party.google_calendar.GoogleCalendarService;
 import org.example.util.TestUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

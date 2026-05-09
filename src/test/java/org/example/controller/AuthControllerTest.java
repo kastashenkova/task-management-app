@@ -135,7 +135,7 @@ class AuthControllerTest {
 
     @Test
     @DisplayName("""
-            Should return UNAUTHORIZED exception 
+            Should return UNAUTHORIZED exception
             """)
     void login_nonExistingUser_ReturnsUnauthorized() throws Exception {
         UserLoginRequestDto loginRequest = new UserLoginRequestDto();

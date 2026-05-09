@@ -51,6 +51,6 @@ public class GoogleAuthController {
                 .execute();
 
         flow.createAndStoreCredential(tokenResponse, state);
-        return ResponseEntity.ok("Google Calendar connected");
+        return ResponseEntity.ok("Google Calendar connected! Now you can return back to the Task Management System API page.");
     }
 }
