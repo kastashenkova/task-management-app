@@ -32,7 +32,7 @@ import org.example.repository.task.specification.TaskSearchParameters;
 import org.example.repository.task.specification.TaskSpecificationBuilder;
 import org.example.repository.user.UserRepository;
 import org.example.service.third_party.CalendarEventResult;
-import org.example.service.third_party.GoogleCalendarService;
+import org.example.service.third_party.google_calendar.GoogleCalendarService;
 import org.example.service.third_party.WhatsAppService;
 import org.example.util.TestUtil;
 import org.junit.jupiter.api.DisplayName;
