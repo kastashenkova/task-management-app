@@ -270,7 +270,6 @@ public class TaskServiceTest {
         verify(taskRepository, times(1))
                 .findAllByProject_Id(eq(mockProjectId), any(Pageable.class));
     }
-
     @Test
     @DisplayName("""
                 Get existing Task by its id
@@ -338,6 +337,7 @@ public class TaskServiceTest {
         verify(taskRepository, times(1))
                 .findTaskByIdAndAssignee(nonExistingTaskId, mockUser);
     }
+
 
     @Test
     @DisplayName("""
