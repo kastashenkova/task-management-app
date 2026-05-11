@@ -25,7 +25,7 @@ Manage tasks and projects effectively through a web-based application. This syst
 - Docker and Swagger usage
 - +80% test coverage (both unit and integration testing)
 
-<img width="573" height="485" alt="image" src="https://github.com/user-attachments/assets/4d6b554f-4107-43ae-9277-040388fd7107" />
+<img width="576" height="482" alt="image" src="https://github.com/user-attachments/assets/6fb0b1f9-5462-4332-98f0-5fef4cedcb5e" />
 
 > *Created with JaCoCo*
 
