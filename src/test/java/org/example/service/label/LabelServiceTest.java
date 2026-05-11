@@ -88,14 +88,10 @@ public class LabelServiceTest {
                 """)
     void getLabels_twoLabels_ReturnsAllLabels() {
         LabelResponseDto pullRequestLabelResponseDto = TestUtil.PullRequestLabelDto();
-        Label pullRequestLabel = new Label();
-        pullRequestLabel.setName(pullRequestLabelResponseDto.getName());
-        pullRequestLabel.setColor(pullRequestLabelResponseDto.getColor());
+        Label pullRequestLabel = TestUtil.PullRequestLabel();
 
         LabelResponseDto mergeConflictLabelResponseDto = TestUtil.MergeConflictLabelDto();
-        Label mergeConflictLabel = new Label()
-                .setName(mergeConflictLabelResponseDto.getName())
-                .setColor(mergeConflictLabelResponseDto.getColor());
+        Label mergeConflictLabel = TestUtil.MergeConflictLabel();
 
         List<Label> labels
                 = List.of(pullRequestLabel, mergeConflictLabel);
@@ -187,7 +183,7 @@ public class LabelServiceTest {
         labelWithoutId.setName(requestDto.getName());
         labelWithoutId.setColor(requestDto.getColor());
 
-       assertThrows(EntityNotFoundException.class,
+        assertThrows(EntityNotFoundException.class,
                () -> labelService.updateLabelById(1L, requestDto));
 
         verify(labelRepository, times(0)).save(labelWithoutId);

@@ -69,40 +69,23 @@ public class UserServiceTest {
                 """)
     void register_newUser_ReturnsNewUser() {
         // given
-        UserRegistrationRequestDto requestDto = new UserRegistrationRequestDto();
-        requestDto.setUsername("john.carter");
-        requestDto.setEmail("john.carter@company.com");
-        requestDto.setPhoneNumber("+380988888888");
-        requestDto.setFirstName("John");
-        requestDto.setLastName("Carter");
-        requestDto.setPassword("password");
-        requestDto.setRepeatPassword("password");
+        UserRegistrationRequestDto requestDto = TestUtil.AliceRegistrationRequestDto();
 
-        User userWithoutId = new User();
-        userWithoutId.setUsername(requestDto.getUsername());
-        userWithoutId.setEmail(requestDto.getEmail());
-        userWithoutId.setPhoneNumber(requestDto.getPhoneNumber());
-        userWithoutId.setFirstName(requestDto.getFirstName());
-        userWithoutId.setLastName(requestDto.getLastName());
-        userWithoutId.setPassword(requestDto.getPassword());
+        User userWithoutId = new User()
+                .setUsername(requestDto.getUsername())
+                .setEmail(requestDto.getEmail())
+                .setPhoneNumber(requestDto.getPhoneNumber())
+                .setFirstName(requestDto.getFirstName())
+                .setLastName(requestDto.getLastName())
+                .setPassword(requestDto.getPassword());
 
-        User saved = new User();
-        saved.setId(1L);
-        saved.setUsername(requestDto.getUsername());
-        saved.setEmail(requestDto.getEmail());
-        saved.setPhoneNumber(requestDto.getPhoneNumber());
-        saved.setFirstName(requestDto.getFirstName());
-        saved.setLastName(requestDto.getLastName());
-        saved.setPassword(requestDto.getPassword());
-        Role role = new Role();
-        role.setId(1L);
-        role.setName(Role.RoleName.USER);
-        saved.setRole(role);
+        User saved = TestUtil.Alice();
 
-        UserResponseDto expected = TestUtil.JohnDto();
+        UserResponseDto expected = TestUtil.AliceDto();
 
         when(userMapper.toEntity(requestDto)).thenReturn(userWithoutId);
-        when(roleRepository.findRoleByName(Role.RoleName.USER)).thenReturn(Optional.of(role));
+        when(roleRepository.findRoleByName(Role.RoleName.USER))
+                .thenReturn(Optional.of(saved.getRole()));
         when(passwordEncoder.encode(anyString())).thenReturn("encodedPassword");
         when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
         when(userRepository.save(userWithoutId)).thenReturn(saved);
@@ -127,35 +110,31 @@ public class UserServiceTest {
                 """)
     void updateUserRoleById_existingUser_ReturnsUpdatedUser() {
         // given
-        RoleDto roleDto = new RoleDto();
-        roleDto.setName("ADMIN");
+        RoleDto roleDto = new RoleDto()
+                .setName("ADMIN");
 
-        User userWithoutId = new User();
-        userWithoutId.setUsername("alice.black");
-        userWithoutId.setEmail("alice.black@company.com");
-        userWithoutId.setPhoneNumber("+380912345678");
-        userWithoutId.setFirstName("Alice");
-        userWithoutId.setLastName("Black");
-        userWithoutId.setPassword("password");
+        UserRegistrationRequestDto requestDto = TestUtil.AliceRegistrationRequestDto();
 
-        User updated = new User();
-        updated.setId(1L);
-        updated.setUsername(userWithoutId.getUsername());
-        updated.setEmail(userWithoutId.getEmail());
-        updated.setPhoneNumber(userWithoutId.getPhoneNumber());
-        updated.setFirstName(userWithoutId.getFirstName());
-        updated.setLastName(userWithoutId.getLastName());
-        updated.setPassword(userWithoutId.getPassword());
-        Role role = new Role();
-        role.setId(1L);
-        role.setName(Role.RoleName.ADMIN);
-        updated.setRole(role);
+        User userWithoutId = new User()
+                .setUsername(requestDto.getUsername())
+                .setEmail(requestDto.getEmail())
+                .setPhoneNumber(requestDto.getPhoneNumber())
+                .setFirstName(requestDto.getFirstName())
+                .setLastName(requestDto.getLastName())
+                .setPassword(requestDto.getPassword());
 
-        UserResponseDto expected = TestUtil.AliceDto();
-        expected.setRole("ADMIN");
+        Role role = new Role()
+                .setName(Role.RoleName.ADMIN);
+
+        User updated = TestUtil.Alice()
+                .setRole(role);
+
+        UserResponseDto expected = TestUtil.AliceDto()
+                .setRole("ADMIN");
 
         when(userRepository.findById(1L)).thenReturn(Optional.of(userWithoutId));
-        when(roleRepository.findRoleByName(Role.RoleName.ADMIN)).thenReturn(Optional.of(role));
+        when(roleRepository.findRoleByName(Role.RoleName.ADMIN))
+                .thenReturn(Optional.of(role));
         when(userRepository.save(userWithoutId)).thenReturn(updated);
         when(userMapper.toDto(any(User.class))).thenReturn(expected);
 
@@ -176,16 +155,18 @@ public class UserServiceTest {
                 Should return Not Found
                 """)
     void updateUserRoleById_nonExistingUser_ReturnsNotFound() {
-        RoleDto roleDto = new RoleDto();
-        roleDto.setName("ADMIN");
+        RoleDto roleDto = new RoleDto()
+                .setName("ADMIN");
 
-        User userWithoutId = new User();
-        userWithoutId.setUsername("alice.black");
-        userWithoutId.setEmail("alice.black@company.com");
-        userWithoutId.setPhoneNumber("+380912345678");
-        userWithoutId.setFirstName("Alice");
-        userWithoutId.setLastName("Black");
-        userWithoutId.setPassword("password");
+        UserRegistrationRequestDto requestDto = TestUtil.AliceRegistrationRequestDto();
+
+        User userWithoutId = new User()
+                .setUsername(requestDto.getUsername())
+                .setEmail(requestDto.getEmail())
+                .setPhoneNumber(requestDto.getPhoneNumber())
+                .setFirstName(requestDto.getFirstName())
+                .setLastName(requestDto.getLastName())
+                .setPassword(requestDto.getPassword());
 
         assertThrows(EntityNotFoundException.class,
                 () -> userService.updateUserRoleById(1L, roleDto));
@@ -199,13 +180,7 @@ public class UserServiceTest {
             """)
     void getMyInfo_loggedInUser_ReturnsLoggedInUserInfo() {
         UserResponseDto johnDto = TestUtil.JohnDto();
-        User john = new User();
-        john.setUsername(johnDto.getUsername());
-        john.setEmail(johnDto.getEmail());
-        john.setPhoneNumber(johnDto.getPhoneNumber());
-        john.setFirstName(johnDto.getFirstName());
-        john.setLastName(johnDto.getLastName());
-        john.setPassword("password");
+        User john = TestUtil.John();
 
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn(johnDto.getUsername());

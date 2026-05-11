@@ -2,7 +2,7 @@ package org.example.service.attachment;
 
 import jakarta.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.ZoneOffset;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.attachment.AttachmentResponseDto;
 import org.example.mapper.AttachmentMapper;
@@ -34,17 +34,19 @@ public class AttachmentServiceImpl implements AttachmentService {
     @Override
     @Transactional
     public AttachmentResponseDto createAttachment(Long taskId, MultipartFile file) throws Exception {
-        Attachment attachment = new Attachment();
-        attachment.setTask(getTaskById(taskId));
         String dropboxPath = dropboxService.uploadFile(file);
-        attachment.setDropboxFileId(dropboxPath);
         String resolvedFilename = dropboxPath.substring(dropboxPath.indexOf('_') + 1);
-        attachment.setFilename(resolvedFilename);
-        attachment.setUploadDate(LocalDateTime.now(ZoneId.of("Europe/Kyiv")));
+
+        Attachment attachment = new Attachment()
+                .setTask(getTaskById(taskId))
+                .setDropboxFileId(dropboxPath)
+                .setFilename(resolvedFilename)
+                .setUploadDate(LocalDateTime.now(ZoneOffset.UTC));
         return attachmentMapper.toDto(attachmentRepository.save(attachment));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<AttachmentResponseDto> getAllForTask(Long taskId, Pageable pageable) {
         getTaskById(taskId);
         return attachmentRepository.findAllByTask_Id(taskId, pageable)

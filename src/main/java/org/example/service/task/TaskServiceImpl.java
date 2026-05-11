@@ -111,13 +111,7 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     public TaskResponseDto updateTaskById(Long id, TaskRequestDto taskRequestDto) {
         Task task = getById(id);
-
-        task.setName(taskRequestDto.getName());
-        task.setDescription(taskRequestDto.getDescription());
-        task.setPriority(taskRequestDto.getPriority());
-        task.setStatus(taskRequestDto.getStatus());
-        task.setDueDate(taskRequestDto.getDueDate());
-
+        taskMapper.updateFromDto(taskRequestDto, task);
         Project project;
         if (!isAdmin()) {
             User user = getCurrentUser();
@@ -152,8 +146,7 @@ public class TaskServiceImpl implements TaskService {
             throw new RuntimeException("Error while updating event: " + e.getMessage());
         }
 
-        taskRepository.save(task);
-        return taskMapper.toDto(task);
+        return taskMapper.toDto(taskRepository.save(task));
     }
 
     @Override

@@ -4,8 +4,11 @@ import org.example.config.MapperConfig;
 import org.example.dto.task.TaskRequestDto;
 import org.example.dto.task.TaskResponseDto;
 import org.example.model.task.Task;
+import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 @Mapper(config = MapperConfig.class)
 public interface TaskMapper {
@@ -16,4 +19,8 @@ public interface TaskMapper {
     TaskResponseDto toDto(Task task);
 
     Task toEntity(TaskRequestDto requestDto);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updateFromDto(TaskRequestDto requestDto,
+                       @MappingTarget Task task);
 }

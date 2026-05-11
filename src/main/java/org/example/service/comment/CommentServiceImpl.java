@@ -1,8 +1,8 @@
 package org.example.service.comment;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import jakarta.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import lombok.RequiredArgsConstructor;
 import org.example.dto.comment.CommentRequestDto;
 import org.example.dto.comment.CommentResponseDto;
@@ -33,16 +33,16 @@ public class CommentServiceImpl implements CommentService {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("User not found: " + username));
-        Comment comment = new Comment();
-        comment.setUser(user);
-        comment.setTask(getTaskById(commentRequestDto.getTaskId()));
-        comment.setText(commentRequestDto.getText());
-        comment.setTimestamp(LocalDateTime.now(ZoneId.of("Europe/Kyiv")));
+        Comment comment = commentMapper.toEntity(commentRequestDto)
+                .setTask(getTaskById(commentRequestDto.getTaskId()))
+                .setUser(user)
+                .setTimestamp(LocalDateTime.now(ZoneOffset.UTC));
         commentRepository.save(comment);
         return commentMapper.toDto(comment);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<CommentResponseDto> getAllForTask(Long taskId, Pageable pageable) {
         getTaskById(taskId);
         return commentRepository.findAllByTask_Id(taskId, pageable)
