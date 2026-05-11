@@ -10,7 +10,6 @@ import static org.mockito.Mockito.verify;
 
 import org.example.dto.task.TaskResponseDto;
 import org.example.model.label.Label;
-import org.example.model.project.Project;
 import org.example.model.task.Task;
 import org.example.model.user.User;
 import org.example.util.TestUtil;
@@ -41,28 +40,13 @@ public class WhatsAppServiceTest {
             """)
     public void sendTaskAssignmentWhatsApp_validInput_SendsTaskAssignment() {
         TaskResponseDto addPaymentCountryTaskDto = TestUtil.AddPaymentCountryTaskDto();
-        User mockAssignee = new User()
-                .setId(addPaymentCountryTaskDto.getAssigneeId())
-                .setUsername("john.carter")
-                .setEmail("john.carter@company.com")
-                .setPhoneNumber("+380988888888")
-                .setFirstName("John")
-                .setLastName("Carter");
-        Project mockProject = new Project()
-                .setId(addPaymentCountryTaskDto.getProjectId())
-                .setName("mockProject");
+        User mockAssignee = TestUtil.John()
+                .setId(addPaymentCountryTaskDto.getAssigneeId());
         Label mockLabel = new Label()
                 .setId(addPaymentCountryTaskDto.getLabelId());
-        Task mockTask = new Task()
-                .setId(addPaymentCountryTaskDto.getId())
-                .setName(addPaymentCountryTaskDto.getName())
-                .setDescription(addPaymentCountryTaskDto.getDescription())
-                .setPriority(addPaymentCountryTaskDto.getPriority())
-                .setStatus(addPaymentCountryTaskDto.getStatus())
-                .setDueDate(addPaymentCountryTaskDto.getDueDate())
-                .setProject(mockProject)
+        Task mockTask = TestUtil.AddPaymentCountryTask()
                 .setAssignee(mockAssignee)
-                .setLabel(mockLabel);
+                .setLabel(mockLabel);;
 
         String mockCalendarEventUrl = "mockCalendarEventUrl";
 
@@ -89,28 +73,14 @@ public class WhatsAppServiceTest {
             """)
     public void sendTaskAssignmentWhatsApp_incorrectPhoneNumber_ReturnsIllegalArgumentException() {
         TaskResponseDto addPaymentCountryTaskDto = TestUtil.AddPaymentCountryTaskDto();
-        User mockAssignee = new User()
+        User mockAssignee = TestUtil.John()
                 .setId(addPaymentCountryTaskDto.getAssigneeId())
-                .setUsername("john.carter")
-                .setEmail("john.carter@company.com")
-                .setPhoneNumber(" ")
-                .setFirstName("John")
-                .setLastName("Carter");
-        Project mockProject = new Project()
-                .setId(addPaymentCountryTaskDto.getProjectId())
-                .setName("mockProject");
+                .setPhoneNumber(" ");
         Label mockLabel = new Label()
                 .setId(addPaymentCountryTaskDto.getLabelId());
-        Task mockTask = new Task()
-                .setId(addPaymentCountryTaskDto.getId())
-                .setName(addPaymentCountryTaskDto.getName())
-                .setDescription(addPaymentCountryTaskDto.getDescription())
-                .setPriority(addPaymentCountryTaskDto.getPriority())
-                .setStatus(addPaymentCountryTaskDto.getStatus())
-                .setDueDate(addPaymentCountryTaskDto.getDueDate())
-                .setProject(mockProject)
+        Task mockTask = TestUtil.AddPaymentCountryTask()
                 .setAssignee(mockAssignee)
-                .setLabel(mockLabel);
+                .setLabel(mockLabel);;
 
         String mockCalendarEventUrl = "mockCalendarEventUrl";
 
@@ -132,26 +102,11 @@ public class WhatsAppServiceTest {
             """)
     public void sendTaskAssignmentWhatsApp_whatsAppError_ReturnsRuntimeException() {
         TaskResponseDto addPaymentCountryTaskDto = TestUtil.AddPaymentCountryTaskDto();
-        User mockAssignee = new User()
-                .setId(addPaymentCountryTaskDto.getAssigneeId())
-                .setUsername("john.carter")
-                .setEmail("john.carter@company.com")
-                .setPhoneNumber("+380988888888")
-                .setFirstName("John")
-                .setLastName("Carter");
-        Project mockProject = new Project()
-                .setId(addPaymentCountryTaskDto.getProjectId())
-                .setName("mockProject");
+        User mockAssignee = TestUtil.John()
+                .setId(addPaymentCountryTaskDto.getAssigneeId());
         Label mockLabel = new Label()
                 .setId(addPaymentCountryTaskDto.getLabelId());
-        Task mockTask = new Task()
-                .setId(addPaymentCountryTaskDto.getId())
-                .setName(addPaymentCountryTaskDto.getName())
-                .setDescription(addPaymentCountryTaskDto.getDescription())
-                .setPriority(addPaymentCountryTaskDto.getPriority())
-                .setStatus(addPaymentCountryTaskDto.getStatus())
-                .setDueDate(addPaymentCountryTaskDto.getDueDate())
-                .setProject(mockProject)
+        Task mockTask = TestUtil.AddPaymentCountryTask()
                 .setAssignee(mockAssignee)
                 .setLabel(mockLabel);
 

@@ -44,28 +44,9 @@ public class GoogleCalendarServiceTest {
             """)
     public void createEvent_validRequest_ReturnsEventLink() throws Exception {
         TaskResponseDto addPaymentCountryTaskDto = TestUtil.AddPaymentCountryTaskDto();
-        User mockAssignee = new User()
-                .setId(addPaymentCountryTaskDto.getAssigneeId())
-                .setUsername("john.carter")
-                .setEmail("john.carter@company.com")
-                .setPhoneNumber("+380988888888")
-                .setFirstName("John")
-                .setLastName("Carter");
-        Project mockProject = new Project()
-                .setId(addPaymentCountryTaskDto.getProjectId())
-                .setName("mockProject");
-        Label mockLabel = new Label()
-                .setId(addPaymentCountryTaskDto.getLabelId());
-        Task mockTask = new Task()
-                .setId(addPaymentCountryTaskDto.getId())
-                .setName(addPaymentCountryTaskDto.getName())
-                .setDescription(addPaymentCountryTaskDto.getDescription())
-                .setPriority(addPaymentCountryTaskDto.getPriority())
-                .setStatus(addPaymentCountryTaskDto.getStatus())
-                .setDueDate(addPaymentCountryTaskDto.getDueDate())
-                .setProject(mockProject)
-                .setAssignee(mockAssignee)
-                .setLabel(mockLabel)
+        User mockAssignee = TestUtil.John()
+                .setId(addPaymentCountryTaskDto.getAssigneeId());;
+        Task mockTask = TestUtil.AddPaymentCountryTask()
                 .setCalendarEventId("test-calendar-event-id");
 
         Calendar.Events mockEvents = mock(Calendar.Events.class);
@@ -93,28 +74,9 @@ public class GoogleCalendarServiceTest {
             """)
     public void updateEvent_existingEvent_Success() throws Exception {
         TaskResponseDto addPaymentCountryTaskDto = TestUtil.AddPaymentCountryTaskDto();
-        User mockAssignee = new User()
-                .setId(addPaymentCountryTaskDto.getAssigneeId())
-                .setUsername("john.carter")
-                .setEmail("john.carter@company.com")
-                .setPhoneNumber("+380988888888")
-                .setFirstName("John")
-                .setLastName("Carter");
-        Project mockProject = new Project()
-                .setId(addPaymentCountryTaskDto.getProjectId())
-                .setName("mockProject");
-        Label mockLabel = new Label()
-                .setId(addPaymentCountryTaskDto.getLabelId());
-        Task mockTask = new Task()
-                .setId(addPaymentCountryTaskDto.getId())
-                .setName(addPaymentCountryTaskDto.getName())
-                .setDescription(addPaymentCountryTaskDto.getDescription())
-                .setPriority(addPaymentCountryTaskDto.getPriority())
-                .setStatus(addPaymentCountryTaskDto.getStatus())
-                .setDueDate(addPaymentCountryTaskDto.getDueDate())
-                .setProject(mockProject)
-                .setAssignee(mockAssignee)
-                .setLabel(mockLabel)
+        User mockAssignee = TestUtil.John()
+                .setId(addPaymentCountryTaskDto.getAssigneeId());;
+        Task mockTask = TestUtil.AddPaymentCountryTask()
                 .setCalendarEventId("test-calendar-event-id");
 
         Calendar.Events mockEvents = mock(Calendar.Events.class);
@@ -162,28 +124,9 @@ public class GoogleCalendarServiceTest {
             """)
     public void deleteEvent_existingEvent_Success() throws Exception {
         TaskResponseDto addPaymentCountryTaskDto = TestUtil.AddPaymentCountryTaskDto();
-        User mockAssignee = new User()
-                .setId(addPaymentCountryTaskDto.getAssigneeId())
-                .setUsername("john.carter")
-                .setEmail("john.carter@company.com")
-                .setPhoneNumber("+380988888888")
-                .setFirstName("John")
-                .setLastName("Carter");
-        Project mockProject = new Project()
-                .setId(addPaymentCountryTaskDto.getProjectId())
-                .setName("mockProject");
-        Label mockLabel = new Label()
-                .setId(addPaymentCountryTaskDto.getLabelId());
-        Task mockTask = new Task()
-                .setId(addPaymentCountryTaskDto.getId())
-                .setName(addPaymentCountryTaskDto.getName())
-                .setDescription(addPaymentCountryTaskDto.getDescription())
-                .setPriority(addPaymentCountryTaskDto.getPriority())
-                .setStatus(addPaymentCountryTaskDto.getStatus())
-                .setDueDate(addPaymentCountryTaskDto.getDueDate())
-                .setProject(mockProject)
-                .setAssignee(mockAssignee)
-                .setLabel(mockLabel)
+        User mockAssignee = TestUtil.John()
+                .setId(addPaymentCountryTaskDto.getAssigneeId());;
+        Task mockTask = TestUtil.AddPaymentCountryTask()
                 .setCalendarEventId("test-calendar-event-id");
 
         Calendar.Events mockEvents = mock(Calendar.Events.class);

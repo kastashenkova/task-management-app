@@ -26,6 +26,7 @@ public class LabelServiceImpl implements LabelService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<LabelResponseDto> getLabels(Pageable pageable) {
         return labelRepository.findAll(pageable)
                 .map(labelMapper::toDto);
@@ -37,10 +38,8 @@ public class LabelServiceImpl implements LabelService {
         Label label = labelRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Label with id " + id + " not found")
         );
-        label.setName(labelRequestDto.getName());
-        label.setColor(labelRequestDto.getColor());
-        labelRepository.save(label);
-        return labelMapper.toDto(label);
+        labelMapper.updateFromDto(labelRequestDto, label);
+        return labelMapper.toDto(labelRepository.save(label));
     }
 
     @Override

@@ -131,23 +131,10 @@ public class AttachmentServiceTest {
                 """)
     void getAllForTask_twoAttachmentsInTask_ReturnsAllAttachments() {
         AttachmentResponseDto buildPayrollModuleAttachmentDto = TestUtil.AttachmentForBuildPayrollModuleTaskDto();
-        Task mockTask = new Task()
-                .setId(buildPayrollModuleAttachmentDto.getTaskId());
-
-        Attachment buildPayrollModuleAttachment = new Attachment()
-                .setId(buildPayrollModuleAttachmentDto.getTaskId())
-                .setTask(mockTask)
-                .setDropboxFileId(buildPayrollModuleAttachmentDto.getDropboxFileId())
-                .setFilename(buildPayrollModuleAttachmentDto.getFilename())
-                .setUploadDate(buildPayrollModuleAttachmentDto.getUploadDate());
+        Attachment buildPayrollModuleAttachment = TestUtil.AttachmentForBuildPayrollModuleTask();
 
         AttachmentResponseDto addPaymentCountryAttachmentDto = TestUtil.AttachmentForAddPaymentCountryTaskDto();
-        Attachment addPaymentCountryAttachment = new Attachment()
-                .setId(addPaymentCountryAttachmentDto.getTaskId())
-                .setTask(mockTask)
-                .setDropboxFileId(addPaymentCountryAttachmentDto.getDropboxFileId())
-                .setFilename(addPaymentCountryAttachmentDto.getFilename())
-                .setUploadDate(addPaymentCountryAttachmentDto.getUploadDate());
+        Attachment addPaymentCountryAttachment = TestUtil.AttachmentForAddPaymentCountryTask();
 
         List<Attachment> attachments
                 = List.of(buildPayrollModuleAttachment, addPaymentCountryAttachment);
@@ -162,18 +149,21 @@ public class AttachmentServiceTest {
 
         SecurityContextHolder.setContext(securityContext);
 
+        Long taskId = buildPayrollModuleAttachmentDto.getTaskId();
+        Task mockTask = new Task()
+                .setId(taskId);
         when(userRepository.findByUsername(mockUser.getUsername()))
                 .thenReturn(Optional.of(mockUser));
-        when(taskRepository.findTaskByIdAndAssignee(mockTask.getId(), mockUser))
+        when(taskRepository.findTaskByIdAndAssignee(taskId, mockUser))
                .thenReturn(Optional.of(mockTask));
         when(attachmentMapper.toDto(buildPayrollModuleAttachment))
                 .thenReturn(buildPayrollModuleAttachmentDto);
         when(attachmentMapper.toDto(addPaymentCountryAttachment))
                 .thenReturn(addPaymentCountryAttachmentDto);
-        when(attachmentRepository.findAllByTask_Id(mockTask.getId(), pageable)).thenReturn(page);
+        when(attachmentRepository.findAllByTask_Id(taskId, pageable)).thenReturn(page);
 
         Page<AttachmentResponseDto> actual = attachmentService.getAllForTask(
-                mockTask.getId(), pageable);
+                taskId, pageable);
 
         assertNotNull(actual);
         assertEquals(2, actual.getTotalElements());
@@ -226,15 +216,7 @@ public class AttachmentServiceTest {
     void retrieveAttachment_existingAttachment_ReturnsTheAttachment() {
         AttachmentResponseDto buildPayrollModuleAttachmentDto = TestUtil
                 .AttachmentForBuildPayrollModuleTaskDto();
-        Task mockTask = new Task()
-                .setId(buildPayrollModuleAttachmentDto.getTaskId());
-
-        Attachment buildPayrollModuleAttachment = new Attachment()
-                .setId(buildPayrollModuleAttachmentDto.getTaskId())
-                .setTask(mockTask)
-                .setDropboxFileId(buildPayrollModuleAttachmentDto.getDropboxFileId())
-                .setFilename(buildPayrollModuleAttachmentDto.getFilename())
-                .setUploadDate(buildPayrollModuleAttachmentDto.getUploadDate());
+        Attachment buildPayrollModuleAttachment = TestUtil.AttachmentForBuildPayrollModuleTask();
 
         when(securityContext.getAuthentication()).thenReturn(authentication);
         User mockUser = new User()
@@ -243,10 +225,12 @@ public class AttachmentServiceTest {
         when(authentication.getName()).thenReturn(mockUser.getUsername());
 
         SecurityContextHolder.setContext(securityContext);
-
         when(userRepository.findByUsername(mockUser.getUsername()))
                 .thenReturn(Optional.of(mockUser));
-        when(taskRepository.findTaskByIdAndAssignee(mockTask.getId(), mockUser))
+
+        Long taskId = buildPayrollModuleAttachmentDto.getTaskId();
+        Task mockTask = mock(Task.class);
+        when(taskRepository.findTaskByIdAndAssignee(taskId, mockUser))
                 .thenReturn(Optional.of(mockTask));
         when(attachmentRepository.findById(1L))
                 .thenReturn(Optional.of(buildPayrollModuleAttachment));
@@ -281,15 +265,7 @@ public class AttachmentServiceTest {
     void deleteAttachment_existingAttachment_Success() {
         AttachmentResponseDto buildPayrollModuleAttachmentDto = TestUtil
                 .AttachmentForBuildPayrollModuleTaskDto();
-        Task mockTask = new Task()
-                .setId(buildPayrollModuleAttachmentDto.getTaskId());
-
-        Attachment buildPayrollModuleAttachment = new Attachment()
-                .setId(buildPayrollModuleAttachmentDto.getTaskId())
-                .setTask(mockTask)
-                .setDropboxFileId(buildPayrollModuleAttachmentDto.getDropboxFileId())
-                .setFilename(buildPayrollModuleAttachmentDto.getFilename())
-                .setUploadDate(buildPayrollModuleAttachmentDto.getUploadDate());
+        Attachment buildPayrollModuleAttachment = TestUtil.AttachmentForBuildPayrollModuleTask();
 
         when(securityContext.getAuthentication()).thenReturn(authentication);
         User mockUser = new User()
@@ -303,10 +279,12 @@ public class AttachmentServiceTest {
                 .thenReturn(Optional.of(mockUser));
         doNothing().when(dropboxService).deleteFile(
                 buildPayrollModuleAttachmentDto.getDropboxFileId());
-
         when(attachmentRepository.findById(1L))
                 .thenReturn(Optional.of(buildPayrollModuleAttachment));
-        when(taskRepository.findTaskByIdAndAssignee(mockTask.getId(), mockUser))
+
+        Long taskId = buildPayrollModuleAttachmentDto.getTaskId();
+        Task mockTask = mock(Task.class);
+        when(taskRepository.findTaskByIdAndAssignee(taskId, mockUser))
                 .thenReturn(Optional.of(mockTask));
 
         attachmentService.deleteAttachment(1L);

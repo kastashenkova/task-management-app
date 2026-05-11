@@ -93,23 +93,12 @@ public class TaskServiceTest {
                 """)
     void createTask_newTask_ReturnsNewTask() throws Exception {
         // given
-        TaskRequestDto taskRequestDto = new TaskRequestDto()
-                .setName("Build Payroll Module")
-                .setDescription("Develop salary calculation module with tax deductions "
-                        + "and automated monthly payslip generation")
-                .setPriority(Priority.MEDIUM)
-                .setStatus(org.example.model.task.Status.NOT_STARTED)
-                .setDueDate(LocalDate.of(2026, 7, 15))
-                .setProjectId(3L)
-                .setAssigneeId(3L)
-                .setLabelId(6L);
-        Project mockProject = new Project()
-                .setId(taskRequestDto.getProjectId());
-        User mockUser = new User()
-                .setId(taskRequestDto.getAssigneeId())
-                .setUsername("mockUserName");
-        Label mockLabel = new Label()
-                .setId(taskRequestDto.getLabelId());
+        TaskRequestDto taskRequestDto = TestUtil.BuildPayrollModuleTaskRequestDto();
+        Task saved = TestUtil.BuildPayrollModuleTask();
+
+        Project mockProject = saved.getProject();
+        User mockUser = saved.getAssignee();
+        Label mockLabel = saved.getLabel();
         Task taskWithoutId = new Task()
                 .setName(taskRequestDto.getName())
                 .setDescription(taskRequestDto.getDescription())
@@ -119,17 +108,6 @@ public class TaskServiceTest {
                 .setProject(mockProject)
                 .setAssignee(mockUser)
                 .setLabel(mockLabel);
-
-        Task saved = new Task()
-                .setId(1L)
-                .setName(taskWithoutId.getName())
-                .setDescription(taskWithoutId.getDescription())
-                .setPriority(taskWithoutId.getPriority())
-                .setStatus(taskWithoutId.getStatus())
-                .setDueDate(taskWithoutId.getDueDate())
-                .setProject(taskWithoutId.getProject())
-                .setAssignee(taskWithoutId.getAssignee())
-                .setLabel(taskWithoutId.getLabel());
 
         TaskResponseDto expected = TestUtil.BuildPayrollModuleTaskDto();
 
@@ -173,16 +151,7 @@ public class TaskServiceTest {
                 Should return Not Found
                 """)
     void createTask_nonExistingForeignKeyEntity_ReturnsNotFound() throws Exception {
-        TaskRequestDto taskRequestDto = new TaskRequestDto()
-                .setName("Build Payroll Module")
-                .setDescription("Develop salary calculation module with tax deductions "
-                        + "and automated monthly payslip generation")
-                .setPriority(Priority.MEDIUM)
-                .setStatus(org.example.model.task.Status.NOT_STARTED)
-                .setDueDate(LocalDate.of(2026, 7, 15))
-                .setProjectId(3L)
-                .setAssigneeId(3L)
-                .setLabelId(6L);
+        TaskRequestDto taskRequestDto = TestUtil.BuildPayrollModuleTaskRequestDto();
 
         assertThrows(EntityNotFoundException.class, () -> taskService.createTask(taskRequestDto));
 
@@ -195,42 +164,20 @@ public class TaskServiceTest {
                 """)
     void getTasksForProject_twoTasksInProject_ReturnsAllTasks() {
         TaskResponseDto buildPayrollSystemTaskDto = TestUtil.BuildPayrollModuleTaskDto();
-        Project mockProject = new Project()
-                .setId(buildPayrollSystemTaskDto.getProjectId());
-        User mockUser = new User()
-                .setId(1L)
-                .setUsername("mockUser");
-        Label mockLabel = new Label()
-                .setId(1L);
-        Task buildPayrollSystemTask = new Task()
-                .setId(buildPayrollSystemTaskDto.getId())
-                .setName(buildPayrollSystemTaskDto.getName())
-                .setDescription(buildPayrollSystemTaskDto.getDescription())
-                .setPriority(buildPayrollSystemTaskDto.getPriority())
-                .setStatus(buildPayrollSystemTaskDto.getStatus())
-                .setDueDate(buildPayrollSystemTaskDto.getDueDate())
-                .setProject(mockProject)
-                .setAssignee(mockUser)
-                .setLabel(mockLabel);
+        Task buildPayrollSystemTask = TestUtil.BuildPayrollModuleTask();
 
         TaskResponseDto addPaymentCountryTaskDto = TestUtil.AddPaymentCountryTaskDto()
-                .setProjectId(mockProject.getId());
-
-        Task addPaymentCountryTask = new Task()
-                .setId(addPaymentCountryTaskDto.getId())
-                .setName(addPaymentCountryTaskDto.getName())
-                .setDescription(addPaymentCountryTaskDto.getDescription())
-                .setPriority(addPaymentCountryTaskDto.getPriority())
-                .setStatus(addPaymentCountryTaskDto.getStatus())
-                .setDueDate(addPaymentCountryTaskDto.getDueDate())
-                .setProject(mockProject)
-                .setAssignee(mockUser)
-                .setLabel(mockLabel);
+                .setProjectId(buildPayrollSystemTaskDto.getProjectId());
+        Task addPaymentCountryTask = TestUtil.AddPaymentCountryTask()
+                .setProject(buildPayrollSystemTask.getProject());
 
         List<Task> tasks
                 = List.of(buildPayrollSystemTask, addPaymentCountryTask);
         Page<Task> page = new PageImpl<>(tasks);
         Pageable pageable = PageRequest.of(0, 10);
+
+        Project mockProject = buildPayrollSystemTask.getProject();
+        User mockUser = buildPayrollSystemTask.getAssignee();
 
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn(mockUser.getUsername());
@@ -324,23 +271,9 @@ public class TaskServiceTest {
                 """)
     void getTaskById_existingTask_ReturnsTheTask() {
         TaskResponseDto taskDto = TestUtil.BuildPayrollModuleTaskDto();
-        Project project = new Project()
-                .setId(taskDto.getProjectId());
-        User mockUser = new User()
-                .setId(1L)
-                .setUsername("mockUserName");
-        Label mockLabel = new Label()
-                .setId(1L);
-        Task task = new Task()
-                .setId(taskDto.getId())
-                .setName(taskDto.getName())
-                .setDescription(taskDto.getDescription())
-                .setPriority(taskDto.getPriority())
-                .setStatus(taskDto.getStatus())
-                .setDueDate(taskDto.getDueDate())
-                .setProject(project)
-                .setAssignee(mockUser)
-                .setLabel(mockLabel);
+        Task task = TestUtil.BuildPayrollModuleTask();
+
+        User mockUser = task.getAssignee();
 
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn(mockUser.getUsername());
@@ -393,23 +326,12 @@ public class TaskServiceTest {
                 """)
     void updateTaskById_existingTask_ReturnsUpdatedTask() throws Exception {
         // given
-        TaskRequestDto taskRequestDto = new TaskRequestDto()
-                .setName("Build Payroll Module")
-                .setDescription("Develop salary calculation module with tax deductions "
-                        + "and automated monthly payslip generation")
-                .setPriority(Priority.MEDIUM)
-                .setStatus(org.example.model.task.Status.NOT_STARTED)
-                .setDueDate(LocalDate.of(2026, 7, 15))
-                .setProjectId(3L)
-                .setAssigneeId(3L)
-                .setLabelId(6L);
-        Project mockProject = new Project()
-                .setId(taskRequestDto.getProjectId());
-        User mockUser = new User()
-                .setId(1L)
-                .setUsername("mockUserName");
-        Label mockLabel = new Label()
-                .setId(6L);
+        TaskRequestDto taskRequestDto = TestUtil.BuildPayrollModuleTaskRequestDto();
+        Task updated = TestUtil.BuildPayrollModuleTask();
+
+        Project mockProject = updated.getProject();
+        User mockUser = updated.getAssignee();
+        Label mockLabel = updated.getLabel();
         Task taskWithoutId = new Task()
                 .setName(taskRequestDto.getName())
                 .setDescription(taskRequestDto.getDescription())
@@ -419,17 +341,6 @@ public class TaskServiceTest {
                 .setProject(mockProject)
                 .setAssignee(mockUser)
                 .setLabel(mockLabel);
-
-        Task updated = new Task()
-                .setId(1L)
-                .setName(taskWithoutId.getName())
-                .setDescription(taskWithoutId.getDescription())
-                .setPriority(taskWithoutId.getPriority())
-                .setStatus(taskWithoutId.getStatus())
-                .setDueDate(taskWithoutId.getDueDate())
-                .setProject(taskWithoutId.getProject())
-                .setAssignee(taskWithoutId.getAssignee())
-                .setLabel(taskWithoutId.getLabel());
 
         TaskResponseDto expected = TestUtil.BuildPayrollModuleTaskDto();
         expected.setStatus(taskRequestDto.getStatus());
@@ -444,7 +355,7 @@ public class TaskServiceTest {
                 .thenReturn(Optional.of(mockUser));
         when(userRepository.findById(taskRequestDto.getAssigneeId()))
                 .thenReturn(Optional.of(mockUser));
-        when(projectRepository.findByAssigneeIdAndId(1L, taskRequestDto.getProjectId()))
+        when(projectRepository.findByAssigneeIdAndId(3L, taskRequestDto.getProjectId()))
                 .thenReturn(Optional.of(mockProject));
         when(labelRepository.findById(mockLabel.getId()))
                 .thenReturn(Optional.of(mockLabel));
@@ -472,23 +383,12 @@ public class TaskServiceTest {
             Should return Not Found
             """)
     void updateTaskById_nonExistingTask_NotFound() throws Exception {
-        TaskRequestDto taskRequestDto = new TaskRequestDto()
-                .setName("Build Payroll Module")
-                .setDescription("Develop salary calculation module with tax deductions "
-                + "and automated monthly payslip generation")
-                .setPriority(Priority.MEDIUM)
-                .setStatus(org.example.model.task.Status.NOT_STARTED)
-                .setDueDate(LocalDate.of(2026, 7, 15))
-                .setProjectId(3L)
-                .setAssigneeId(3L)
-                .setLabelId(1L);
-        Project mockProject = new Project()
-                .setId(taskRequestDto.getProjectId());
-        User mockUser = new User()
-                .setId(1L)
-                .setUsername("mockUserName");
-        Label mockLabel = new Label()
-                .setId(1L);
+        TaskRequestDto taskRequestDto = TestUtil.BuildPayrollModuleTaskRequestDto();
+        Task updated = TestUtil.BuildPayrollModuleTask();
+
+        Project mockProject = updated.getProject();
+        User mockUser = updated.getAssignee();
+        Label mockLabel = updated.getLabel();
         Task taskWithoutId = new Task()
                 .setName(taskRequestDto.getName())
                 .setDescription(taskRequestDto.getDescription())
@@ -520,25 +420,9 @@ public class TaskServiceTest {
                 Should delete existing Task by its id
                 """)
     void deleteTaskById_existingTask_Success() throws Exception {
-        TaskResponseDto taskDto = TestUtil.AddPaymentCountryTaskDto();
-        Project mockProject = new Project()
-                .setId(1L);
-        User mockUser = new User()
-                .setId(1L)
-                .setUsername("mockUserName");
-        Label mockLabel = new Label()
-                .setId(1L);
-        Task task = new Task()
-                .setId(taskDto.getId())
-                .setName(taskDto.getName())
-                .setDescription(taskDto.getDescription())
-                .setPriority(Priority.MEDIUM)
-                .setStatus(org.example.model.task.Status.NOT_STARTED)
-                .setDueDate(LocalDate.of(2026, 7, 15))
-                .setProject(mockProject)
-                .setAssignee(mockUser)
-                .setLabel(mockLabel);
+        Task task = TestUtil.AddPaymentCountryTask();
 
+        User mockUser = task.getAssignee();
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn(mockUser.getUsername());
 
@@ -575,38 +459,8 @@ public class TaskServiceTest {
                  Search tasks by the same priority
                  """)
     void search_byPriority_ReturnsTasks() {
-        TaskResponseDto buildPayrollSystemTaskDto = TestUtil.BuildPayrollModuleTaskDto();
-        Project buildPayrollSystemProject = new Project()
-                .setId(buildPayrollSystemTaskDto.getProjectId());
-        User mockUser = new User()
-                .setId(1L);
-        Label mockLabel = new Label()
-                .setId(1L);
-        Task buildPayrollSystemTask = new Task()
-                .setId(buildPayrollSystemTaskDto.getId())
-                .setName(buildPayrollSystemTaskDto.getName())
-                .setDescription(buildPayrollSystemTaskDto.getDescription())
-                .setPriority(buildPayrollSystemTaskDto.getPriority())
-                .setStatus(buildPayrollSystemTaskDto.getStatus())
-                .setDueDate(buildPayrollSystemTaskDto.getDueDate())
-                .setProject(buildPayrollSystemProject)
-                .setAssignee(mockUser)
-                .setLabel(mockLabel);
-
-        TaskResponseDto addPaymentCountryTaskDto = TestUtil.AddPaymentCountryTaskDto();
-        Project addPaymentCountryProject = new Project()
-                .setId(addPaymentCountryTaskDto.getProjectId());
-
-        Task addPaymentCountryTask = new Task()
-                .setId(addPaymentCountryTaskDto.getId())
-                .setName(addPaymentCountryTaskDto.getName())
-                .setDescription(addPaymentCountryTaskDto.getDescription())
-                .setPriority(addPaymentCountryTaskDto.getPriority())
-                .setStatus(addPaymentCountryTaskDto.getStatus())
-                .setDueDate(addPaymentCountryTaskDto.getDueDate())
-                .setProject(addPaymentCountryProject)
-                .setAssignee(mockUser)
-                .setLabel(mockLabel);
+        Task buildPayrollSystemTask = TestUtil.BuildPayrollModuleTask();
+        Task addPaymentCountryTask = TestUtil.AddPaymentCountryTask();
 
         Pageable pageable = PageRequest.of(0, 10);
         Page<Task> page = new PageImpl<>(
@@ -639,38 +493,8 @@ public class TaskServiceTest {
                  Search tasks by the same status
                  """)
     void search_byStatus_ReturnsTasks() {
-        TaskResponseDto buildPayrollSystemTaskDto = TestUtil.BuildPayrollModuleTaskDto();
-        Project buildPayrollSystemProject = new Project()
-                .setId(buildPayrollSystemTaskDto.getProjectId());
-        User mockUser = new User()
-                .setId(1L);
-        Label mockLabel = new Label()
-                .setId(1L);
-        Task buildPayrollSystemTask = new Task()
-                .setId(buildPayrollSystemTaskDto.getId())
-                .setName(buildPayrollSystemTaskDto.getName())
-                .setDescription(buildPayrollSystemTaskDto.getDescription())
-                .setPriority(buildPayrollSystemTaskDto.getPriority())
-                .setStatus(buildPayrollSystemTaskDto.getStatus())
-                .setDueDate(buildPayrollSystemTaskDto.getDueDate())
-                .setProject(buildPayrollSystemProject)
-                .setAssignee(mockUser)
-                .setLabel(mockLabel);
-
-        TaskResponseDto addPaymentCountryTaskDto = TestUtil.AddPaymentCountryTaskDto();
-        Project addPaymentCountryProject = new Project()
-                .setId(addPaymentCountryTaskDto.getProjectId());
-
-        Task addPaymentCountryTask = new Task()
-                .setId(addPaymentCountryTaskDto.getId())
-                .setName(addPaymentCountryTaskDto.getName())
-                .setDescription(addPaymentCountryTaskDto.getDescription())
-                .setPriority(addPaymentCountryTaskDto.getPriority())
-                .setStatus(addPaymentCountryTaskDto.getStatus())
-                .setDueDate(addPaymentCountryTaskDto.getDueDate())
-                .setProject(addPaymentCountryProject)
-                .setAssignee(mockUser)
-                .setLabel(mockLabel);
+        Task buildPayrollSystemTask = TestUtil.BuildPayrollModuleTask();
+        Task addPaymentCountryTask = TestUtil.AddPaymentCountryTask();
 
         Pageable pageable = PageRequest.of(0, 10);
         Page<Task> page = new PageImpl<>(

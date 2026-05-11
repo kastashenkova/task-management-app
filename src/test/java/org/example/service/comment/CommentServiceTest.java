@@ -5,11 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.anyLong;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
@@ -100,6 +96,7 @@ public class CommentServiceTest {
                 .thenReturn(Optional.of(mockUser));
         when(taskRepository.findTaskByIdAndAssignee(anyLong(), any()))
                 .thenReturn(Optional.ofNullable(task));
+        when(commentMapper.toEntity(commentRequestDto)).thenReturn(commentWithoutId);
         when(commentRepository.save(any(Comment.class))).thenReturn(saved);
         when(commentMapper.toDto(any(Comment.class))).thenReturn(expected);
 
@@ -121,16 +118,10 @@ public class CommentServiceTest {
                 """)
     void getAllForTask_twoComments_ReturnsAllComments() {
         CommentResponseDto addRefreshTokenCommentDto = TestUtil.AddRefreshTokenCommentDto();
-        Task addRefreshTokenTask = new Task()
-                .setId(addRefreshTokenCommentDto.getTaskId());
-        Comment addRefreshTokenComment = new Comment()
-               .setTask(addRefreshTokenTask);
+        Comment addRefreshTokenComment = TestUtil.AddRefreshTokenComment();
 
         CommentResponseDto addGoogleCloudAPICommentDto = TestUtil.AddGoogleCloudAPICommentDto();
-        Task addGoogleCloudAPITask = new Task()
-                .setId(addGoogleCloudAPICommentDto.getTaskId());
-        Comment addGoogleCloudAPIComment = new Comment()
-                .setTask(addGoogleCloudAPITask);
+        Comment addGoogleCloudAPIComment = TestUtil.AddGoogleCloudAPIComment();
 
         List<Comment> comments
                 = List.of(addRefreshTokenComment, addGoogleCloudAPIComment);
@@ -142,9 +133,9 @@ public class CommentServiceTest {
         SecurityContextHolder.setContext(securityContext);
 
         when(authentication.getName()).thenReturn("alice.black");
-        User mockUser = new User();
+        User mockUser = mock(User.class);
         when(userRepository.findByUsername("alice.black")).thenReturn(Optional.of(mockUser));
-        Task mockTask = new Task();
+        Task mockTask = mock(Task.class);
         when(taskRepository.findTaskByIdAndAssignee(eq(2L), any()))
                 .thenReturn(Optional.of(mockTask));
 
@@ -196,11 +187,7 @@ public class CommentServiceTest {
                 Should delete existing Comment by its id
                 """)
     void deleteCommentById_existingComment_Success() {
-        CommentResponseDto addRefreshTokenCommentDto = TestUtil.AddRefreshTokenCommentDto();
-        Task addRefreshTokenTask = new Task()
-                .setId(addRefreshTokenCommentDto.getTaskId());
-        Comment addRefreshTokenComment = new Comment()
-                .setTask(addRefreshTokenTask);
+        Comment addRefreshTokenComment = TestUtil.AddRefreshTokenComment();
 
         when(commentRepository.findById(1L))
                 .thenReturn(Optional.ofNullable(addRefreshTokenComment));

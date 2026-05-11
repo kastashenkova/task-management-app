@@ -73,12 +73,7 @@ public class ProjectServiceTest {
                 """)
     void createProject_newProject_ReturnsNewProject() {
         // given
-        ProjectRequestDto projectRequestDto = new ProjectRequestDto()
-                .setName("Payment")
-                .setDescription("Develop your own PayPal system")
-                .setStartDate(LocalDate.of(2026, 5, 6))
-                .setEndDate(LocalDate.of(2026, 7, 8))
-                .setStatus(Status.INITIATED);
+        ProjectRequestDto projectRequestDto =TestUtil.PayPalProjectRequestDto();
 
         Project projectWithoutId = new Project()
                 .setName(projectRequestDto.getName())
@@ -87,13 +82,7 @@ public class ProjectServiceTest {
                 .setEndDate(projectRequestDto.getEndDate())
                 .setStatus(projectRequestDto.getStatus());
 
-        Project saved = new Project()
-                .setId(1L)
-                .setName(projectRequestDto.getName())
-                .setDescription(projectRequestDto.getDescription())
-                .setStartDate(projectRequestDto.getStartDate())
-                .setEndDate(projectRequestDto.getEndDate())
-                .setStatus(projectRequestDto.getStatus());
+        Project saved = TestUtil.PayPalProject();
 
         ProjectResponseDto expected = TestUtil.PayPalProjectDto();
 
@@ -119,24 +108,10 @@ public class ProjectServiceTest {
                 """)
     void getProjects_twoProjects_ReturnsAllProjects() {
         ProjectResponseDto payPalProjectDto = TestUtil.PayPalProjectDto();
-
-        Project payPalProject = new Project()
-                .setId(payPalProjectDto.getId())
-                .setName(payPalProjectDto.getName())
-                .setDescription(payPalProjectDto.getDescription())
-                .setStartDate(payPalProjectDto.getStartDate())
-                .setEndDate(payPalProjectDto.getEndDate())
-                .setStatus(payPalProjectDto.getStatus());
+        Project payPalProject = TestUtil.PayPalProject();
 
         ProjectResponseDto mobileBankingAppProjectDto = TestUtil.MobileBankingAppProjectDto();
-
-        Project mobileBankingAppProject = new Project()
-                .setId(mobileBankingAppProjectDto.getId())
-                .setName(mobileBankingAppProjectDto.getName())
-                .setDescription(mobileBankingAppProjectDto.getDescription())
-                .setStartDate(mobileBankingAppProjectDto.getStartDate())
-                .setEndDate(mobileBankingAppProjectDto.getEndDate())
-                .setStatus(mobileBankingAppProjectDto.getStatus());
+        Project mobileBankingAppProject = TestUtil.MobileBankingAppProject();
 
         List<Project> projects
                 = List.of(payPalProject, mobileBankingAppProject);
@@ -204,14 +179,7 @@ public class ProjectServiceTest {
                 """)
     void getProjectById_existingProject_ReturnsTheProject() {
         ProjectResponseDto payPalProjectDto = TestUtil.PayPalProjectDto();
-
-        Project payPalProject = new Project()
-                .setId(payPalProjectDto.getId())
-                .setName(payPalProjectDto.getName())
-                .setDescription(payPalProjectDto.getDescription())
-                .setStartDate(payPalProjectDto.getStartDate())
-                .setEndDate(payPalProjectDto.getEndDate())
-                .setStatus(payPalProjectDto.getStatus());
+        Project payPalProject = TestUtil.PayPalProject();
 
         String mockUserName = "mockUserName";
         when(securityContext.getAuthentication()).thenReturn(authentication);
@@ -241,7 +209,6 @@ public class ProjectServiceTest {
             Should return Not Found
             """)
     void getProjectById_nonExistingProject_NotFound() {
-
         String mockUserName = "mockUserName";
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn(mockUserName);
@@ -268,13 +235,7 @@ public class ProjectServiceTest {
                 """)
     void updateProjectById_existingProject_ReturnsUpdatedProject() {
         // given
-        ProjectRequestDto projectRequestDto = new ProjectRequestDto()
-                .setName("Mobile Banking App")
-                .setDescription("Mobile application for managing bank accounts,"
-                + " transactions and money transfers")
-                .setStartDate(LocalDate.of(2025, 11, 1))
-                .setEndDate(LocalDate.of(2026, 4, 15))
-                .setStatus(Status.IN_PROGRESS);
+        ProjectRequestDto projectRequestDto = TestUtil.MobileBankingAppProjectRequestDto();
 
         Project projectWithoutId = new Project()
                 .setName(projectRequestDto.getName())
@@ -283,16 +244,11 @@ public class ProjectServiceTest {
                 .setEndDate(projectRequestDto.getEndDate())
                 .setStatus(projectRequestDto.getStatus());
 
-        Project updated = new Project()
-                .setId(1L)
-                .setName(projectRequestDto.getName())
-                .setDescription(projectRequestDto.getDescription())
-                .setStartDate(projectRequestDto.getStartDate())
-                .setEndDate(projectRequestDto.getEndDate())
+        Project updated = TestUtil.MobileBankingAppProject()
                 .setStatus(projectRequestDto.getStatus());
 
-        ProjectResponseDto expected = TestUtil.MobileBankingAppProjectDto();
-        expected.setStatus(projectRequestDto.getStatus());
+        ProjectResponseDto expected = TestUtil.MobileBankingAppProjectDto()
+                .setStatus(projectRequestDto.getStatus());
 
         String mockUserName = "mockUserName";
         when(securityContext.getAuthentication()).thenReturn(authentication);
@@ -329,13 +285,7 @@ public class ProjectServiceTest {
             Should return Not Found
             """)
     void updateProjectById_nonExistingProject_NotFound() {
-        ProjectRequestDto projectRequestDto = new ProjectRequestDto()
-                .setName("Mobile Banking App")
-                .setDescription("Mobile application for managing bank accounts,"
-                        + " transactions and money transfers")
-                .setStartDate(LocalDate.of(2025, 11, 1))
-                .setEndDate(LocalDate.of(2026, 4, 15))
-                .setStatus(Status.IN_PROGRESS);
+        ProjectRequestDto projectRequestDto = TestUtil.MobileBankingAppProjectRequestDto();
 
         Project projectWithoutId = new Project()
                 .setName(projectRequestDto.getName())
@@ -363,15 +313,7 @@ public class ProjectServiceTest {
                 Should delete existing Project by its id
                 """)
     void deleteProjectById_existingProject_Success() {
-        ProjectResponseDto projectDto = TestUtil.PayPalProjectDto();
-
-        Project project = new Project()
-               .setId(projectDto.getId())
-               .setName(projectDto.getName())
-               .setDescription(projectDto.getDescription())
-               .setStartDate(projectDto.getStartDate())
-               .setEndDate(projectDto.getEndDate())
-               .setStatus(projectDto.getStatus());
+        Project project = TestUtil.PayPalProject();
 
         when(projectRepository.findById(1L))
                 .thenReturn(Optional.ofNullable(project));
@@ -402,24 +344,10 @@ public class ProjectServiceTest {
                  """)
     void search_byStatus_ReturnsProjects() {
         ProjectResponseDto payPalProjectDto = TestUtil.PayPalProjectDto();
-
-        Project payPalProject = new Project()
-                .setId(payPalProjectDto.getId())
-                .setName(payPalProjectDto.getName())
-                .setDescription(payPalProjectDto.getDescription())
-                .setStartDate(payPalProjectDto.getStartDate())
-                .setEndDate(payPalProjectDto.getEndDate())
-                .setStatus(payPalProjectDto.getStatus());
+        Project payPalProject = TestUtil.PayPalProject();
 
         ProjectResponseDto mobileBankingAppProjectDto = TestUtil.MobileBankingAppProjectDto();
-
-        Project mobileBankingAppProject = new Project()
-                .setId(mobileBankingAppProjectDto.getId())
-                .setName(mobileBankingAppProjectDto.getName())
-                .setDescription(mobileBankingAppProjectDto.getDescription())
-                .setStartDate(mobileBankingAppProjectDto.getStartDate())
-                .setEndDate(mobileBankingAppProjectDto.getEndDate())
-                .setStatus(mobileBankingAppProjectDto.getStatus());
+        Project mobileBankingAppProject = TestUtil.MobileBankingAppProject();
 
         Pageable pageable = PageRequest.of(0, 10);
         Page<Project> page = new PageImpl<>(
@@ -457,24 +385,10 @@ public class ProjectServiceTest {
                  """)
     void search_byEndDate_ReturnsProjects() {
         ProjectResponseDto payPalProjectDto = TestUtil.PayPalProjectDto();
-
-        Project payPalProject = new Project()
-                .setId(payPalProjectDto.getId())
-                .setName(payPalProjectDto.getName())
-                .setDescription(payPalProjectDto.getDescription())
-                .setStartDate(payPalProjectDto.getStartDate())
-                .setEndDate(payPalProjectDto.getEndDate())
-                .setStatus(payPalProjectDto.getStatus());
+        Project payPalProject = TestUtil.PayPalProject();
 
         ProjectResponseDto mobileBankingAppProjectDto = TestUtil.MobileBankingAppProjectDto();
-
-        Project mobileBankingAppProject = new Project()
-                .setId(mobileBankingAppProjectDto.getId())
-                .setName(mobileBankingAppProjectDto.getName())
-                .setDescription(mobileBankingAppProjectDto.getDescription())
-                .setStartDate(mobileBankingAppProjectDto.getStartDate())
-                .setEndDate(mobileBankingAppProjectDto.getEndDate())
-                .setStatus(mobileBankingAppProjectDto.getStatus());
+        Project mobileBankingAppProject = TestUtil.MobileBankingAppProject();
 
         Pageable pageable = PageRequest.of(0, 10);
         Page<Project> page = new PageImpl<>(

@@ -74,25 +74,10 @@ public class UserServiceImpl implements UserService {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("User not found: " + username));
-        if (userRequestDto.getUsername() != null && !userRequestDto.getUsername().isEmpty()) {
-            user.setUsername(userRequestDto.getUsername());
-        }
-        if (userRequestDto.getEmail() != null && !userRequestDto.getEmail().isEmpty()) {
-            user.setEmail(userRequestDto.getEmail());
-        }
-        if (userRequestDto.getPhoneNumber() != null && !userRequestDto.getPhoneNumber().isEmpty()) {
-            user.setPhoneNumber(userRequestDto.getPhoneNumber());
-        }
-        if (userRequestDto.getFirstName() != null && !userRequestDto.getFirstName().isEmpty()) {
-            user.setFirstName(userRequestDto.getFirstName());
-        }
-        if (userRequestDto.getLastName() != null && !userRequestDto.getLastName().isEmpty()) {
-            user.setLastName(userRequestDto.getLastName());
-        }
+        userMapper.updateFromDto(userRequestDto, user);
         if (userRequestDto.getPassword() != null && !userRequestDto.getPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(userRequestDto.getPassword()));
         }
-        userRepository.save(user);
-        return userMapper.toDto(user);
+        return userMapper.toDto(userRepository.save(user));
     }
 }
