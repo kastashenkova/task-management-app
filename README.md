@@ -34,6 +34,11 @@ Manage tasks and projects effectively through a web-based application. This syst
 
 <img width="806" height="293" alt="Знімок екрана 2026-05-03 165555" src="https://github.com/user-attachments/assets/0bbdc1a9-001c-4b82-8994-c30230003267" />
 
+## Project structure
+<img width="3750" height="4410" alt="java" src="https://github.com/user-attachments/assets/ccc7c4f2-4ea9-4127-b554-f58ef0d1a250" />
+
+> See full UML diagram inside the project itself
+
 ## 📌 API endpoints
 #### 🔑 Auth Controller 🔑
 - `POST` */api/auth/register* — User registration
