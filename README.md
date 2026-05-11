@@ -24,6 +24,11 @@ Manage tasks and projects effectively through a web-based application. This syst
 - Integration with third-party application of Google Calendar for tasks assignment
 - Docker and Swagger usage
 - +80% test coverage (both unit and integration testing)
+
+<img width="573" height="485" alt="image" src="https://github.com/user-attachments/assets/4d6b554f-4107-43ae-9277-040388fd7107" />
+
+> *Created with JaCoCo*
+
 - CI/CD checkstyle pipeline: custom & Qodana
 - AWS CI for flexible and rapid updates deployment
 
