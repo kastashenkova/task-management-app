@@ -19,7 +19,7 @@ import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.example.dto.attachment.AttachmentResponseDto;
 import org.example.service.third_party.DropboxService;
-import org.example.util.TestUtil;
+import org.example.util.AttachmentTestUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -160,7 +160,7 @@ public class AttachmentControllerTest {
         byte[] fileContent = "Test Content".getBytes();
         MockMultipartFile mockFile = new MockMultipartFile(
                 "file",
-                "build-payroll-module_test.pdf",
+                "file_test-id",
                 MediaType.APPLICATION_PDF_VALUE,
                 fileContent
         );
@@ -170,7 +170,7 @@ public class AttachmentControllerTest {
                 .thenReturn("dbx_file_test-id");
 
         MvcResult result = mockMvc.perform(
-                multipart("/attachments?taskId=1")
+                multipart("/attachments?taskId=3")
                         .file(mockFile)
                         .contentType(MediaType.MULTIPART_FORM_DATA)
                 )
@@ -181,7 +181,8 @@ public class AttachmentControllerTest {
                 .getResponse()
                 .getContentAsString(), AttachmentResponseDto.class);
 
-        AttachmentResponseDto expected = TestUtil.AttachmentForBuildPayrollModuleTaskDto();
+        AttachmentResponseDto expected
+                = AttachmentTestUtil.AttachmentForBuildPayrollModuleTaskDto();
 
         assertNotNull(actual);
         assertNotNull(actual.getId());

@@ -19,7 +19,8 @@ import org.example.mapper.LabelMapper;
 import org.example.model.label.Color;
 import org.example.model.label.Label;
 import org.example.repository.label.LabelRepository;
-import org.example.util.TestUtil;
+import org.example.util.AttachmentTestUtil;
+import org.example.util.LabelTestUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -63,7 +64,7 @@ public class LabelServiceTest {
         saved.setName(labelWithoutId.getName());
         saved.setColor(labelWithoutId.getColor());
 
-        LabelResponseDto expected = TestUtil.PullRequestLabelDto();
+        LabelResponseDto expected = LabelTestUtil.PullRequestLabelResponseDto();
         expected.setId(1L);
 
         when(labelMapper.toEntity(requestDto)).thenReturn(labelWithoutId);
@@ -87,11 +88,11 @@ public class LabelServiceTest {
                 Should return all available labels
                 """)
     void getLabels_twoLabels_ReturnsAllLabels() {
-        LabelResponseDto pullRequestLabelResponseDto = TestUtil.PullRequestLabelDto();
-        Label pullRequestLabel = TestUtil.PullRequestLabel();
+        LabelResponseDto pullRequestLabelResponseDto = LabelTestUtil.PullRequestLabelResponseDto();
+        Label pullRequestLabel = LabelTestUtil.PullRequestLabel();
 
-        LabelResponseDto mergeConflictLabelResponseDto = TestUtil.MergeConflictLabelDto();
-        Label mergeConflictLabel = TestUtil.MergeConflictLabel();
+        LabelResponseDto mergeConflictLabelResponseDto = LabelTestUtil.MergeConflictLabelResponseDto();
+        Label mergeConflictLabel = LabelTestUtil.MergeConflictLabel();
 
         List<Label> labels
                 = List.of(pullRequestLabel, mergeConflictLabel);
@@ -150,7 +151,7 @@ public class LabelServiceTest {
         updated.setName(labelWithoutId.getName());
         updated.setColor(labelWithoutId.getColor());
 
-        LabelResponseDto expected = TestUtil.PullRequestLabelDto();
+        LabelResponseDto expected = LabelTestUtil.PullRequestLabelResponseDto();
         expected.setId(1L);
         expected.setName(updated.getName());
 

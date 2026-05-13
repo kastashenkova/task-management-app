@@ -16,7 +16,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.example.dto.label.LabelRequestDto;
 import org.example.dto.label.LabelResponseDto;
 import org.example.model.label.Color;
-import org.example.util.TestUtil;
+import org.example.util.AttachmentTestUtil;
+import org.example.util.LabelTestUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +71,7 @@ public class LabelControllerTest {
         );
 
         assertNotNull(actualList);
-        assertEquals(11, actualList.size());
+        assertEquals(13, actualList.size());
     }
 
     @WithMockUser(username = "john.carter", roles = "ADMIN")
@@ -112,7 +113,7 @@ public class LabelControllerTest {
         requestDto.setName("Pull Request");
         requestDto.setColor(Color.SAGE);
 
-        LabelResponseDto expected = TestUtil.PullRequestLabelDto();
+        LabelResponseDto expected = LabelTestUtil.PullRequestLabelResponseDto();
 
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
 
@@ -152,7 +153,7 @@ public class LabelControllerTest {
         requestDto.setName("Updated Label");
         requestDto.setColor(Color.SAGE);
 
-        LabelResponseDto expected = TestUtil.PullRequestLabelDto();
+        LabelResponseDto expected = LabelTestUtil.PullRequestLabelResponseDto();
         expected.setName("Updated Label");
 
         String jsonRequest = objectMapper.writeValueAsString(requestDto);

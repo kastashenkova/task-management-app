@@ -20,7 +20,9 @@ import org.example.model.user.User;
 import org.example.repository.comment.CommentRepository;
 import org.example.repository.task.TaskRepository;
 import org.example.repository.user.UserRepository;
-import org.example.util.TestUtil;
+import org.example.util.AttachmentTestUtil;
+import org.example.util.CommentTestUtil;
+import org.example.util.UserTestUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -82,10 +84,10 @@ public class CommentServiceTest {
                 .setTask(task)
                 .setText(commentWithoutId.getText());
 
-        CommentResponseDto expected = TestUtil.AddRefreshTokenCommentDto();
+        CommentResponseDto expected = CommentTestUtil.AddRefreshTokenCommentDto();
         expected.setId(1L);
 
-        UserResponseDto userResponseDto = TestUtil.AliceDto();
+        UserResponseDto userResponseDto = UserTestUtil.AliceResponseDto();
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn(userResponseDto.getUsername());
 
@@ -117,11 +119,11 @@ public class CommentServiceTest {
                 Should return all available comments for the specific task
                 """)
     void getAllForTask_twoComments_ReturnsAllComments() {
-        CommentResponseDto addRefreshTokenCommentDto = TestUtil.AddRefreshTokenCommentDto();
-        Comment addRefreshTokenComment = TestUtil.AddRefreshTokenComment();
+        CommentResponseDto addRefreshTokenCommentDto = CommentTestUtil.AddRefreshTokenCommentDto();
+        Comment addRefreshTokenComment = CommentTestUtil.AddRefreshTokenComment();
 
-        CommentResponseDto addGoogleCloudAPICommentDto = TestUtil.AddGoogleCloudAPICommentDto();
-        Comment addGoogleCloudAPIComment = TestUtil.AddGoogleCloudAPIComment();
+        CommentResponseDto addGoogleCloudAPICommentDto = CommentTestUtil.AddGoogleCloudAPICommentDto();
+        Comment addGoogleCloudAPIComment = CommentTestUtil.AddGoogleCloudAPIComment();
 
         List<Comment> comments
                 = List.of(addRefreshTokenComment, addGoogleCloudAPIComment);
@@ -187,7 +189,7 @@ public class CommentServiceTest {
                 Should delete existing Comment by its id
                 """)
     void deleteCommentById_existingComment_Success() {
-        Comment addRefreshTokenComment = TestUtil.AddRefreshTokenComment();
+        Comment addRefreshTokenComment = CommentTestUtil.AddRefreshTokenComment();
 
         when(commentRepository.findById(1L))
                 .thenReturn(Optional.ofNullable(addRefreshTokenComment));

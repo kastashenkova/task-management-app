@@ -12,7 +12,9 @@ import org.example.dto.task.TaskResponseDto;
 import org.example.model.label.Label;
 import org.example.model.task.Task;
 import org.example.model.user.User;
-import org.example.util.TestUtil;
+import org.example.util.AttachmentTestUtil;
+import org.example.util.TaskTestUtil;
+import org.example.util.UserTestUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,12 +41,12 @@ public class WhatsAppServiceTest {
             Should send task assignment to the logged in user
             """)
     public void sendTaskAssignmentWhatsApp_validInput_SendsTaskAssignment() {
-        TaskResponseDto addPaymentCountryTaskDto = TestUtil.AddPaymentCountryTaskDto();
-        User mockAssignee = TestUtil.John()
+        TaskResponseDto addPaymentCountryTaskDto = TaskTestUtil.AddPaymentCountryTaskResponseDto();
+        User mockAssignee = UserTestUtil.John()
                 .setId(addPaymentCountryTaskDto.getAssigneeId());
         Label mockLabel = new Label()
                 .setId(addPaymentCountryTaskDto.getLabelId());
-        Task mockTask = TestUtil.AddPaymentCountryTask()
+        Task mockTask = TaskTestUtil.AddPaymentCountryTask()
                 .setAssignee(mockAssignee)
                 .setLabel(mockLabel);;
 
@@ -72,13 +74,13 @@ public class WhatsAppServiceTest {
             Should return Illegal Argument Exception
             """)
     public void sendTaskAssignmentWhatsApp_incorrectPhoneNumber_ReturnsIllegalArgumentException() {
-        TaskResponseDto addPaymentCountryTaskDto = TestUtil.AddPaymentCountryTaskDto();
-        User mockAssignee = TestUtil.John()
+        TaskResponseDto addPaymentCountryTaskDto = TaskTestUtil.AddPaymentCountryTaskResponseDto();
+        User mockAssignee = UserTestUtil.John()
                 .setId(addPaymentCountryTaskDto.getAssigneeId())
                 .setPhoneNumber(" ");
         Label mockLabel = new Label()
                 .setId(addPaymentCountryTaskDto.getLabelId());
-        Task mockTask = TestUtil.AddPaymentCountryTask()
+        Task mockTask = TaskTestUtil.AddPaymentCountryTask()
                 .setAssignee(mockAssignee)
                 .setLabel(mockLabel);;
 
@@ -101,12 +103,12 @@ public class WhatsAppServiceTest {
             Should return RuntimeException
             """)
     public void sendTaskAssignmentWhatsApp_whatsAppError_ReturnsRuntimeException() {
-        TaskResponseDto addPaymentCountryTaskDto = TestUtil.AddPaymentCountryTaskDto();
-        User mockAssignee = TestUtil.John()
+        TaskResponseDto addPaymentCountryTaskDto = TaskTestUtil.AddPaymentCountryTaskResponseDto();
+        User mockAssignee = UserTestUtil.John()
                 .setId(addPaymentCountryTaskDto.getAssigneeId());
         Label mockLabel = new Label()
                 .setId(addPaymentCountryTaskDto.getLabelId());
-        Task mockTask = TestUtil.AddPaymentCountryTask()
+        Task mockTask = TaskTestUtil.AddPaymentCountryTask()
                 .setAssignee(mockAssignee)
                 .setLabel(mockLabel);
 

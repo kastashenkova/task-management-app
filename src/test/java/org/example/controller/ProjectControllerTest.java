@@ -17,7 +17,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.example.dto.project.ProjectRequestDto;
 import org.example.dto.project.ProjectResponseDto;
 import org.example.model.project.Status;
-import org.example.util.TestUtil;
+import org.example.util.ProjectTestUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,7 +105,7 @@ public class ProjectControllerTest {
            Should return specific project by its id
            """)
     void getProjectById_secondProject_ReturnsTheSecondProjectInDto() throws Exception {
-        ProjectResponseDto expected = TestUtil.MobileBankingAppProjectDto();
+        ProjectResponseDto expected = ProjectTestUtil.MobileBankingAppProjectResponseDto();
 
         MvcResult result = mockMvc.perform(get("/projects/{id}",
                         2L))
@@ -155,7 +155,7 @@ public class ProjectControllerTest {
         requestDto.setEndDate(LocalDate.of(2026, 7, 8));
         requestDto.setStatus(Status.INITIATED);
 
-        ProjectResponseDto expected = TestUtil.PayPalProjectDto();
+        ProjectResponseDto expected = ProjectTestUtil.PayPalProjectResponseDto();
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
 
         MvcResult result = mockMvc.perform(post("/projects")
@@ -192,7 +192,7 @@ public class ProjectControllerTest {
         requestDto.setEndDate(LocalDate.of(2026, 8, 9));
         requestDto.setStatus(Status.IN_PROGRESS);
 
-        ProjectResponseDto expected = TestUtil.MobileBankingAppProjectDto();
+        ProjectResponseDto expected = ProjectTestUtil.MobileBankingAppProjectResponseDto();
         expected.setStartDate(LocalDate.of(2026, 5, 6));
         expected.setEndDate(LocalDate.of(2026, 8, 9));
         expected.setStatus(Status.IN_PROGRESS);

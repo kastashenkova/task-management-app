@@ -15,7 +15,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.example.dto.comment.CommentRequestDto;
 import org.example.dto.comment.CommentResponseDto;
 import org.example.dto.task.TaskResponseDto;
-import org.example.util.TestUtil;
+import org.example.util.AttachmentTestUtil;
+import org.example.util.CommentTestUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -147,10 +148,10 @@ public class CommentControllerTest {
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void createComment_validRequestDto_ReturnsCreatedComment() throws Exception {
         CommentRequestDto requestDto = new CommentRequestDto();
-        requestDto.setTaskId(2L);
+        requestDto.setTaskId(3L);
         requestDto.setText("Please, also add refresh token support before closing this task");
 
-        CommentResponseDto expected = TestUtil.AddRefreshTokenCommentDto();
+        CommentResponseDto expected = CommentTestUtil.AddRefreshTokenCommentDto();
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
 
         MvcResult result = mockMvc.perform(post("/comments")
