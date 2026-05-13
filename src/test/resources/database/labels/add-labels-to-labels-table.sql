@@ -9,4 +9,6 @@ INSERT INTO labels (id, name, color, is_deleted) VALUES
                                                      (8, 'Security', 'BLUEBERRY', false),
                                                      (9, 'Performance', 'BASIL', false),
                                                      (10, 'Blocked', 'GRAPHITE', false),
-                                                     (11, 'Urgent', 'TOMATO', false);
+                                                     (11, 'Urgent', 'TOMATO', false),
+                                                     (12, 'Pull Request', 'SAGE', false),
+                                                     (13, 'Merge Conflict', 'GRAPE', false);

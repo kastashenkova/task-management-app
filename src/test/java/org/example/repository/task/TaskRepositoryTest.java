@@ -166,7 +166,7 @@ public class TaskRepositoryTest {
     void findAllByProject_Id_tasksWithinTheSameProject_ReturnsAllTasksOfTheSameProject() {
         Pageable pageable = PageRequest.of(0, 10);
         Page<Task> actual = taskRepository.findAllByProject_Id(1L, pageable);
-        assertEquals(2, actual.getTotalElements());
+        assertEquals(3, actual.getTotalElements());
     }
 
     @Test

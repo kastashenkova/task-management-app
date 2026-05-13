@@ -26,7 +26,7 @@ import org.example.repository.attachment.AttachmentRepository;
 import org.example.repository.task.TaskRepository;
 import org.example.repository.user.UserRepository;
 import org.example.service.third_party.DropboxService;
-import org.example.util.TestUtil;
+import org.example.util.AttachmentTestUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -93,7 +93,7 @@ public class AttachmentServiceTest {
                 .setFilename("actualFilename.pdf")
                 .setUploadDate(LocalDateTime.now());
 
-        AttachmentResponseDto expected = TestUtil.AttachmentForBuildPayrollModuleTaskDto();
+        AttachmentResponseDto expected = AttachmentTestUtil.AttachmentForBuildPayrollModuleTaskDto();
 
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn(mockUser.getUsername());
@@ -130,11 +130,11 @@ public class AttachmentServiceTest {
                 Should return all available attachments
                 """)
     void getAllForTask_twoAttachmentsInTask_ReturnsAllAttachments() {
-        AttachmentResponseDto buildPayrollModuleAttachmentDto = TestUtil.AttachmentForBuildPayrollModuleTaskDto();
-        Attachment buildPayrollModuleAttachment = TestUtil.AttachmentForBuildPayrollModuleTask();
+        AttachmentResponseDto buildPayrollModuleAttachmentDto = AttachmentTestUtil.AttachmentForBuildPayrollModuleTaskDto();
+        Attachment buildPayrollModuleAttachment = AttachmentTestUtil.AttachmentForBuildPayrollModuleTask();
 
-        AttachmentResponseDto addPaymentCountryAttachmentDto = TestUtil.AttachmentForAddPaymentCountryTaskDto();
-        Attachment addPaymentCountryAttachment = TestUtil.AttachmentForAddPaymentCountryTask();
+        AttachmentResponseDto addPaymentCountryAttachmentDto = AttachmentTestUtil.AttachmentForAddPaymentCountryTaskDto();
+        Attachment addPaymentCountryAttachment = AttachmentTestUtil.AttachmentForAddPaymentCountryTask();
 
         List<Attachment> attachments
                 = List.of(buildPayrollModuleAttachment, addPaymentCountryAttachment);
@@ -214,9 +214,9 @@ public class AttachmentServiceTest {
                 Get existing Attachment by its id
                 """)
     void retrieveAttachment_existingAttachment_ReturnsTheAttachment() {
-        AttachmentResponseDto buildPayrollModuleAttachmentDto = TestUtil
+        AttachmentResponseDto buildPayrollModuleAttachmentDto = AttachmentTestUtil
                 .AttachmentForBuildPayrollModuleTaskDto();
-        Attachment buildPayrollModuleAttachment = TestUtil.AttachmentForBuildPayrollModuleTask();
+        Attachment buildPayrollModuleAttachment = AttachmentTestUtil.AttachmentForBuildPayrollModuleTask();
 
         when(securityContext.getAuthentication()).thenReturn(authentication);
         User mockUser = new User()
@@ -263,9 +263,9 @@ public class AttachmentServiceTest {
                 Should delete existing Attachment by its id
                 """)
     void deleteAttachment_existingAttachment_Success() {
-        AttachmentResponseDto buildPayrollModuleAttachmentDto = TestUtil
+        AttachmentResponseDto buildPayrollModuleAttachmentDto = AttachmentTestUtil
                 .AttachmentForBuildPayrollModuleTaskDto();
-        Attachment buildPayrollModuleAttachment = TestUtil.AttachmentForBuildPayrollModuleTask();
+        Attachment buildPayrollModuleAttachment = AttachmentTestUtil.AttachmentForBuildPayrollModuleTask();
 
         when(securityContext.getAuthentication()).thenReturn(authentication);
         User mockUser = new User()

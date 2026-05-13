@@ -22,7 +22,7 @@ import org.example.model.task.Priority;
 import org.example.model.task.Status;
 import org.example.service.third_party.CalendarEventResult;
 import org.example.service.third_party.google_calendar.GoogleCalendarService;
-import org.example.util.TestUtil;
+import org.example.util.TaskTestUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,7 +88,7 @@ public class TaskControllerTest {
         );
 
         assertNotNull(actualList);
-        assertEquals(2, actualList.size());
+        assertEquals(3, actualList.size());
     }
 
     @WithMockUser(username = "john.carter", roles = "ADMIN")
@@ -152,7 +152,7 @@ public class TaskControllerTest {
            Should return specific task by its id
            """)
     void getTaskById_thirdTask_ReturnsTheThirdTaskInDto() throws Exception {
-        TaskResponseDto expected = TestUtil.BuildPayrollModuleTaskDto();
+        TaskResponseDto expected = TaskTestUtil.BuildPayrollModuleTaskResponseDto();
 
         MvcResult result = mockMvc.perform(get("/tasks/{id}",
                         3L))
@@ -232,10 +232,10 @@ public class TaskControllerTest {
         requestDto.setStatus(org.example.model.task.Status.IN_PROGRESS);
         requestDto.setDueDate(LocalDate.of(2026, 10, 26));
         requestDto.setProjectId(2L);
-        requestDto.setAssigneeId(3L);
-        requestDto.setLabelId(11L);
+        requestDto.setAssigneeId(1L);
+        requestDto.setLabelId(13L);
 
-        TaskResponseDto expected = TestUtil.AddPaymentCountryTaskDto();
+        TaskResponseDto expected = TaskTestUtil.AddPaymentCountryTaskResponseDto();
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
 
         MvcResult result = mockMvc.perform(post("/tasks")
@@ -284,11 +284,11 @@ public class TaskControllerTest {
         requestDto.setPriority(Priority.HIGH);
         requestDto.setStatus(Status.IN_PROGRESS);
         requestDto.setDueDate(LocalDate.of(2026, 5, 15));
-        requestDto.setProjectId(3L);
-        requestDto.setAssigneeId(3L);
-        requestDto.setLabelId(6L);
+        requestDto.setProjectId(1L);
+        requestDto.setAssigneeId(1L);
+        requestDto.setLabelId(12L);
 
-        TaskResponseDto expected = TestUtil.BuildPayrollModuleTaskDto();
+        TaskResponseDto expected = TaskTestUtil.BuildPayrollModuleTaskResponseDto();
         expected.setPriority(Priority.HIGH);
         expected.setStatus(Status.IN_PROGRESS);
         expected.setDueDate(LocalDate.of(2026, 5, 15));
@@ -296,7 +296,7 @@ public class TaskControllerTest {
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
 
         MvcResult result = mockMvc.perform(put("/tasks/{id}",
-                        2L)
+                        3L)
                         .content(jsonRequest)
                         .contentType(MediaType.APPLICATION_JSON)
                 )

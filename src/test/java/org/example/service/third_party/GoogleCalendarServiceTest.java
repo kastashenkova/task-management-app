@@ -12,13 +12,13 @@ import static org.mockito.Mockito.when;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 import org.example.dto.task.TaskResponseDto;
-import org.example.model.label.Label;
-import org.example.model.project.Project;
 import org.example.model.task.Task;
 import org.example.model.user.User;
 import org.example.service.third_party.google_calendar.GoogleCalendarClientFactory;
 import org.example.service.third_party.google_calendar.GoogleCalendarService;
-import org.example.util.TestUtil;
+import org.example.util.AttachmentTestUtil;
+import org.example.util.TaskTestUtil;
+import org.example.util.UserTestUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,10 +43,10 @@ public class GoogleCalendarServiceTest {
             Should return created calendar event link
             """)
     public void createEvent_validRequest_ReturnsEventLink() throws Exception {
-        TaskResponseDto addPaymentCountryTaskDto = TestUtil.AddPaymentCountryTaskDto();
-        User mockAssignee = TestUtil.John()
+        TaskResponseDto addPaymentCountryTaskDto = TaskTestUtil.AddPaymentCountryTaskResponseDto();
+        User mockAssignee = UserTestUtil.John()
                 .setId(addPaymentCountryTaskDto.getAssigneeId());;
-        Task mockTask = TestUtil.AddPaymentCountryTask()
+        Task mockTask = TaskTestUtil.AddPaymentCountryTask()
                 .setCalendarEventId("test-calendar-event-id");
 
         Calendar.Events mockEvents = mock(Calendar.Events.class);
@@ -73,10 +73,10 @@ public class GoogleCalendarServiceTest {
             Should update existing Google Calendar event
             """)
     public void updateEvent_existingEvent_Success() throws Exception {
-        TaskResponseDto addPaymentCountryTaskDto = TestUtil.AddPaymentCountryTaskDto();
-        User mockAssignee = TestUtil.John()
+        TaskResponseDto addPaymentCountryTaskDto = TaskTestUtil.AddPaymentCountryTaskResponseDto();
+        User mockAssignee = UserTestUtil.John()
                 .setId(addPaymentCountryTaskDto.getAssigneeId());;
-        Task mockTask = TestUtil.AddPaymentCountryTask()
+        Task mockTask = TaskTestUtil.AddPaymentCountryTask()
                 .setCalendarEventId("test-calendar-event-id");
 
         Calendar.Events mockEvents = mock(Calendar.Events.class);
@@ -123,10 +123,10 @@ public class GoogleCalendarServiceTest {
             Should delete existing task event
             """)
     public void deleteEvent_existingEvent_Success() throws Exception {
-        TaskResponseDto addPaymentCountryTaskDto = TestUtil.AddPaymentCountryTaskDto();
-        User mockAssignee = TestUtil.John()
+        TaskResponseDto addPaymentCountryTaskDto = TaskTestUtil.AddPaymentCountryTaskResponseDto();
+        User mockAssignee = UserTestUtil.John()
                 .setId(addPaymentCountryTaskDto.getAssigneeId());;
-        Task mockTask = TestUtil.AddPaymentCountryTask()
+        Task mockTask = TaskTestUtil.AddPaymentCountryTask()
                 .setCalendarEventId("test-calendar-event-id");
 
         Calendar.Events mockEvents = mock(Calendar.Events.class);

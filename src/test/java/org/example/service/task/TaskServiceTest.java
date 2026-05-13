@@ -14,7 +14,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import jakarta.persistence.EntityNotFoundException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.example.dto.task.TaskRequestDto;
@@ -22,7 +21,6 @@ import org.example.dto.task.TaskResponseDto;
 import org.example.mapper.TaskMapper;
 import org.example.model.label.Label;
 import org.example.model.project.Project;
-import org.example.model.task.Priority;
 import org.example.model.task.Task;
 import org.example.model.user.User;
 import org.example.repository.label.LabelRepository;
@@ -34,7 +32,7 @@ import org.example.repository.user.UserRepository;
 import org.example.service.third_party.CalendarEventResult;
 import org.example.service.third_party.google_calendar.GoogleCalendarService;
 import org.example.service.third_party.WhatsAppService;
-import org.example.util.TestUtil;
+import org.example.util.TaskTestUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -93,8 +91,8 @@ public class TaskServiceTest {
                 """)
     void createTask_newTask_ReturnsNewTask() throws Exception {
         // given
-        TaskRequestDto taskRequestDto = TestUtil.BuildPayrollModuleTaskRequestDto();
-        Task saved = TestUtil.BuildPayrollModuleTask();
+        TaskRequestDto taskRequestDto = TaskTestUtil.BuildPayrollModuleTaskRequestDto();
+        Task saved = TaskTestUtil.BuildPayrollModuleTask();
 
         Project mockProject = saved.getProject();
         User mockUser = saved.getAssignee();
@@ -109,7 +107,7 @@ public class TaskServiceTest {
                 .setAssignee(mockUser)
                 .setLabel(mockLabel);
 
-        TaskResponseDto expected = TestUtil.BuildPayrollModuleTaskDto();
+        TaskResponseDto expected = TaskTestUtil.BuildPayrollModuleTaskResponseDto();
 
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn(mockUser.getUsername());
@@ -151,7 +149,7 @@ public class TaskServiceTest {
                 Should return Not Found
                 """)
     void createTask_nonExistingForeignKeyEntity_ReturnsNotFound() throws Exception {
-        TaskRequestDto taskRequestDto = TestUtil.BuildPayrollModuleTaskRequestDto();
+        TaskRequestDto taskRequestDto = TaskTestUtil.BuildPayrollModuleTaskRequestDto();
 
         assertThrows(EntityNotFoundException.class, () -> taskService.createTask(taskRequestDto));
 
@@ -163,12 +161,12 @@ public class TaskServiceTest {
                 Should return all available tasks
                 """)
     void getTasksForProject_twoTasksInProject_ReturnsAllTasks() {
-        TaskResponseDto buildPayrollSystemTaskDto = TestUtil.BuildPayrollModuleTaskDto();
-        Task buildPayrollSystemTask = TestUtil.BuildPayrollModuleTask();
+        TaskResponseDto buildPayrollSystemTaskDto = TaskTestUtil.BuildPayrollModuleTaskResponseDto();
+        Task buildPayrollSystemTask = TaskTestUtil.BuildPayrollModuleTask();
 
-        TaskResponseDto addPaymentCountryTaskDto = TestUtil.AddPaymentCountryTaskDto()
+        TaskResponseDto addPaymentCountryTaskDto = TaskTestUtil.AddPaymentCountryTaskResponseDto()
                 .setProjectId(buildPayrollSystemTaskDto.getProjectId());
-        Task addPaymentCountryTask = TestUtil.AddPaymentCountryTask()
+        Task addPaymentCountryTask = TaskTestUtil.AddPaymentCountryTask()
                 .setProject(buildPayrollSystemTask.getProject());
 
         List<Task> tasks
@@ -270,8 +268,8 @@ public class TaskServiceTest {
                 Get existing Task by its id
                 """)
     void getTaskById_existingTask_ReturnsTheTask() {
-        TaskResponseDto taskDto = TestUtil.BuildPayrollModuleTaskDto();
-        Task task = TestUtil.BuildPayrollModuleTask();
+        TaskResponseDto taskDto = TaskTestUtil.BuildPayrollModuleTaskResponseDto();
+        Task task = TaskTestUtil.BuildPayrollModuleTask();
 
         User mockUser = task.getAssignee();
 
@@ -326,8 +324,8 @@ public class TaskServiceTest {
                 """)
     void updateTaskById_existingTask_ReturnsUpdatedTask() throws Exception {
         // given
-        TaskRequestDto taskRequestDto = TestUtil.BuildPayrollModuleTaskRequestDto();
-        Task updated = TestUtil.BuildPayrollModuleTask();
+        TaskRequestDto taskRequestDto = TaskTestUtil.BuildPayrollModuleTaskRequestDto();
+        Task updated = TaskTestUtil.BuildPayrollModuleTask();
 
         Project mockProject = updated.getProject();
         User mockUser = updated.getAssignee();
@@ -342,7 +340,7 @@ public class TaskServiceTest {
                 .setAssignee(mockUser)
                 .setLabel(mockLabel);
 
-        TaskResponseDto expected = TestUtil.BuildPayrollModuleTaskDto();
+        TaskResponseDto expected = TaskTestUtil.BuildPayrollModuleTaskResponseDto();
         expected.setStatus(taskRequestDto.getStatus());
 
         when(securityContext.getAuthentication()).thenReturn(authentication);
@@ -355,18 +353,18 @@ public class TaskServiceTest {
                 .thenReturn(Optional.of(mockUser));
         when(userRepository.findById(taskRequestDto.getAssigneeId()))
                 .thenReturn(Optional.of(mockUser));
-        when(projectRepository.findByAssigneeIdAndId(3L, taskRequestDto.getProjectId()))
+        when(projectRepository.findByAssigneeIdAndId(1L, taskRequestDto.getProjectId()))
                 .thenReturn(Optional.of(mockProject));
         when(labelRepository.findById(mockLabel.getId()))
                 .thenReturn(Optional.of(mockLabel));
-        when(taskRepository.findTaskByIdAndAssignee(1L, mockUser))
+        when(taskRepository.findTaskByIdAndAssignee(3L, mockUser))
                 .thenReturn(Optional.of(taskWithoutId));
         when(taskRepository.save(taskWithoutId)).thenReturn(updated);
         when(taskMapper.toDto(any(Task.class))).thenReturn(expected);
 
         // when
         TaskResponseDto actual = taskService.updateTaskById(
-                1L,
+                3L,
                 taskRequestDto);
 
         // then
@@ -383,8 +381,8 @@ public class TaskServiceTest {
             Should return Not Found
             """)
     void updateTaskById_nonExistingTask_NotFound() throws Exception {
-        TaskRequestDto taskRequestDto = TestUtil.BuildPayrollModuleTaskRequestDto();
-        Task updated = TestUtil.BuildPayrollModuleTask();
+        TaskRequestDto taskRequestDto = TaskTestUtil.BuildPayrollModuleTaskRequestDto();
+        Task updated = TaskTestUtil.BuildPayrollModuleTask();
 
         Project mockProject = updated.getProject();
         User mockUser = updated.getAssignee();
@@ -420,7 +418,7 @@ public class TaskServiceTest {
                 Should delete existing Task by its id
                 """)
     void deleteTaskById_existingTask_Success() throws Exception {
-        Task task = TestUtil.AddPaymentCountryTask();
+        Task task = TaskTestUtil.AddPaymentCountryTask();
 
         User mockUser = task.getAssignee();
         when(securityContext.getAuthentication()).thenReturn(authentication);
@@ -459,8 +457,8 @@ public class TaskServiceTest {
                  Search tasks by the same priority
                  """)
     void search_byPriority_ReturnsTasks() {
-        Task buildPayrollSystemTask = TestUtil.BuildPayrollModuleTask();
-        Task addPaymentCountryTask = TestUtil.AddPaymentCountryTask();
+        Task buildPayrollSystemTask = TaskTestUtil.BuildPayrollModuleTask();
+        Task addPaymentCountryTask = TaskTestUtil.AddPaymentCountryTask();
 
         Pageable pageable = PageRequest.of(0, 10);
         Page<Task> page = new PageImpl<>(
@@ -493,8 +491,8 @@ public class TaskServiceTest {
                  Search tasks by the same status
                  """)
     void search_byStatus_ReturnsTasks() {
-        Task buildPayrollSystemTask = TestUtil.BuildPayrollModuleTask();
-        Task addPaymentCountryTask = TestUtil.AddPaymentCountryTask();
+        Task buildPayrollSystemTask = TaskTestUtil.BuildPayrollModuleTask();
+        Task addPaymentCountryTask = TaskTestUtil.AddPaymentCountryTask();
 
         Pageable pageable = PageRequest.of(0, 10);
         Page<Task> page = new PageImpl<>(

@@ -12,7 +12,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.example.dto.user.RoleDto;
 import org.example.dto.user.UserUpdateRequestDto;
 import org.example.dto.user.registration.UserResponseDto;
-import org.example.util.TestUtil;
+import org.example.util.UserTestUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +55,7 @@ public class UsersControllerTest {
         RoleDto requestDto = new RoleDto();
         requestDto.setName("ADMIN");
 
-        UserResponseDto expected = TestUtil.SarahMitchellDto();
+        UserResponseDto expected = UserTestUtil.SarahMitchellResponseDto();
         expected.setRole("ADMIN");
 
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
@@ -112,7 +112,7 @@ public class UsersControllerTest {
     },
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void getMyInfo_adminUser_ReturnsInfoOfTheLoggedInUser() throws Exception {
-        UserResponseDto expected = TestUtil.JohnDto();
+        UserResponseDto expected = UserTestUtil.JohnResponseDto();
 
         MvcResult result = mockMvc.perform(get("/users/me"))
                 .andExpect(status().isOk())
@@ -147,7 +147,7 @@ public class UsersControllerTest {
     },
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void getMyInfo_userRoleUser_ReturnsInfoOfTheLoggedInUser() throws Exception {
-        UserResponseDto expected = TestUtil.SarahMitchellDto();
+        UserResponseDto expected = UserTestUtil.SarahMitchellResponseDto();
 
         MvcResult result = mockMvc.perform(get("/users/me"))
                 .andExpect(status().isOk())
@@ -186,7 +186,7 @@ public class UsersControllerTest {
         userRequestDto.setEmail("sarah.white@company.com");
         userRequestDto.setLastName("White");
 
-        UserResponseDto expected = TestUtil.SarahWhiteDto();
+        UserResponseDto expected = UserTestUtil.SarahWhiteResponseDto();
 
         String jsonRequest = objectMapper.writeValueAsString(userRequestDto);
 
@@ -232,7 +232,7 @@ public class UsersControllerTest {
         userRequestDto.setPassword("new-password");
         userRequestDto.setRepeatPassword("new-password");
 
-        UserResponseDto expected = TestUtil.AliceDto();
+        UserResponseDto expected = UserTestUtil.AliceResponseDto();
 
         String jsonRequest = objectMapper.writeValueAsString(userRequestDto);
 

@@ -20,7 +20,7 @@ import org.example.model.user.Role;
 import org.example.model.user.User;
 import org.example.repository.user.RoleRepository;
 import org.example.repository.user.UserRepository;
-import org.example.util.TestUtil;
+import org.example.util.UserTestUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -69,7 +69,7 @@ public class UserServiceTest {
                 """)
     void register_newUser_ReturnsNewUser() {
         // given
-        UserRegistrationRequestDto requestDto = TestUtil.AliceRegistrationRequestDto();
+        UserRegistrationRequestDto requestDto = UserTestUtil.AliceRegistrationRequestDto();
 
         User userWithoutId = new User()
                 .setUsername(requestDto.getUsername())
@@ -79,9 +79,9 @@ public class UserServiceTest {
                 .setLastName(requestDto.getLastName())
                 .setPassword(requestDto.getPassword());
 
-        User saved = TestUtil.Alice();
+        User saved = UserTestUtil.Alice();
 
-        UserResponseDto expected = TestUtil.AliceDto();
+        UserResponseDto expected = UserTestUtil.AliceResponseDto();
 
         when(userMapper.toEntity(requestDto)).thenReturn(userWithoutId);
         when(roleRepository.findRoleByName(Role.RoleName.USER))
@@ -113,7 +113,7 @@ public class UserServiceTest {
         RoleDto roleDto = new RoleDto()
                 .setName("ADMIN");
 
-        UserRegistrationRequestDto requestDto = TestUtil.AliceRegistrationRequestDto();
+        UserRegistrationRequestDto requestDto = UserTestUtil.AliceRegistrationRequestDto();
 
         User userWithoutId = new User()
                 .setUsername(requestDto.getUsername())
@@ -126,10 +126,10 @@ public class UserServiceTest {
         Role role = new Role()
                 .setName(Role.RoleName.ADMIN);
 
-        User updated = TestUtil.Alice()
+        User updated = UserTestUtil.Alice()
                 .setRole(role);
 
-        UserResponseDto expected = TestUtil.AliceDto()
+        UserResponseDto expected = UserTestUtil.AliceResponseDto()
                 .setRole("ADMIN");
 
         when(userRepository.findById(1L)).thenReturn(Optional.of(userWithoutId));
@@ -158,7 +158,7 @@ public class UserServiceTest {
         RoleDto roleDto = new RoleDto()
                 .setName("ADMIN");
 
-        UserRegistrationRequestDto requestDto = TestUtil.AliceRegistrationRequestDto();
+        UserRegistrationRequestDto requestDto = UserTestUtil.AliceRegistrationRequestDto();
 
         User userWithoutId = new User()
                 .setUsername(requestDto.getUsername())
@@ -179,8 +179,8 @@ public class UserServiceTest {
             Should return user info
             """)
     void getMyInfo_loggedInUser_ReturnsLoggedInUserInfo() {
-        UserResponseDto johnDto = TestUtil.JohnDto();
-        User john = TestUtil.John();
+        UserResponseDto johnDto = UserTestUtil.JohnResponseDto();
+        User john = UserTestUtil.John();
 
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn(johnDto.getUsername());
@@ -233,7 +233,7 @@ public class UserServiceTest {
         role.setName(Role.RoleName.USER);
         updated.setRole(role);
 
-        UserResponseDto expected = TestUtil.AliceDto();
+        UserResponseDto expected = UserTestUtil.AliceResponseDto();
 
         when(securityContext.getAuthentication()).thenReturn(authentication);
         when(authentication.getName()).thenReturn(expected.getUsername());

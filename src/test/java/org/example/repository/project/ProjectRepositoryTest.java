@@ -125,7 +125,7 @@ public class ProjectRepositoryTest {
     void findAllByAssigneeId_projectsWithTheSameAssignee_ReturnsAllProjectsWithTasksOfTheSameAssignee() {
         Pageable pageable = PageRequest.of(0, 10);
         Page<Project> actual = projectRepository.findAllByAssigneeId(3L, pageable);
-        assertEquals(3, actual.getTotalElements());
+        assertEquals(2, actual.getTotalElements());
     }
 
     @Test

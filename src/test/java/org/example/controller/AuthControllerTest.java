@@ -11,7 +11,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.example.dto.user.login.UserLoginRequestDto;
 import org.example.dto.user.registration.UserRegistrationRequestDto;
 import org.example.dto.user.registration.UserResponseDto;
-import org.example.util.TestUtil;
+import org.example.util.UserTestUtil;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +59,7 @@ class AuthControllerTest {
         requestDto.setPassword("password");
         requestDto.setRepeatPassword("password");
 
-        UserResponseDto expected = TestUtil.AliceDto();
+        UserResponseDto expected = UserTestUtil.AliceResponseDto();
 
         MvcResult result = mockMvc.perform(post("/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
