@@ -1,5 +1,6 @@
 package org.example.dto.project;
 
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import lombok.Getter;
@@ -19,13 +20,13 @@ public class ProjectRequestDto {
     @NotBlank
     @Length(min = 1, max = 500, message = "{validation.description.size}")
     private String description;
-    @NotBlank
+    @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate startDate;
-    @NotBlank
+    @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate endDate;
-    @NotBlank
+    @NotNull
     @Length(min = 1, max = 20, message = "{validation.status.size}")
     private Status status;
 }

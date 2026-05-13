@@ -2,7 +2,7 @@ package org.example.dto.task;
 
 import java.time.LocalDate;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -21,19 +21,19 @@ public class TaskRequestDto {
     @NotBlank
     @Length(min = 1, max = 500, message = "{validation.description.size}")
     private String description;
-    @NotBlank
+    @NotNull
     @Length(min = 1, max = 20, message = "{validation.priority.size}")
     private Priority priority;
-    @NotBlank
+    @NotNull
     @Length(min = 1, max = 20, message = "{validation.status.size}")
     private Status status;
-    @NotBlank
+    @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dueDate;
-    @NotEmpty
+    @NotNull
     private Long projectId;
-    @NotEmpty
+    @NotNull
     private Long assigneeId;
-    @NotEmpty
+    @NotNull
     private Long labelId;
 }
