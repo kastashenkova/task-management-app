@@ -1,6 +1,7 @@
 package org.example.dto.label;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -14,7 +15,7 @@ public class LabelRequestDto {
     @NotBlank
     @Length(min = 1, max = 100, message = "{validation.name.size}")
     private String name;
-    @NotBlank
     @Length(min = 1, max = 20, message = "{validation.color.size}")
+    @NotNull
     private Color color;
 }
